@@ -31,7 +31,7 @@ public class HomeController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String Signup(@Valid User user, BindingResult result, Model model) {
         if(result.hasErrors()){
-            return "signup";
+            return "Signup";
         }
         userService.save(user);
         model.addAttribute("users", userService.findAll());

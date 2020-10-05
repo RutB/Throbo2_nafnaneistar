@@ -1,8 +1,6 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Services;
 
 import java.util.List;
-import java.util.Optional;
-
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 
 public interface UserService {

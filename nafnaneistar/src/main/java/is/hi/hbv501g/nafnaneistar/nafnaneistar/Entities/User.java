@@ -18,6 +18,11 @@ public class User {
     private ArrayList<Integer> approvedNames;
     private ArrayList<Integer> linkedPartners;
 
+
+    public User() {
+        
+    }
+
     public User(String name, String email, ArrayList<Integer> availableNames){
         this.name = name;
         this.email = email;

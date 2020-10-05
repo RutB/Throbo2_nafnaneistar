@@ -184,7 +184,6 @@ def replaceIslChar(s):
         news = news.replace(old,new)
     return news
 
-
 def getFullNameListWithDesc(fullList, descList):
     combinedNames = []
     indexedDesc = []
@@ -211,38 +210,63 @@ def getFullNameListWithDesc(fullList, descList):
         combinedNames.append(name)
     return combinedNames
 
-allFemaleApprovedNames = getAllMaleOrFemaleNames(1);
-femaleDesc = getFemaleNamesAndMeaning();
+#runtime +- 75min
+def initGettingFullList():
+    allFemaleApprovedNames = getAllMaleOrFemaleNames(1);
+    femaleDesc = getFemaleNamesAndMeaning();
 
-allMaleApprovedNames = getAllMaleOrFemaleNames(0)
-maleDesc = getMaleNamesAndMeaning()
+    allMaleApprovedNames = getAllMaleOrFemaleNames(0)
+    maleDesc = getMaleNamesAndMeaning()
 
-fullMaleList = getFullNameListWithDesc(allMaleApprovedNames,maleDesc)
-fullFemaleList = getFullNameListWithDesc(allFemaleApprovedNames,femaleDesc)
+    fullMaleList = getFullNameListWithDesc(allMaleApprovedNames,maleDesc)
+    fullFemaleList = getFullNameListWithDesc(allFemaleApprovedNames,femaleDesc)
 
-maleMissing = []
-femaleMissing = []
-
-
-for n in fullMaleList:
-    if n['desc'] == "":
-        maleMissing.append(n['name'])
-
-for n in fullFemaleList:
-    if n['desc'] == "":
-        femaleMissing.append(n['name'])
-
-writeToTextFile(maleMissing,"maleMissing.txt")
-writeToTextFile(femaleMissing,"femaleMissing.txt")
+    maleMissing = []
+    femaleMissing = []
 
 
-print(len(fullMaleList))
-print(len(maleMissing));
-print(len(femaleMissing))
-print(len(fullFemaleList))
+    for n in fullMaleList:
+        if n['desc'] == "":
+            maleMissing.append(n['name'])
 
-writeToJsonFile(fullMaleList,"fullMaleNamesWithDesc.json")
-writeToJsonFile(fullFemaleList,"fullFemaleNamesWithDesc.json")
+    for n in fullFemaleList:
+        if n['desc'] == "":
+            femaleMissing.append(n['name'])
+
+    writeToTextFile(maleMissing,"maleMissing.txt")
+    writeToTextFile(femaleMissing,"femaleMissing.txt")
+
+
+    print(len(fullMaleList))
+    print(len(maleMissing));
+    print(len(femaleMissing))
+    print(len(fullFemaleList))
+
+    writeToJsonFile(fullMaleList,"fullMaleNamesWithDesc.json")
+    writeToJsonFile(fullFemaleList,"fullFemaleNamesWithDesc.json")
+
+def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDesc.json"):
+    sql = "INSERT INTO namecards (name,desc) VALUES \n"
+    with open(f) as json_file:
+        data = json.load(json_file)
+        for p in data:
+                desc = "MISSING"
+                if not p['desc'] == "":
+                    desc = p['desc']
+                line = '(||{}||,||{}||,||{}||),\n'.format(p['name'],desc, 1)
+                sql = sql+line.replace("'","`").replace('"','`').replace('||','"')
+    with open(m) as json_file:
+        data = json.load(json_file)
+        for p in data:
+                desc = "MISSING"
+                if not p['desc'] == "":
+                    desc = p['desc']
+                line = '(||{}||,||{}||,||{}||),\n'.format(p['name'],desc, 0)
+                sql = sql+line.replace("'","`").replace('"','`').replace('||','"')
+    with open("insertdb.txt",'w',encoding="utf-8") as outfile:
+        outfile.write(sql)
+
+createDataForDB()
 
 
 stop = timeit.default_timer()
