@@ -1,3 +1,4 @@
 # Throbo2_nafnaneistar
  
-Whatup
+Docs path:
+https://docs.google.com/document/d/17YIhGQTzE54LR_iJFvDep4WH4QxbHmts7SLBumwcKJk/edit
