@@ -2,10 +2,16 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 
 import java.util.ArrayList;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
     private String email;
     private ArrayList<Integer> availableNames;
@@ -24,12 +30,32 @@ public class User {
     /*
     Custom Functions and Metods
     */
+    
+    public ArrayList<Integer> approveName(Integer id){
+        int index = this.availableNames.indexOf(id);
+        this.approvedNames.add(this.availableNames.remove(index));
+        return this.availableNames;
+    }
+
+    public ArrayList<Integer> disapproveName(Integer id){
+        int index = this.availableNames.indexOf(id);
+        this.availableNames.remove(index);
+        return this.availableNames;
+    }
+
+    public void addLinkedPartner(Integer id){
+        this.linkedPartners.add(id);
+    }
+
+    public boolean removeLinkedPartner(Integer id){
+        return this.linkedPartners.remove(id);
+    }
 
     /*
     Getters and Setters    
     */
 
-    public int getId(){
+    public long getId(){
         return this.id;
     }
 

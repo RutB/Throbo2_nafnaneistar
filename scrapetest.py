@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import json
+import os.path
 import timeit
 from googletrans import Translator
 import urllib.parse
@@ -91,17 +92,18 @@ def appendToTextFile(text,filename):
         outfile.write(s);
  
 def readTranslatedMeaningsToList(f):
-    file1 = open(f, 'r') 
-    Lines = file1.readlines()
     namesAndMeaning = []
-    for line in Lines:
-        if len(line.strip()) < 1:
-            continue
-        name = {}
-        data =  line.split(':')
-        name["name"] = data[0]
-        name["desc"] = data[1]
-        namesAndMeaning.append(name)
+    if os.path.isfile(f):
+        file1 = open(f, 'r') 
+        Lines = file1.readlines()
+        for line in Lines:
+            if len(line.strip()) < 1:
+                continue
+            name = {}
+            data =  line.split(':')
+            name["name"] = data[0]
+            name["desc"] = data[1]
+            namesAndMeaning.append(name)
     return namesAndMeaning
 
 def getAndTranslateEnglishMeaning(name):
