@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User save(User user);
+    <S extends User> User save(User user);
 
     void delete(User user);
 

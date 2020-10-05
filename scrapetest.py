@@ -154,6 +154,7 @@ def newgetAndTranslateEnglishMeaning(name):
         i = 0;
         while "form of" in meaning.text.strip():
             links = meaning.findAll('a')
+            link = links[0]
             for l in links:
                 if "/name/" in  l['href']:
                     link = l
@@ -246,23 +247,33 @@ def initGettingFullList():
     writeToJsonFile(fullFemaleList,"fullFemaleNamesWithDesc.json")
 
 def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDesc.json"):
-    sql = "INSERT INTO namecards (name,desc) VALUES \n"
+    sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
     with open(f) as json_file:
         data = json.load(json_file)
         for p in data:
                 desc = "MISSING"
                 if not p['desc'] == "":
                     desc = p['desc']
-                line = '(||{}||,||{}||,||{}||),\n'.format(p['name'],desc, 1)
-                sql = sql+line.replace("'","`").replace('"','`').replace('||','"')
+                desc = desc.replace("'",'`')
+                x = desc.count("(")
+                y = desc.count(")")
+                if x > y:
+                    desc = desc+")"
+                line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
+                sql = sql+line.replace('"',"“")
     with open(m) as json_file:
         data = json.load(json_file)
         for p in data:
                 desc = "MISSING"
                 if not p['desc'] == "":
                     desc = p['desc']
-                line = '(||{}||,||{}||,||{}||),\n'.format(p['name'],desc, 0)
-                sql = sql+line.replace("'","`").replace('"','`').replace('||','"')
+                desc = desc.replace("'",'`')
+                x = desc.count("(")
+                y = desc.count(")")
+                if x > y:
+                    desc = desc+")"
+                line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
+                sql = sql+line.replace('"',"“")
     with open("insertdb.txt",'w',encoding="utf-8") as outfile:
         outfile.write(sql)
 

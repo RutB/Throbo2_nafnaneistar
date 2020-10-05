@@ -6,25 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
+import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 
 @Controller
 public class HomeController {
     
     private UserService userService;
+    private NameService nameService;
 
     @Autowired
-    public HomeController(UserService userService){
+    public HomeController(UserService userService,NameService nameService){
         this.userService = userService;
+        this.nameService = nameService;
     }
     @RequestMapping("/")
     public String Home(Model model){
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("names", nameService.findAll());
         return "Home";
     }
 

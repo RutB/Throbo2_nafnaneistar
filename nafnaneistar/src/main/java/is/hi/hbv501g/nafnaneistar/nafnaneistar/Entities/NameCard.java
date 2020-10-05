@@ -1,22 +1,32 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class NameCard {
     
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
-    private String desc;
+    @Lob
+    private String description;
+    private int gender;
 
-    public NameCard(Long id, String name, String desc) {
-        this.name = name;
-        this.desc = desc;
+    public NameCard(){
+        
     }
 
-    public Long getId() {
+    public NameCard(Integer id, String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -24,11 +34,12 @@ public class NameCard {
         return name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getdescription() {
+        return description;
     }
 
-    
-    
+    public int getGender() {
+        return gender;
+    }
 
 }
