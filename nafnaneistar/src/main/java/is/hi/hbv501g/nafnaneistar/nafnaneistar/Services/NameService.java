@@ -10,5 +10,6 @@ public interface NameService {
     void delete(NameCard nameCard);
     List<NameCard> findAll();
     Optional<NameCard> findById(Integer id);
+    List<NameCard> findAllByDescriptionLike(String s);
     
 }

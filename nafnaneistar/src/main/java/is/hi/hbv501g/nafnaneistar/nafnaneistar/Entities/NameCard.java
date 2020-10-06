@@ -34,7 +34,7 @@ public class NameCard {
         return name;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 

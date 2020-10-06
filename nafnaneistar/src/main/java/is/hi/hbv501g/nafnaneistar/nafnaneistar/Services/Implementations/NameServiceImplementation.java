@@ -49,5 +49,12 @@ public class NameServiceImplementation implements NameService {
     public Optional<NameCard> findById(Integer id) {
         return repository.findById(id);
     }
+
+	@Override
+	public List<NameCard> findAllByDescriptionLike(String s) {
+		return repository.findAllByDescriptionLike(s);
+	}
+
+
     
 }

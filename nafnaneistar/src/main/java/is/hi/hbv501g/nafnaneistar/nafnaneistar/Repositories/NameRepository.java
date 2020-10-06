@@ -15,5 +15,6 @@ public interface NameRepository extends JpaRepository<NameCard, Long> {
     List<NameCard> findAll();
 
     Optional<NameCard> findById(Integer id);
+    List<NameCard> findAllByDescriptionLike(String s);
 
 }

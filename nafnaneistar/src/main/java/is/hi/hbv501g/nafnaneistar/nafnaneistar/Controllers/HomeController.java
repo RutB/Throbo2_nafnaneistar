@@ -43,6 +43,12 @@ public class HomeController {
     public String SignupForm(Model model) {
         return "Signup";
     }
+    @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
+    public String ViewNames(Model model) {
+        model.addAttribute("names", nameService.findAllByDescriptionLike("MISSING"));
+ 
+        return "viewnames";
+    }
 
 
 }
