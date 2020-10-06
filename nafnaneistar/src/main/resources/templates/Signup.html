@@ -7,10 +7,18 @@
 </head>
 <body>
     <main>
-        <form th:action="@{/signup}" th:object="${user}" method="post">
+        <form th:action="@{/signup}" th:object="${user}" method="post" style="display: flex; flex-direction:column;">
             <label for="name">Nafn:</label>
-            <input type="text" th:field="*{name}" id="title">
+            <input type="text" th:field="*{name}" id="name">
             <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            
+            <label for="email">Netfang:</label>
+            <input type="email" th:field="*{email}" id="email">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+            <label for="password">Lykilorð:</label>
+            <input type="password" th:field="*{password}" id="password">
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
             <input type="submit" value="add user">
 
@@ -18,17 +26,6 @@
             
         </form>
     </main>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nafn</th>
-            <th>Fáanleg nöfn</th>
-        </tr>
-        <tr th:each="user: ${users}">
-            <td th:text="${user.getId()}" />
-            <td th:text="${user.getName()}" />
-            <td th:text="${user.getAvailableNames()}" />
-        </tr>
-    </table>
+    <table th:include="/Home.html :: table"></table>
 </body>
 </html>

@@ -8,16 +8,18 @@
 <body>
     <h3>Halló Heimur</h3>
     <a th:href="@{/signup}">Skrá notanda</a>
-    <table>
+    <table  th:fragment="table">
         <tr>
             <th>ID</th>
             <th>Nafn</th>
-            <th>Fáanleg nöfn</th>
+            <th>Netfang</th>
+            <th>Lykilorð</th>
         </tr>
         <tr th:each="user: ${users}">
             <td th:text="${user.getId()}" />
             <td th:text="${user.getName()}" />
-            <td th:text="${user.getAvailableNames()}" />
+            <td th:text="${user.getEmail()}" />
+            <td th:text="${user.getPassword()}" />
         </tr>
     </table>
 </body>
