@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class User {
@@ -12,8 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
     private String email;
+    private String password;
+    @Lob
     private ArrayList<Integer> availableNames;
     private ArrayList<Integer> approvedNames;
     private ArrayList<Integer> linkedPartners;
@@ -23,9 +27,10 @@ public class User {
 
     }
 
-    public User(String name, String email, ArrayList<Integer> availableNames){
+    public User(String name, String email, String password, ArrayList<Integer> availableNames){
         this.name = name;
         this.email = email;
+        this.password = password;
         this.availableNames = availableNames;
         this.approvedNames = new ArrayList<Integer>();
         this.linkedPartners = new ArrayList<Integer>();
@@ -79,10 +84,22 @@ public class User {
     public ArrayList<Integer> getAvailableNames(){
         return this.availableNames;
     }
+    public void setAvailableNames(ArrayList<Integer> ids){
+        this.availableNames = ids;
+
+    }
     public ArrayList<Integer> getApprovedNames(){
         return this.approvedNames;
     }
     public ArrayList<Integer> getLinkedPartners(){
         return this.linkedPartners;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

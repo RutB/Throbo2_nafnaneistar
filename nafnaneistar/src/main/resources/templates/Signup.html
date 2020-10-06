@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NafnaTEst</title>
+    <title>Signup | Nafnaneistar</title>
 </head>
 <body>
-    <h3>Halló Heimur</h3>
-    <a th:href="@{/signup}">Skrá notanda</a>
+    <main>
+        <form th:action="@{/signup}" th:object="${user}" method="post">
+            <label for="name">Nafn:</label>
+            <input type="text" th:field="*{name}" id="title">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+            <input type="submit" value="add user">
+
+
+            
+        </form>
+    </main>
     <table>
         <tr>
             <th>ID</th>

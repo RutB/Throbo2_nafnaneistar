@@ -8,8 +8,8 @@
 <body>
     <table>
         <tr th:each="name: ${names}">
+            <td th:text="${name.getId()}" />
             <td th:text="${name.getName()}" />
-            <td th:text="${name.getDescription()}"/>
         </tr>
     </table>
 </body>
