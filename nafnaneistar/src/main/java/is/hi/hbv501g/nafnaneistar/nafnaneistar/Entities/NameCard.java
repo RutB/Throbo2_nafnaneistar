@@ -13,9 +13,10 @@ public class NameCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    //@Lob is for the database creation to store it larger than a VARCHAR with only 255 char capacity
     @Lob
     private String description;
-    private int gender;
+    private boolean gender;
 
     public NameCard(){
         
@@ -39,7 +40,7 @@ public class NameCard {
     }
 
     public int getGender() {
-        return gender;
+        return  (this.gender) ? 1 : 0;
     }
 
 }
