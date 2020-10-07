@@ -61,6 +61,10 @@ public class User {
         return this.linkedPartners.remove(id);
     }
 
+    public int getAvailableNamesSize(){
+        return this.availableNames.size();
+    }
+
     /*
     Getters and Setters    
     */

@@ -1,7 +1,5 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
-import java.util.ArrayList;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
+import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
 @Controller
 public class HomeController {
@@ -42,16 +40,11 @@ public class HomeController {
         if (result.hasErrors()) {
             return "Signup";
         }
-        ArrayList<Integer> ids = new ArrayList<>();
-
-        for(NameCard nc : nameService.findAll()){
-            ids.add(nc.getId());
-        }
-        user.setAvailableNames(ids);
+        UserUtils.initAvailableNames(user, nameService);
         userService.save(user);
         model.addAttribute("users", userService.findAll());
-        System.out.println(user.getName());
-        return "Home";
+        return "redirect:/";
+
     }
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String SignupForm(Model model) {

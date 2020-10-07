@@ -1,3 +1,4 @@
+
 INSERT INTO name_card (name, description, gender) VALUES 
 ('Aagot','Afbrigði ÅGOT.',1),
 ('Abel','Frá hebreska nafninu הֶבֶל (Hevel) sem þýðir “andardráttur“. Í Gamla testamentinu er hann annar sonur Adams og Evu, myrtur af öfund af bróður sínum Kain. Á Englandi kom þetta nafn í notkun á miðöldum og það var algengt á Puritan tímum.',1),
@@ -4263,4 +4264,4 @@ INSERT INTO name_card (name, description, gender) VALUES
 ('Örnólfur','örn og úlfur.',1),
 ('Örvar','hermaður',1),
 ('Össur','sem veitir andsvar',1),
-('Öxar','MISSING',1),
+('Öxar','MISSING',1);

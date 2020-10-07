@@ -14,12 +14,14 @@
             <th>Nafn</th>
             <th>Netfang</th>
             <th>Lykilorð</th>
+            <th>N0fn</th>
         </tr>
         <tr th:each="user: ${users}">
             <td th:text="${user.getId()}" />
             <td th:text="${user.getName()}" />
             <td th:text="${user.getEmail()}" />
             <td th:text="${user.getPassword()}" />
+            <td th:text="${user.getAvailableNamesSize()}" />
         </tr>
     </table>
 </body>
