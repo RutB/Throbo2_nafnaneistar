@@ -1,0 +1,35 @@
+.namecard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.namecard__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0;
+}
+
+.namecard__name {
+    font-size: 1.8em;
+}
+
+.namecard__container:first-of-type{
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+
+.namecard__gender {
+    margin-left: .5em;
+}
+
+.namecard__buttons {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+}

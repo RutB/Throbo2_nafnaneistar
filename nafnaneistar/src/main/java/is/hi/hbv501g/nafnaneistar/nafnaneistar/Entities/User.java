@@ -1,6 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +33,9 @@ public class User {
 
 
     public User() {
-
+        
+        this.approvedNames = new ArrayList<Integer>();
+        this.linkedPartners = new ArrayList<Integer>();
     }
 
     public User(String name, String email, String password, ArrayList<Integer> availableNames){
@@ -72,6 +76,15 @@ public class User {
         return this.availableNames.size();
     }
 
+    public Integer getRandomNameId(){
+        Random r = new Random();
+        int size = this.availableNames.size();
+        if(size == 0)
+            return -1;
+        Integer newID = this.availableNames.get(r.nextInt(size));
+        return newID;
+    }
+
     /*
     Getters and Setters    
     */
@@ -100,8 +113,9 @@ public class User {
     }
     public void setAvailableNames(ArrayList<Integer> ids){
         this.availableNames = ids;
-
     }
+
+
     public ArrayList<Integer> getApprovedNames(){
         return this.approvedNames;
     }
@@ -115,5 +129,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+	@Override
+	public String toString() {
+        return "User: " + this.name + "listleft: " + this.getAvailableNamesSize();
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
-import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Repositories.NameRepository;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 
@@ -22,12 +21,6 @@ public class NameServiceImplementation implements NameService {
         this.repository = nameRepo;
     }
 
-    public Optional<NameCard> getRandomName(User user) {
-        Random r = new Random();
-        int size = user.getAvailableNames().size();
-        Integer newID = user.getAvailableNames().get(r.nextInt(size));
-        return repository.findById(newID);
-    }
 
     @Override
     public NameCard save(NameCard nameCard) {

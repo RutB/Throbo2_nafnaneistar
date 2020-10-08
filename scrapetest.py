@@ -274,12 +274,15 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                     desc = desc+")"
                 line = "('{}','{}',{}),\n".format(p['name'],desc, 0)
                 sql = sql+line.replace('"',"“")
+        sql = sql +  "INSERT INTO name_card (id,name, description, gender) VALUES \n"
+        line = "({},'{}','{}',{}),\n".format(-1, 'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!', 1)
+        sql = sql + line
+        line = "({},'{}','{}',{}),\n".format(-2, 'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!', 0)
+        sql = sql + line
     with open("insertdb.txt",'w',encoding="utf-8") as outfile:
         outfile.write(sql)
 
-#createDataForDB()
-
-x = getFemaleNamesAndMeaning()
+createDataForDB()
 
 
 
@@ -288,9 +291,17 @@ def writeToDBfile(x):
     sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
     for line in x:
         line = "('{}','{}',{}),\n".format(line['name'],line['desc'], 1)
-        sql = sql + line;
+        sql = sql + line
+    sql = sql +  "INSERT INTO name_card (id,name, description, gender) VALUES \n"
+    line = "({},'{}','{}',{}),\n".format(-1, 'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!', 1)
+    sql = sql + line
+    line = "({},'{}','{}',{}),\n".format(-2, 'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!', 0)
+    sql = sql + line
     with open("insertdb.txt",'w',encoding="utf-8") as outfile:
         outfile.write(sql)
+
+
+print()
 stop = timeit.default_timer()
 print('Time: ', stop - start)  
 

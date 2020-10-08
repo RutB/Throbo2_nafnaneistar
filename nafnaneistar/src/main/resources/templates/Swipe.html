@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe | Nafnaneistar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/swipe.css}">
+</head>
+<body>
+    <span class="user" th:text="${user.getName()}"></span>
+    <main>
+        <section class="namecard">
+            <div class="namecard__container">
+                <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
+                <i class="namecard__gender" th:if="${name.get().getGender()}">&#9792;</i>
+                <i class="namecard__gender" th:unless="${name.get().getGender()}">&#9794;</i> 
+            </div>
+            <div class="namecard__container">
+                <p class="namecard__description" th:text="${name.get().getDescription()}"/>
+            </div>
+            <div class="namecard__buttons">
+                <button class="namecard__button namecard__disapprove" th:value="${name.get().getId()}">Dislike</button>
+                <button class="namecard__button namecard__approve" th:value="${name.get().getId()}">Approve</button>
+            </div>
+            
+        </section>
+        <section class="users">
+            <table class="users__table" th:include="/Home.html :: table"></table>
+        </section>        
+    </main>
+
+    <script th:src="@{/js/swipe.js}"></script>
+</body>
+</html>
