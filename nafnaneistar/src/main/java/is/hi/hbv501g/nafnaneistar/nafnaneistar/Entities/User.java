@@ -28,6 +28,7 @@ public class User {
     private String password;
     @Lob
     private ArrayList<Integer> availableNames;
+    @Lob
     private ArrayList<Integer> approvedNames;
     private ArrayList<Integer> linkedPartners;
 

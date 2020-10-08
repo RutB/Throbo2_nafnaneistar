@@ -29,6 +29,7 @@ function getNewName(url){
         }
         return resp.json()
     }).then((data)=>{   
+        console.log(data)
         rePopulateData(data)
     })
 }
