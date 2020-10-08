@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__input {
+    max-width: fit-content;
+    line-height: 2;
+    min-width: 20em;
+    border: none;
+    border-radius: 2em;
+}
+
+.form__label {
+    margin: .5em 0;
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+.form__button {
+    max-width: fit-content;
+    min-width: 21em;
+    background-color:lightblue;
+    line-height: 2;
+    border-radius: 2em;
+}

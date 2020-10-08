@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup | Nafnaneistar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
 </head>
 <body>
     <main>
-        <form th:action="@{/signup}" th:object="${user}" method="post" style="display: flex; flex-direction:column;">
-            <label for="name">Nafn:</label>
-            <input type="text" th:field="*{name}" id="name">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-            
-            <label for="email">Netfang:</label>
-            <input type="email" th:field="*{email}" id="email">
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <section class="signup">
+            <form class="signup__form form" th:action="@{/signup}" th:object="${user}" method="post">
+                <label class="form__label" for="name">Nafn:</label>
+                <input class="form__input" type="text" th:field="*{name}" id="name" placeholder="Nafn">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                
+                <label class="form__label" for="email">Netfang:</label>
+                <input class="form__input" type="email" th:field="*{email}" id="email" placeholder="Netfang">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
-            <label for="password">Lykilorð:</label>
-            <input type="password" th:field="*{password}" id="password">
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <label class="form__label" for="password">Lykilorð:</label>
+                <input class="form__input" type="password" th:field="*{password}" id="password">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Vesen</span>
 
-            <input type="submit" value="add user">
-
-
-            
-        </form>
+                <button  class="form__button" type="submit" > Skrá Notanda</button>
+            </form>
+        </section>
+        <section class="users">
+            <table class="users__table" th:include="/Home.html :: table"></table>
+        </section>
+        
     </main>
-    <table th:include="/Home.html :: table"></table>
+    
 </body>
 </html>

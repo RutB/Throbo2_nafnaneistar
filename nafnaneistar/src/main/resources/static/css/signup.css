@@ -1,0 +1,14 @@
+@import 'components/form.css';
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.signup__form {
+
+}
+
+
+

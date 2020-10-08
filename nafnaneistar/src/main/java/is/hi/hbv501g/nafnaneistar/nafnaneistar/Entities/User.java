@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class User {
@@ -14,8 +16,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty
     private String name;
+    
+    @Email
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
     @Lob
     private ArrayList<Integer> availableNames;

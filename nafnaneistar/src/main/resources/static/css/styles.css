@@ -1,0 +1,23 @@
+@import "resets.css";
+
+html {
+    font-size: 16px;
+    text-align: justify;
+}
+body {
+    background-color: pink;
+}
+main{
+    padding-top: 2em;
+    max-width: 70em;
+    display: flex;
+    flex-direction: column;
+
+    align-content: center;
+    margin: 0 auto;
+
+}
+
+table {
+    margin: 2em 0;
+}
