@@ -272,14 +272,25 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 y = desc.count(")")
                 if x > y:
                     desc = desc+")"
-                line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
+                line = "('{}','{}',{}),\n".format(p['name'],desc, 0)
                 sql = sql+line.replace('"',"“")
     with open("insertdb.txt",'w',encoding="utf-8") as outfile:
         outfile.write(sql)
 
-createDataForDB()
+#createDataForDB()
+
+x = getFemaleNamesAndMeaning()
 
 
+
+
+def writeToDBfile(x):
+    sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
+    for line in x:
+        line = "('{}','{}',{}),\n".format(line['name'],line['desc'], 1)
+        sql = sql + line;
+    with open("insertdb.txt",'w',encoding="utf-8") as outfile:
+        outfile.write(sql)
 stop = timeit.default_timer()
 print('Time: ', stop - start)  
 

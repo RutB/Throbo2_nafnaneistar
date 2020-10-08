@@ -37,6 +37,7 @@ public class HomeController {
     public String Signup(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         model.addAttribute("names", nameService.findAll());
         model.addAttribute("users", userService.findAll());
+
         if (result.hasErrors()) {
             return "Signup";
         }
