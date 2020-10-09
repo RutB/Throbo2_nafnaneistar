@@ -12,11 +12,16 @@
     justify-content: center;
 }
 
+.header__signup {
+    justify-content: flex-start;
+}
+
 .header__image {
     position: absolute;
     left: 2em;
     top: 2em;
 }
+
 
 .header__image img {
     height: 21vh;
@@ -33,7 +38,10 @@
 .main{
     margin: 1em auto;
 }
-.login {
+.main__signup {
+    margin: 8em auto;
+}
+.login,.signup {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -41,7 +49,7 @@
     justify-content: space-evenly;
 }
 
-.login__title {
+.login__title,.signup__title {
     margin: 1.5em 0;
 }
 
@@ -99,11 +107,22 @@
         height: 60vh;
         margin-top: 1em;
     }
-    .login{
+    .login,.signup{
         text-align: center;
     }
     .login__form {
         width: 100%;
+    }
+
+    .signup__title {
+        margin-top: 2em;
+    }
+    .header__signup {
+        justify-content: center;
+    }
+
+    .main__signup {
+        margin: 9em auto;
     }
 
 }
