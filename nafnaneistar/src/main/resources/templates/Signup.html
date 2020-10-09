@@ -11,11 +11,9 @@
     <main>
         <section class="signup">
             <form class="signup__form form" th:action="@{/signup}" th:object="${user}" method="post">
-                <label class="form__label" for="name">Nafn:</label>
                 <input class="form__input" type="text" th:field="*{name}" id="name" placeholder="Nafn">
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                 
-                <label class="form__label" for="email">Netfang:</label>
                 <input class="form__input" type="email" th:field="*{email}" id="email" placeholder="Netfang">
                 <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 

@@ -1,18 +1,47 @@
 @import "resets.css";
-
+:root {
+    --main-bg-color: #FFF9CC;
+    --nav-bg-color:#A3D9B9;
+    --nav-bg-color-lg:#C6E8D4;
+    --bt-color:#A3D9B9;
+    --bt-color-lg:#C6E8D4;
+    --font-color: #7F7F7F;
+    --ambient-color:#F0CDB4;
+    --max-width: 70em;
+}
 html {
     font-size: 16px;
     text-align: justify;
+    
 }
 
+body {
+    background-color: var(--main-bg-color);
+}
+h1,h2,h3,h4,h5,h6{
+    color: var(--font-color);
+    line-height: 1.15;
+}
+
+h1 {
+    font-size: 4.125em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h2 {
+    font-size: 2em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
 main{
-    padding: 2em;
-    max-width: 70em;
+    max-width: var(--max-width);
     display: flex;
     flex-direction: column;
-
     align-content: center;
+    justify-content: center;
     margin: 0 auto;
+    color: var(--font-color);
 
 }
 

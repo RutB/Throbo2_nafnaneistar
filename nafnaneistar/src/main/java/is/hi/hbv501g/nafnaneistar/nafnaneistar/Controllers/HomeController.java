@@ -32,10 +32,21 @@ public class HomeController {
 
     @RequestMapping("/")
     public String Home(Model model) {
+        return "redirect:login";
+    }
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String Login(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "Home";
+        model.addAttribute("user",new User());
+        return "login";
     }
 
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public String PostLogin(Model model) {
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user",new User());
+        return "login";
+    }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String Signup(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         model.addAttribute("names", nameService.findAll());

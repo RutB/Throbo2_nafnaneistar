@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innskráning | Nafnaneistar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    
+    
+</head>
+<body>
+    <header class="header">
+        <div class="header__image">
+            <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
+        </div>
+        <div class="header__content">
+            <h1>Velkomin(n)</h1>
+        </div>
+    </header>
+    <main class="main">
+        <section class="login">
+            <h2 class="login__title">Skráðu þig inn og finndu rétta nafnið!</h2>
+            <form class="login__form form" th:action="@{/login}" method="post">
+                <input class="form__input" type="text" id="name" placeholder="Nafn"/>
+                <input class="form__input" type="password" id="password" placeholder="Lykilorð"/>
+                <button  class="form__button" type="submit" > Innskráning</button>
+            </form>
+            <div class="login__signup">
+                <h2 class="login__title">Ekki með aðgang?</h2>
+                <a class="button__link form__button" th:href="@{/signup}">Nýskráning</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
