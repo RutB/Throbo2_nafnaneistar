@@ -49,20 +49,8 @@ public class HomeController {
     public String PostLogin(
         @RequestParam(value = "email", required = true) String email,
         @RequestParam(value = "password", required = true) String password,
-        Model model
-    ) {
+        Model model) {  
         model.addAttribute("users", userService.findAll());
-        System.out.println(email);
-        System.out.println(password);
-        User user  = userService.findByEmailAndPassword(email, password);
-        
-        if(user != null){
-            currentUser = user;
-            System.out.println(currentUser);
-            return "redirect:/swipe";
-        
-            
-        }
         return "login";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -96,7 +84,6 @@ public class HomeController {
     public String SwipeNames(Model model) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
-        System.out.println("CurrentUser = " + currentUser.getName());
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);
         return "Swipe";

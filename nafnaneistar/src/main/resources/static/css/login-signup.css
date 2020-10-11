@@ -11,7 +11,28 @@
     align-items: flex-end;
     justify-content: center;
 }
+.popup{
+    position: absolute;
+    display: flex;
+    top: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
 
+.popup__container {
+    background-color: var(--ambient-color);
+    text-align: center;
+    border-radius: 1em;
+    padding: 2em;
+    color: var(--font-color);
+}
+
+.popup__text {
+    padding: 1em;
+}
 .header__signup {
     justify-content: flex-start;
 }
@@ -124,5 +145,6 @@
     .main__signup {
         margin: 9em auto;
     }
+
 
 }
