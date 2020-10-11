@@ -1,6 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.Implementations;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class UserServiceImplementation implements UserService {
     UserRepository repository;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepo){
+    public UserServiceImplementation(UserRepository userRepo) {
         this.repository = userRepo;
     }
 
@@ -37,6 +39,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<User> findByName(String name) {
         return this.repository.findByName(name);
+    }
+
+    @Override
+    public User findByEmailAndPassword(String email, String password) {
+        return repository.findByEmailAndPassword(email, password);
     }
     
 }

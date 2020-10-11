@@ -3,6 +3,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 public class User {
@@ -23,6 +26,7 @@ public class User {
     
     @Email
     @NotEmpty
+    @Column(unique=true)
     private String email;
     @NotEmpty
     private String password;

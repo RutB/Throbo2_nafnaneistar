@@ -8,5 +8,6 @@ public interface UserService {
     void delete(User user);
     List<User> findAll();
     List<User> findByName(String name);
+    User findByEmailAndPassword(String email, String password);
     
 }

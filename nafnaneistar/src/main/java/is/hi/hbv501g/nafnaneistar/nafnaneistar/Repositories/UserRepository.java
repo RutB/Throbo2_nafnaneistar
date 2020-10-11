@@ -1,7 +1,6 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 
@@ -12,5 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAll();
     List<User> findByName(String name);
+    User findByEmailAndPassword(String email, String password);
 
 }

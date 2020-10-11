@@ -3,14 +3,17 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
@@ -23,6 +26,7 @@ public class HomeController {
 
     private UserService userService;
     private NameService nameService;
+    public static User currentUser;
 
     @Autowired
     public HomeController(UserService userService, NameService nameService) {
@@ -42,9 +46,23 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String PostLogin(Model model) {
+    public String PostLogin(
+        @RequestParam(value = "email", required = true) String email,
+        @RequestParam(value = "password", required = true) String password,
+        Model model
+    ) {
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("user",new User());
+        System.out.println(email);
+        System.out.println(password);
+        User user  = userService.findByEmailAndPassword(email, password);
+        
+        if(user != null){
+            currentUser = user;
+            System.out.println(currentUser);
+            return "redirect:/swipe";
+        
+            
+        }
         return "login";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -77,9 +95,8 @@ public class HomeController {
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
     public String SwipeNames(Model model) {
         model.addAttribute("users", userService.findAll());
-        User currentUser = userService.findByName("test2").get(0);
         model.addAttribute("user", currentUser);
-        System.out.println(currentUser.toString());
+        System.out.println("CurrentUser = " + currentUser.getName());
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);
         return "Swipe";
