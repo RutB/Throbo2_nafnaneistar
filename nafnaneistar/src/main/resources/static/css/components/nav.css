@@ -1,0 +1,21 @@
+.nav {
+    display: flex;
+    height: 10em;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.nav__links {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    width: 70%;
+    justify-content: space-around;
+    margin-right: 1em;
+    
+}
+
+.nav__link {
+    
+}

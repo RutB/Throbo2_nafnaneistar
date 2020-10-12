@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginform = document.querySelector('.login__form');
     loginform.addEventListener('submit', submitHandler);
-
+    var interval;
 
 function submitHandler(e){
     e.preventDefault();
@@ -28,6 +28,8 @@ function decreaseTimer(){
             window.location.replace(url)
         else 
             document.querySelector('.popup').remove()
+        
+        clearInterval(interval)
     }
 }
 
@@ -74,7 +76,7 @@ function validateLogin(url){
                 createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","3");
             else
                 createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","3");
-            setInterval(decreaseTimer,1000)
+             interval = setInterval(decreaseTimer,1000)
 
     })
 }

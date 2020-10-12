@@ -7,13 +7,20 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/swipe.css}">
 </head>
+
 <header class="header">
     <div class="header__image">
         <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
     </div>
-    <div class="header__content">
-        <h1>Velkomin(n)</h1>
-    </div>
+    <nav class="nav">
+        <ul class="nav__links">
+            <li class="nav__link"><a>Search Name</a></li>
+            <li class="nav__link"><a>Select Names</a></li>
+            <li class="nav__link"><a>View Liked</a></li>
+            <li class="nav__link"><a>Link Partner</a></li>
+            <li class="nav__link"><a><i class="fas fa-cog"></i></a></li>
+        </ul>
+    </nav>
 </header>
 <body>
     <span class="user" th:text="${user.getName()}"></span>

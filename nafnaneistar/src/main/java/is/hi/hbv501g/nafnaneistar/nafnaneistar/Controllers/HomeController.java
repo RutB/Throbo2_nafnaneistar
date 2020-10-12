@@ -3,10 +3,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +37,8 @@ public class HomeController {
     }
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String Login(Model model) {
+        if(currentUser != null)
+            return "redirect:/swipe";
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user",new User());
         return "login";
