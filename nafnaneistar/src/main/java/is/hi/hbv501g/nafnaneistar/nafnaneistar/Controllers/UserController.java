@@ -31,7 +31,6 @@ public class UserController {
         
         if(user != null){
             HomeController.currentUser = user;
-            System.out.println(HomeController.currentUser);
             return true;
         }
         return false;
