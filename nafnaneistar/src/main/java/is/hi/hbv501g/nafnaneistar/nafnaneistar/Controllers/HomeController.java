@@ -90,7 +90,16 @@ public class HomeController {
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);
         return "Swipe";
-    }
+    }   
+     @RequestMapping(value = "/linkpartner", method = RequestMethod.GET)
+    public String Linkpartner(Model model) {
+        //if(currentUser == null)
+        //   return "redirect:/login";
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user", currentUser);
+       // Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
+       // model.addAttribute("name",nc);
+        return "linkpartner";
+    }
 
-    
 }
