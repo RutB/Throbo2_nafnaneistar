@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=> {
 
-const user = document.querySelector('.user').textContent
+
 
 const buttons = document.querySelectorAll('.namecard__button');
 for (const bt of buttons) {

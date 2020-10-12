@@ -12,6 +12,7 @@
 }
 .header--nav {
     flex-wrap: nowrap;
+    max-height: none;
 }
 .header__image--nav{
     position: unset;
