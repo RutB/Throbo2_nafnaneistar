@@ -82,6 +82,9 @@ public class HomeController {
 
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
     public String SwipeNames(Model model) {
+        if(currentUser == null)
+            return "redirect:/login";
+
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
