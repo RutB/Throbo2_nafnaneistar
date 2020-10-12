@@ -44,8 +44,18 @@
 .nav__link a,.nav__sublink a{
     text-decoration: none;
     color: var(--font-color);
-}
 
+}
+.nav__link a {
+    height: 100%;
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
 
 
 .nav__link:hover,.nav__submenu:hover {
