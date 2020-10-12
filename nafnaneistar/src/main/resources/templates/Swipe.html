@@ -8,8 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/swipe.css}">
 </head>
 
-<header class="header">
-    <div class="header__image">
+<header  th:fragment="header"  class="header header--nav">
+    <div class="header__image header__image--nav">
         <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
     </div>
     <nav class="nav">
@@ -18,12 +18,22 @@
             <li class="nav__link"><a>Select Names</a></li>
             <li class="nav__link"><a>View Liked</a></li>
             <li class="nav__link"><a>Link Partner</a></li>
-            <li class="nav__link"><a><i class="fas fa-cog"></i></a></li>
+            <div class="nav__submenu">
+                <i class="fas fa-cog"></i>
+                <ul class="nav__sublinks">
+                    <li class="nav__greeting">Halló <span class="user" th:text="${user.getName().split(' ')[0]}"/></li>
+                    <li>Stillingar</li>
+                    <li>Bla bla</li>
+                    <li>Bla bla</li>
+                    <li>Bla bla</li>
+                    <li><a th:href="@{/logout}">Skrá út</a></li>
+                </ul>
+            </div>
+            </li>
         </ul>
     </nav>
 </header>
 <body>
-    <span class="user" th:text="${user.getName()}"></span>
     <main>
         <section class="namecard">
             <div class="namecard__container">

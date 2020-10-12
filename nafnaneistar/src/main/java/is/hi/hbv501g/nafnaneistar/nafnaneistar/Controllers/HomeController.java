@@ -75,6 +75,7 @@ public class HomeController {
 
     @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
     public String ViewNames(Model model) {
+        model.addAttribute("user", currentUser);
         model.addAttribute("names", nameService.findAll());
         return "viewnames";
     }
@@ -89,6 +90,12 @@ public class HomeController {
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);
         return "Swipe";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String LogOut(Model model) {
+        currentUser = null;
+        return "redirect:/login";
     }
 
     

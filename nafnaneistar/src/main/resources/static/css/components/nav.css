@@ -1,21 +1,104 @@
 .nav {
     display: flex;
-    height: 10em;
+    height: 3em;
     align-items: center;
     width: 100%;
     justify-content: center;
+    background-color: var(--nav-bg-color);
+    margin: auto 0;
+    border-radius: 1em;
 }
 
 .nav__links {
     display: flex;
     flex-direction: row;
     margin-left: auto;
-    width: 70%;
+    width: 100%;
     justify-content: space-around;
-    margin-right: 1em;
+    align-items: center;
+    justify-content: center;
+    color: var(--font-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
     
 }
 
+.nav__link:first-of-type {
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
 .nav__link {
+    cursor: pointer;
+    font-size: 1.125em;
+    width: 23%;
+    text-align: center;
+    height: 2.8em;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav__link:hover,.nav__submenu:hover {
+    margin: 0;
+    transition: background-color 300ms ease-in;
+    background-color: var(--nav-bg-color-lg);
+}
+
+.nav__submenu {
+    height: 2.8em;
+    display: flex;
+    width: 8%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.nav__submenu{
     
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.nav__submenu:hover .nav__sublinks {
+    transition: transform 300ms ease-in;
+    transform: scaleY(1);
+}
+
+.nav__submenu i {
+    font-size: 1.25em;
+}
+
+.nav__sublinks {
+    color: var(--font-color);
+    position: absolute;
+    display: flex;
+    transform: scaleY(0);
+    transform-origin: top;
+    flex-direction: column;
+    top: 6.5em;
+    margin-left: -1emm;
+    padding: 0 .5em;
+    border: 2px solid var(--nav-bg-color);
+    background-color: var(--nav-bg-color-lg);
+    z-index: 10000;
+    line-height: 2em;
+    margin-right: 2em;
+    
+}
+@media only screen and (max-width: 768px) {
+    .nav {
+        width: 100%;
+        align-items: center;
+    }
+
+    .nav__links{
+        justify-content: space-evenly;
+    }
+    .nav__sublinks {
+        top: 9em;
+        margin-right: 3em;
+    }
+
 }
