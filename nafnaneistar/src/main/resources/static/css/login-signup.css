@@ -1,16 +1,5 @@
 @import 'components/form.css';
 
-
-.header {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    max-height: 25vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: center;
-}
 .popup{
     position: absolute;
     display: flex;
@@ -33,28 +22,6 @@
 .popup__text {
     padding: 1em;
 }
-.header__signup {
-    justify-content: flex-start;
-}
-
-.header__image {
-    position: absolute;
-    left: 2em;
-    top: 2em;
-}
-
-
-.header__image img {
-    height: 21vh;
-}
-
-.header__content {
-    height: 25vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
 
 .main{
     margin: 1em auto;
@@ -73,7 +40,6 @@
 .login__title,.signup__title {
     margin: 1.5em 0;
 }
-
 
 .login__signup {
     padding: 1em 0;
@@ -100,34 +66,7 @@
     width: auto;
 }
 @media only screen and (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-    body {
-        padding: 0 1em;
-    }
-    .header__image {
-        position: relative;
-        left: 0;
-        top: 1em;
-        height: 5em;
-        align-self: center;
-    }
-    
-    .header__image img {
-        height: 5em;
-    }
-    
-    .header__content {
-        width: 100%;
-        height: unset;
-        text-align: center;
-        margin: 1em 0;
-    }
-    .main {
-        height: 60vh;
-        margin-top: 1em;
-    }
+  
     .login,.signup{
         text-align: center;
     }
@@ -145,6 +84,5 @@
     .main__signup {
         margin: 9em auto;
     }
-
 
 }

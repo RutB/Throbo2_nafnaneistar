@@ -1,0 +1,57 @@
+@import 'components/nav.css';
+
+.header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    max-height: 25vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.header__signup {
+    justify-content: flex-start;
+}
+
+.header__image {
+    position: absolute;
+    left: 2em;
+    top: 2em;
+}
+
+
+.header__image img {
+    height: 21vh;
+}
+
+.header__content {
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+@media only screen and (max-width: 768px) {
+    .header__image {
+        position: relative;
+        left: 0;
+        top: 1em;
+        height: 5em;
+        align-self: center;
+    }
+    
+    .header__image img {
+        height: 5em;
+    }
+    
+    .header__content {
+        width: 100%;
+        height: unset;
+        text-align: center;
+        margin: 1em 0;
+    }
+    
+}
+
