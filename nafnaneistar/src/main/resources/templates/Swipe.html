@@ -15,13 +15,13 @@
     <nav class="nav">
         <ul class="nav__links">
             <li class="nav__link"><a>Search Name</a></li>
-            <li class="nav__link"><a>Select Names</a></li>
+            <li class="nav__link"><a th:href="@{/swipe}">Select Names</a></li>
             <li class="nav__link"><a>View Liked</a></li>
             <li class="nav__link"><a>Link Partner</a></li>
             <div class="nav__submenu">
                 <i class="fas fa-cog"></i>
                 <ul class="nav__sublinks">
-                    <li class="nav__greeting">Halló <span class="user" th:text="${user.getName().split(' ')[0]}"/></li>
+                    <li class="nav__greeting">Halló  <span class="user" th:text="${user} ? ${user.getName().split(' ')[0]} : 'Enginn'"/></li>
                     <li>Stillingar</li>
                     <li>Bla bla</li>
                     <li>Bla bla</li>
