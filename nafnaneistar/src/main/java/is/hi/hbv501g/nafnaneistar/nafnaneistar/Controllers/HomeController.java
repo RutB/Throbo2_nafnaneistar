@@ -109,7 +109,7 @@ public class HomeController {
                 System.out.print("onei thetta var rangt email");
                 return "redirect:/swipe";
             }*/
-            else{           
+            //else{           
             System.out.println("User fyrir netfang" + userService.findByEmail(email));
             System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
         currentUser.addLinkedPartner((int)userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
@@ -118,6 +118,6 @@ public class HomeController {
             System.out.println("email user linked parnter "+ userService.findByEmail(email).getLinkedPartners());
             
         return "linkpartner";
-            }
+           // }
     }
 }
