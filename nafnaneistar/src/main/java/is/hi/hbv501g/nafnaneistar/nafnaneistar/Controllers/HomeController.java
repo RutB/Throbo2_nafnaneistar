@@ -2,6 +2,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class HomeController {
 
     private UserService userService;
     private NameService nameService;
-    public static User currentUser;
+
 
     @Autowired
     public HomeController(UserService userService, NameService nameService) {
@@ -36,7 +37,8 @@ public class HomeController {
         return "redirect:login";
     }
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String Login(Model model) {
+    public String Login(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
         if(currentUser != null)
             return "redirect:/swipe";
         model.addAttribute("users", userService.findAll());
@@ -74,14 +76,16 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
-    public String ViewNames(Model model) {
+    public String ViewNames(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
         model.addAttribute("user", currentUser);
         model.addAttribute("names", nameService.findAll());
         return "viewnames";
     }
 
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
-    public String SwipeNames(Model model) {
+    public String SwipeNames(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
         if(currentUser == null)
             return "redirect:/login";
 
@@ -93,8 +97,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String LogOut(Model model) {
-        currentUser = null;
+    public String LogOut(Model model, HttpSession session) {
+        session.removeAttribute("currentUser");
         return "redirect:/login";
     }
 

@@ -12,11 +12,11 @@ function decide(e){
     const id = e.target.value;
     let url = ""
     if(e.target.classList.contains('namecard__approve')){
-        url = `${window.location.origin}/swipe/approve/${user}/${id}`
+        url = `${window.location.origin}/swipe/approve/${id}`
         
     }
     else{
-        url = `${window.location.origin}/swipe/disapprove/${user}/${id}`
+        url = `${window.location.origin}/swipe/disapprove/${id}`
     }
     getNewName(url)
 }

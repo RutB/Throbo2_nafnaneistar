@@ -2,6 +2,8 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,21 +26,22 @@ public class NameController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/swipe/approve/{user}/{id}", produces = "application/json")
-    public Optional<NameCard> ApproveName(@PathVariable String user, @PathVariable String id) 
+    @GetMapping(path="/swipe/approve/{id}", produces = "application/json")
+    public Optional<NameCard> ApproveName(@PathVariable String id,HttpSession session) 
     {   
-        User currentUser = userService.findByName(user).get(0);
+        User currentUser = (User) session.getAttribute("currentUser");
         currentUser.approveName(Integer.parseInt(id));
         userService.save(currentUser);
         Integer newID = currentUser.getRandomNameId();      
         return nameService.findById(newID); 
     }
 
-    @GetMapping(path="/swipe/disapprove/{user}/{id}", produces = "application/json")
-    public Optional<NameCard> DisapproveName(@PathVariable String user,@PathVariable String id) 
+    @GetMapping(path="/swipe/disapprove/{id}", produces = "application/json")
+    public Optional<NameCard> DisapproveName(@PathVariable String id,HttpSession session) 
     {
-        User currentUser = userService.findByName(user).get(0);
+        User currentUser = (User) session.getAttribute("currentUser");
         currentUser.disapproveName(Integer.parseInt(id));
+        userService.save(currentUser);
         Integer newID = currentUser.getRandomNameId();      
         return nameService.findById(newID); 
     }
