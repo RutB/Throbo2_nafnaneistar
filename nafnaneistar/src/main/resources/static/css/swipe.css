@@ -5,7 +5,7 @@
     align-items: center;
     max-width: calc(var(--max-width)/2);
     margin: 0 auto;
-    min-width: 25em;
+    min-width: 30em;
     padding: 2em;
     min-height: 27em;
     background-color: var(--swipe-bg-color);
@@ -41,14 +41,62 @@
     margin-left: .5rem;
     font-size: 4em;
 
-
 }
 
+.namecard__button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.namecard__button:focus{
+    outline: 0;
+}
+
+.namecard__button .fas {
+    font-size: 3em;
+}
+
+.fa-arrow-circle-right{
+    color: var(--nav-bg-color);
+}
+.fa-arrow-circle-left{
+    color: var(--ambient-color);
+}
+.fa-arrow-circle-right:hover {
+    transition: color 300ms ease-in;
+
+    color: green;
+}
+.fa-arrow-circle-left:hover {
+    transition: color 300ms ease-in;
+
+    color: red;
+}
 .namecard__buttons {
     margin-top: auto;
     margin-bottom: 2em;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .namecard {
+        margin-top: 1em;
+        min-width: unset;
+        width: 100%;
+        padding: 0;
+    }
+    .namecard__container:nth-of-type(2) {
+        padding: 1em;
+    }
+    .namecard__buttons {
+        padding: 1em;
+        justify-content: space-around;
+    }
+
 }

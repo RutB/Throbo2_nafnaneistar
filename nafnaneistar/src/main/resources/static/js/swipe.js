@@ -75,7 +75,8 @@ function getDecision(id,approve){
 }
 
 function decide(e){
-    const id = e.target.value;
+    const id = document.querySelector('.namecard__button').value
+
     let url = (e.target.classList.contains('namecard__approve')) ? getDecision(id,1) : getDecision(id,0)
     getNewName(url)
 }
