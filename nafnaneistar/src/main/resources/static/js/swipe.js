@@ -7,6 +7,9 @@ const buttons = document.querySelectorAll('.namecard__button');
 let mouseDown = 0;
 let mouseX = undefined;
 
+let touchDownX = undefined;
+let lastTouch = undefined;
+
 namecard.addEventListener('mousedown', (e)=> {
     mouseDown = 1;
     mouseX = e.clientX;
@@ -29,6 +32,31 @@ namecard.addEventListener('mouseout', (e)=> {
 })
 
 document.addEventListener('keyup', decideByKeyboard)
+
+namecard.addEventListener('touchstart',(e) => {
+    touchDownX = e.touches[0].clientX;
+})
+
+namecard.addEventListener('touchmove', (e) => {
+    lastTouch = e.touches[0].clientX
+})
+
+namecard.addEventListener('touchend',(e)=> {
+    console.log(touchDownX)
+    console.log(lastTouch)
+    let offset = 60
+    if(Math.abs(touchDownX-lastTouch) > offset){
+        if(touchDownX < lastTouch+offset){
+            getNewName(getDecision(buttons[0].value,1))
+        }
+        else if(touchDownX > lastTouch-offset){
+            getNewName(getDecision(buttons[0].value,0))
+        }
+    }
+    
+    touchDownX = undefined;
+    lastTouch = undefined;
+})
 
 for (const bt of buttons) {
     bt.addEventListener('click',decide);
