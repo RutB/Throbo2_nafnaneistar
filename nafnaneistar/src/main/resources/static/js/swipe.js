@@ -11,11 +11,11 @@ namecard.addEventListener('mousedown', (e)=> {
     mouseDown = 1;
     mouseX = e.clientX;
 })
+
 namecard.addEventListener('mouseup', (e)=> {
     mouseDown = 0;
     mouseX = undefined;
 })
-
 
 namecard.addEventListener('mouseout', (e)=> {
     
@@ -27,6 +27,8 @@ namecard.addEventListener('mouseout', (e)=> {
     }
     
 })
+
+document.addEventListener('keyup', decideByKeyboard)
 
 for (const bt of buttons) {
     bt.addEventListener('click',decide);
@@ -80,6 +82,18 @@ function rePopulateData(data){
     buttons.forEach((button) => button.setAttribute('value',id))
     
     
+}
+
+
+function decideByKeyboard(e){
+    let id = document.querySelector('.namecard__button').value
+    let url = ""
+    if(e.key === "ArrowRight")
+       url =  getDecision(id,1)
+    if(e.key === "ArrowLeft")
+        url =  getDecision(id,0)
+    getNewName(url)
+
 }
 
 });
