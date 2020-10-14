@@ -1,1 +1,1 @@
-SELECT * from user
+SELECT * from name_card;

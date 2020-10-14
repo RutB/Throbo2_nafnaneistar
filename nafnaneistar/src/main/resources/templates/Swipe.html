@@ -35,18 +35,19 @@
 </header>
 <body>
     <main>
-        <section class="namecard">
+        <section draggable="true" class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
-                <i class="namecard__gender" th:if="${name.get().getGender()}">&#9792;</i>
-                <i class="namecard__gender" th:unless="${name.get().getGender()}">&#9794;</i> 
+                <i class="namecard__gender fas fa-venus" th:if="${name.get().getGender()}"></i>
+                <i class="namecard__gender fas fa-mars" th:unless="${name.get().getGender()}"></i> 
             </div>
             <div class="namecard__container">
                 <p class="namecard__description" th:text="${name.get().getDescription()}"/>
             </div>
             <div class="namecard__buttons">
-                <button class="namecard__button namecard__disapprove" th:value="${name.get().getId()}">Dislike</button>
-                <button class="namecard__button namecard__approve" th:value="${name.get().getId()}">Approve</button>
+                
+                <button class="namecard__button namecard__disapprove" th:value="${name.get().getId()}"><i class="fas fa-arrow-circle-left "></i></button>
+                <button class="namecard__button namecard__approve" th:value="${name.get().getId()}"><i class="fas fa-arrow-circle-right "></i></button>
             </div>
             
         </section>
