@@ -248,10 +248,11 @@ def initGettingFullList():
 
 def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDesc.json"):
     sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
+    descMissingText = "Merking Óþekkt"
     with open(f) as json_file:
         data = json.load(json_file)
         for p in data:
-                desc = "MISSING"
+                desc = descMissingText
                 if not p['desc'] == "":
                     desc = p['desc']
                 desc = desc.replace("'",'`')
@@ -264,7 +265,7 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
     with open(m) as json_file:
         data = json.load(json_file)
         for p in data:
-                desc = "MISSING"
+                desc = descMissingText
                 if not p['desc'] == "":
                     desc = p['desc']
                 desc = desc.replace("'",'`')

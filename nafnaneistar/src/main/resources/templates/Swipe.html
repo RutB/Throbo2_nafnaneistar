@@ -38,8 +38,8 @@
         <section class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
-                <i class="namecard__gender" th:if="${name.get().getGender()}">&#9792;</i>
-                <i class="namecard__gender" th:unless="${name.get().getGender()}">&#9794;</i> 
+                <i class="namecard__gender fas fa-venus" th:if="${name.get().getGender()}"></i>
+                <i class="namecard__gender fas fa-mars" th:unless="${name.get().getGender()}"></i> 
             </div>
             <div class="namecard__container">
                 <p class="namecard__description" th:text="${name.get().getDescription()}"/>
