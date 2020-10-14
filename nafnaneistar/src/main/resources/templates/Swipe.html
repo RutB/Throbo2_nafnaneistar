@@ -35,7 +35,7 @@
 </header>
 <body>
     <main>
-        <section class="namecard">
+        <section draggable="true" class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
                 <i class="namecard__gender fas fa-venus" th:if="${name.get().getGender()}"></i>

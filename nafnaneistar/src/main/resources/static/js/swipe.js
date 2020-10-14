@@ -1,23 +1,52 @@
 document.addEventListener('DOMContentLoaded', ()=> {
 
 
-
+const namecard = document.querySelector('.namecard');
 const buttons = document.querySelectorAll('.namecard__button');
+
+let mouseDown = 0;
+let mouseX = undefined;
+
+namecard.addEventListener('mousedown', (e)=> {
+    mouseDown = 1;
+    mouseX = e.clientX;
+})
+namecard.addEventListener('mouseup', (e)=> {
+    mouseDown = 0;
+    mouseX = undefined;
+})
+
+
+namecard.addEventListener('mouseout', (e)=> {
+    
+    let id = buttons[0].value
+    if(mouseDown && mouseX !== undefined){
+        let url = (mouseX < e.clientX) ? getDecision(id,1) : getDecision(id,0);
+        mouseX = undefined;
+        getNewName(url)
+    }
+    
+})
+
 for (const bt of buttons) {
     bt.addEventListener('click',decide);
 }
 
-
-function decide(e){
-    const id = e.target.value;
+function getDecision(id,approve){
     let url = ""
-    if(e.target.classList.contains('namecard__approve')){
+    if(approve){
         url = `${window.location.origin}/swipe/approve/${id}`
         
     }
     else{
         url = `${window.location.origin}/swipe/disapprove/${id}`
     }
+    return url;
+}
+
+function decide(e){
+    const id = e.target.value;
+    let url = (e.target.classList.contains('namecard__approve')) ? getDecision(id,1) : getDecision(id,0)
     getNewName(url)
 }
 
