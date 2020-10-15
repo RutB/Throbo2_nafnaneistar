@@ -21,8 +21,8 @@ public class NameController {
     private NameService nameService;
 
 
-    @Autowired
-    public NameController(UserService userService, NameService nameService) {
+        @Autowired
+        public NameController(UserService userService, NameService nameService) {
         this.userService = userService;
         this.nameService = nameService;
     }

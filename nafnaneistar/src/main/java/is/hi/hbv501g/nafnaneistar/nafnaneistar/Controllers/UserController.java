@@ -1,5 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -82,6 +84,11 @@ public class UserController {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
         System.out.println("current linked partner" + currentUser.getLinkedPartners());
+        ArrayList<Integer> ids = currentUser.getLinkedPartners();
+        for(Integer id : ids){
+            Long idd = Long.parseLong(id.toString());
+            System.out.println(userService.findById(idd));
+        }
         return "linkpartner";
     }
     @RequestMapping(value = "/linkpartner", method = RequestMethod.POST)
@@ -89,7 +96,7 @@ public class UserController {
         @RequestParam(value = "email", required = true) String email, Model model, HttpSession session) {
             User currentUser = (User) session.getAttribute("currentUser");
             if(currentUser == null)
-            return "redirect:/swipe";
+                return "redirect:/login";
 
             if(userService.findByEmail(email)== null){
                 System.out.print("onei thetta var rangt email");
@@ -100,9 +107,10 @@ public class UserController {
                 System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
             currentUser.addLinkedPartner((int)userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
             userService.findByEmail(email).addLinkedPartner((int)currentUser.getId());    //email user að uppfæra  linked list og tengjast current user
-                System.out.println("current linked partner" + currentUser.getLinkedPartners());
+            userService.save(currentUser);  
+            System.out.println("current linked partner" + currentUser.getLinkedPartners());
                 System.out.println("email user linked parnter "+ userService.findByEmail(email).getLinkedPartners());
-            return "linkpartner";
+            return "redirect:/linkpartner";
             }
         }
     //truncate table name_card; og notendurnar

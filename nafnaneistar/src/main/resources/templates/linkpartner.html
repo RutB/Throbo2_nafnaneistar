@@ -8,14 +8,7 @@
   <!--  <link rel="stylesheet" th:href="@{/css/linking.css}">      búa til síðu-->     
 </head>
 <body>
-    <header class="header">
-        <div class="header__image">
-            <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
-        </div>
-        <div class="header__content">
-            <h1>Velkomin(n)</h1>
-        </div>
-    </header>
+    <header th:replace="/Swipe.html :: header"></header>
     <main class="main">
         <!--   <span class="user" th:text="${user.getName()}"></span> -->
         <section class="linking">
