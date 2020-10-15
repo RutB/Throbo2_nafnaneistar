@@ -1,45 +1,77 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
+import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
-@RestController
+@Controller
 public class UserController {
+    private UserService userService;
+    private NameService nameService;
 
-    NameService nameService;
-    UserService userService;
 
     @Autowired
-    public UserController(NameService nameService, UserService userService) {
-        this.nameService = nameService;
+    public UserController(UserService userService, NameService nameService) {
         this.userService = userService;
+        this.nameService = nameService;
     }
 
-    @GetMapping(path="/login/check/{email}/{password}", produces = "application/json")
-    public boolean checkLogin(@PathVariable String email, @PathVariable String password, HttpSession session) 
-    {   
-        User user  = userService.findByEmailAndPassword(email, password);
-        
-        if(user != null){
-            session.setAttribute("currentUser", user);
-            return true;
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String Login(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(currentUser != null)
+            return "redirect:/swipe";
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user",new User());
+        return "login";
+    }
+
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public String PostLogin(
+        @RequestParam(value = "email", required = true) String email,
+        @RequestParam(value = "password", required = true) String password,
+        Model model) {  
+        model.addAttribute("users", userService.findAll());
+        return "login";
+    }
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String Signup(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+        model.addAttribute("names", nameService.findAll());
+        model.addAttribute("users", userService.findAll());
+
+        if (result.hasErrors()) {
+            return "Signup";
         }
-        return false;
+        UserUtils.initAvailableNames(user, nameService);
+        userService.save(user);
+        model.addAttribute("users", userService.findAll());
+        return "redirect:/";
+
     }
 
-
-
-
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String SignupForm(Model model) {
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user",new User());
+        return "Signup";
+    }
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String LogOut(Model model, HttpSession session) {
+        session.removeAttribute("currentUser");
+        return "redirect:/login";
+    }
 
 }

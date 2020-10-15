@@ -11,5 +11,7 @@ public interface NameService {
     List<NameCard> findAll();
     Optional<NameCard> findById(Integer id);
     List<NameCard> findAllByDescriptionLike(String s);
+    List<NameCard> findAllByGender(boolean bool);
+
 
 }

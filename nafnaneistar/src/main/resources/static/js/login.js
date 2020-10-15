@@ -33,7 +33,6 @@ function decreaseTimer(){
     }
 }
 
-
 function el(tag,className,text = null){
     let element = document.createElement(tag)
     element.classList.add(className)
@@ -62,7 +61,6 @@ function createPopup(title, text, timer) {
 
     
 }
-
 
 function validateLogin(url){
     fetch(url).then((resp) => {
