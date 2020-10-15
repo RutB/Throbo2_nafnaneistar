@@ -15,7 +15,6 @@ function submitHandler(e){
 
 }
 
-
 function decreaseTimer(){
     let timer = document.querySelector('.popup__timer');
     let pTitle = document.querySelector('.popup__title');

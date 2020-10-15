@@ -260,6 +260,7 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 y = desc.count(")")
                 if x > y:
                     desc = desc+")"
+                desc = desc.rstrip('.');
                 line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
                 sql = sql+line.replace('"',"“")
     with open(m) as json_file:
@@ -273,6 +274,7 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 y = desc.count(")")
                 if x > y:
                     desc = desc+")"
+                desc = desc.rstrip('.');
                 line = "('{}','{}',{}),\n".format(p['name'],desc, 0)
                 sql = sql+line.replace('"',"“")
         sql = sql +  "INSERT INTO name_card (id,name, description, gender) VALUES \n"
