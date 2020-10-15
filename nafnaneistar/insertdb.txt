@@ -4263,7 +4263,7 @@ INSERT INTO name_card (name, description, gender) VALUES
 ('Örnólfur','örn og úlfur.',0),
 ('Örvar','hermaður',0),
 ('Össur','sem veitir andsvar',0),
-('Öxar','Merking Óþekkt',0),
+('Öxar','Merking Óþekkt',0);
 INSERT INTO name_card (id,name, description, gender) VALUES 
 (-1,'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!',1),
-(-2,'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!',0),
+(-2,'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!',0);

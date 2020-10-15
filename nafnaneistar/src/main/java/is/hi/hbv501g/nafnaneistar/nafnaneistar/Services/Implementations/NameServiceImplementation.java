@@ -46,6 +46,11 @@ public class NameServiceImplementation implements NameService {
 		return repository.findAllByDescriptionLike(s);
 	}
 
+    @Override
+    public List<NameCard> findAllByGender(boolean bool) {
+        return this.repository.findAllByGender(bool);
+    }
+
 
 
     

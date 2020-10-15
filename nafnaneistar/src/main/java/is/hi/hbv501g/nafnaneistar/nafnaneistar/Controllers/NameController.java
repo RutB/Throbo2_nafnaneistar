@@ -5,46 +5,46 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 
-@RestController
+@Controller
 public class NameController {
+    private UserService userService;
+    private NameService nameService;
 
-    NameService nameService;
-    UserService userService;
 
     @Autowired
-    public NameController(NameService nameService, UserService userService) {
-        this.nameService = nameService;
+    public NameController(UserService userService, NameService nameService) {
         this.userService = userService;
+        this.nameService = nameService;
     }
 
-    @GetMapping(path="/swipe/approve/{id}", produces = "application/json")
-    public Optional<NameCard> ApproveName(@PathVariable String id,HttpSession session) 
-    {   
+    @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
+    public String ViewNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        currentUser.approveName(Integer.parseInt(id));
-        userService.save(currentUser);
-        Integer newID = currentUser.getRandomNameId();      
-        return nameService.findById(newID); 
+        model.addAttribute("user", currentUser);
+        model.addAttribute("names", nameService.findAll());
+        return "viewnames";
     }
 
-    @GetMapping(path="/swipe/disapprove/{id}", produces = "application/json")
-    public Optional<NameCard> DisapproveName(@PathVariable String id,HttpSession session) 
-    {
+    @RequestMapping(value = "/swipe", method = RequestMethod.GET)
+    public String SwipeNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        currentUser.disapproveName(Integer.parseInt(id));
-        userService.save(currentUser);
-        Integer newID = currentUser.getRandomNameId();      
-        return nameService.findById(newID); 
+        if(currentUser == null)
+            return "redirect:/login";
+
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user", currentUser);
+        Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
+        model.addAttribute("name",nc);
+        return "Swipe";
     }
-
-
 }

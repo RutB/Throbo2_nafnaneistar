@@ -33,7 +33,6 @@ function decreaseTimer(){
     }
 }
 
-
 function el(tag,className,text = null){
     let element = document.createElement(tag)
     element.classList.add(className)
@@ -63,7 +62,6 @@ function createPopup(title, text, timer) {
     
 }
 
-
 function validateLogin(url){
     fetch(url).then((resp) => {
         if(resp.status !== 200) {
@@ -73,9 +71,9 @@ function validateLogin(url){
         return resp.json()}).then((data)=>{   
             console.log(data)
             if(data)
-                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","3");
+                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","1");
             else
-                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","3");
+                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","1");
              interval = setInterval(decreaseTimer,1000)
 
     })
