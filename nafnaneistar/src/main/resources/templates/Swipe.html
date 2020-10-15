@@ -34,7 +34,21 @@
     </nav>
 </header>
 <body>
-    <main>
+    <main class="swipe">
+        <section class="swipe__filters">
+            <div class="swipe___filter swipe__">
+                <label>
+                    Kvenkyns
+                    <input type="checkbox" name="female" id="female">
+                    <span class="checkmark"></span>
+                </label>
+                <label>
+                    Karlkyns
+                    <input type="checkbox" name="male" id="male">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </section>
         <section draggable="true" class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
