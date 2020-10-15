@@ -34,7 +34,10 @@
     </nav>
 </header>
 <body>
-    <main>
+    <main class="swipe">
+        <section class="swipe__filters">
+            <div class="swipe___filter"></div>
+        </section>
         <section draggable="true" class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 

@@ -73,9 +73,9 @@ function validateLogin(url){
         return resp.json()}).then((data)=>{   
             console.log(data)
             if(data)
-                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","3");
+                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","1");
             else
-                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","3");
+                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","1");
              interval = setInterval(decreaseTimer,1000)
 
     })
