@@ -105,19 +105,18 @@ public class HomeController {
     @RequestMapping(value = "/linkpartner", method = RequestMethod.POST)
     public String Linkpartner(
         @RequestParam(value = "email", required = true) String email, Model model) {
-            /*if(email== null){
+            if(userService.findByEmail(email)== null){
                 System.out.print("onei thetta var rangt email");
-                return "redirect:/swipe";
-            }*/
-            //else{           
-            System.out.println("User fyrir netfang" + userService.findByEmail(email));
-            System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
-        currentUser.addLinkedPartner((int)userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
-        userService.findByEmail(email).addLinkedPartner((int)currentUser.getId());    //email user að uppfæra  linked list og tengjast current user
-            System.out.println("current linked partner" + currentUser.getLinkedPartners());
-            System.out.println("email user linked parnter "+ userService.findByEmail(email).getLinkedPartners());
-            
-        return "linkpartner";
-           // }
+                return "linkpartner";
+            }
+            else{           
+                System.out.println("User fyrir netfang" + userService.findByEmail(email));
+                System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
+            currentUser.addLinkedPartner((int)userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
+            userService.findByEmail(email).addLinkedPartner((int)currentUser.getId());    //email user að uppfæra  linked list og tengjast current user
+                System.out.println("current linked partner" + currentUser.getLinkedPartners());
+                System.out.println("email user linked parnter "+ userService.findByEmail(email).getLinkedPartners());
+            return "linkpartner";
+            }
     }
 }
