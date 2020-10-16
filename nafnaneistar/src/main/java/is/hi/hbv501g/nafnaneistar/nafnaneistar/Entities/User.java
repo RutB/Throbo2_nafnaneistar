@@ -57,6 +57,8 @@ public class User {
     
     public ArrayList<Integer> approveName(Integer id){
         int index = this.availableNames.indexOf(id);
+        if(index < 0)
+            return this.availableNames;
         this.approvedNames.add(this.availableNames.remove(index));
         return this.availableNames;
     }
