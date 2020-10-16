@@ -77,17 +77,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/linkpartner", method = RequestMethod.GET)
-    public String LinkparnterForm(Model model, HttpSession session) {
+    public String LinkpartnerForm(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null)
             return "redirect:/login";
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
         System.out.println("current linked partner" + currentUser.getLinkedPartners());
-        ArrayList<Integer> ids = currentUser.getLinkedPartners();
-        for(Integer id : ids){
-            Long idd = Long.parseLong(id.toString());
-            System.out.println(userService.findById(idd));
+        
+        for(Long id : currentUser.getLinkedPartners()) {
+            System.out.println(userService.findById(id));
         }
         return "linkpartner";
     }
@@ -105,8 +104,8 @@ public class UserController {
             else{           
                 System.out.println("User fyrir netfang" + userService.findByEmail(email));
                 System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
-            currentUser.addLinkedPartner((int)userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
-            userService.findByEmail(email).addLinkedPartner((int)currentUser.getId());    //email user að uppfæra  linked list og tengjast current user
+            currentUser.addLinkedPartner(userService.findByEmail(email).getId());    //current user að uppfæra linked list og tengjast email user
+            userService.findByEmail(email).addLinkedPartner(currentUser.getId());    //email user að uppfæra  linked list og tengjast current user
             userService.save(currentUser);  
             System.out.println("current linked partner" + currentUser.getLinkedPartners());
                 System.out.println("email user linked parnter "+ userService.findByEmail(email).getLinkedPartners());

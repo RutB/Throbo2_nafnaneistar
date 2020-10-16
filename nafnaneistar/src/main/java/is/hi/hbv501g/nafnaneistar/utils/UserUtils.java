@@ -20,7 +20,6 @@ public class UserUtils {
         for(NameCard nc : nameService.findAll()){
             if(nc.getGender() == gender){
                 genderList.add(nc.getId());
-                System.out.println("Adding: " + nc.getName());
             }
         }
         return genderList;
