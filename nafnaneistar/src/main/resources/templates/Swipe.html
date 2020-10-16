@@ -36,17 +36,9 @@
 <body>
     <main class="swipe">
         <section class="swipe__filters">
-            <div class="swipe___filter swipe__">
-                <label>
-                    Kvenkyns
-                    <input type="checkbox" name="female" id="female">
-                    <span class="checkmark"></span>
-                </label>
-                <label>
-                    Karlkyns
-                    <input type="checkbox" name="male" id="male">
-                    <span class="checkmark"></span>
-                </label>
+            <div class="swipe__filter swipe__checkboxes"> 
+                <span class="filter__title">Kvenkyns <span class="filter__checkbox" id="female"></span></span>
+                <span class="filter__title">Karlkyns <span class="filter__checkbox" id="male"></span></span>
             </div>
         </section>
         <section draggable="true" class="namecard">
@@ -65,11 +57,8 @@
             </div>
             
         </section>
-        <section class="users">
-            <table class="users__table" th:include="/Home.html :: table"></table>
-        </section>        
+      
     </main>
-
     <script th:src="@{/js/swipe.js}"></script>
 </body>
 </html>

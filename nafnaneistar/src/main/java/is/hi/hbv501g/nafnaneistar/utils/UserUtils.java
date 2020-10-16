@@ -15,4 +15,15 @@ public class UserUtils {
         user.setAvailableNames(ids);
     }
 
+    public static ArrayList<Integer> getGenderList(User user, NameService nameService,int gender){
+        ArrayList<Integer> genderList = new ArrayList<Integer>();
+        for(NameCard nc : nameService.findAll()){
+            if(nc.getGender() == gender){
+                genderList.add(nc.getId());
+                System.out.println("Adding: " + nc.getName());
+            }
+        }
+        return genderList;
+    }
+
 }

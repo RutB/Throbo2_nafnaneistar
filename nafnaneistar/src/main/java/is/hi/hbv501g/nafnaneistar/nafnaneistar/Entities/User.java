@@ -88,6 +88,15 @@ public class User {
         return newID;
     }
 
+    public Integer getRandomNameId(ArrayList<Integer> genderList){
+        Random r = new Random();
+        int size = genderList.size();
+        if(size == 0)
+            return -1;
+        Integer newID = genderList.get(r.nextInt(size));
+        return newID;
+    }
+
     /*
     Getters and Setters    
     */
