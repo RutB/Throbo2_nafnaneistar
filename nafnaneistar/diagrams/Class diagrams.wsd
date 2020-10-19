@@ -1,5 +1,5 @@
 @startuml Nafnaneistar
-
+scale 1.5
 Class  User <<@Entity >> {
     -id : Long
     -name : String
@@ -180,7 +180,7 @@ NameService "1" <-- "1" UserRestController
 NameService "1" <-- "1" HomeController
 HomeController "1" --> "1" UserService
 
-NameService "1" <-- "1" NameController
+NameService "1" <- "1" NameController
 NameService "1" <-- "1" UserController
 
 NameService "1" <-- "1" SettingsRestController
@@ -188,11 +188,11 @@ NameService "1" <-- "1" SettingsRestController
 NameService "1" <-- "1" NameRestController
 NameRestController "1" --> "1" UserService
 
-SearchRestController "1" --> "1" UserService 
-SearchRestController "1" --> "1"  NameService
+SearchRestController "1" -> "1" UserService 
+SearchRestController "1" -> "1"  NameService
 
 NameCard -[hidden]> NameRepository
-User -[hidden]> NameCard
-User --[hidden]> UserUtils
+
+NameCard --[hidden]> UserUtils
 
 @enduml
