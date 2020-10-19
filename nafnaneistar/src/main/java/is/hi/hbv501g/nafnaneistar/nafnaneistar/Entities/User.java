@@ -1,6 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.persistence.Column;
@@ -31,14 +32,13 @@ public class User {
     @Lob
     private ArrayList<Integer> availableNames;
     @Lob
-    private ArrayList<Integer> approvedNames;
-    
+    private HashMap<Integer, Integer> approvedNames;
     private ArrayList<Long> linkedPartners;
 
 
     public User() {
         
-        this.approvedNames = new ArrayList<Integer>();
+        this.approvedNames = new HashMap<Integer,Integer>();
         this.linkedPartners = new ArrayList<Long>();
     }
 
@@ -47,7 +47,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.availableNames = availableNames;
-        this.approvedNames = new ArrayList<Integer>();
+        this.approvedNames = new HashMap<Integer,Integer>();
         this.linkedPartners = new ArrayList<Long>();
     }
 
@@ -60,7 +60,7 @@ public class User {
         int index = this.availableNames.indexOf(id);
         if(index < 0)
             return this.availableNames;
-        this.approvedNames.add(this.availableNames.remove(index));
+        this.approvedNames.put(this.availableNames.remove(index), 0);
         return this.availableNames;
     }
 
@@ -131,7 +131,7 @@ public class User {
     }
 
 
-    public ArrayList<Integer> getApprovedNames(){
+    public HashMap<Integer,Integer> getApprovedNames(){
         return this.approvedNames;
     }
     public ArrayList<Long> getLinkedPartners(){
