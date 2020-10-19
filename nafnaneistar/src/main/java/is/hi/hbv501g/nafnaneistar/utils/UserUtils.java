@@ -19,7 +19,8 @@ public class UserUtils {
         ArrayList<Integer> genderList = new ArrayList<Integer>();
         for(NameCard nc : nameService.findAll()){
             if(nc.getGender() == gender){
-                genderList.add(nc.getId());
+                if(user.getAvailableNames().indexOf(nc.getId()) >= 0)
+                    genderList.add(nc.getId());
             }
         }
         return genderList;

@@ -95,8 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return resp.json();
       })
       .then((data) => {
-        console.log(data);
         rePopulateData(data);
+        getListSize();
       });
   }
 
@@ -117,7 +117,26 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.forEach((button) => button.setAttribute("value", id));
   }
 
+  function getListSize(){
+    let url = `${window.location.origin}/swipe/getlistSize`;
+    let spans = document.querySelectorAll('.namesleft')
+    fetch(url)
+      .then((resp) => {
+        if (resp.status !== 200) {
+          console.log(`Error ${resp.text()}`);
+          return;
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        console.log(data)
+        spans[0].textContent = `(${data[1]})`
+        spans[1].textContent = `(${data[0]})`
+      });
+  }
+
   function decideByKeyboard(e) {
+    let url;
     let id = document.querySelector(".namecard__button").value;
     if (e.key === "ArrowRight") url = getDecision(id, 1);
     if (e.key === "ArrowLeft") url = getDecision(id, 0);

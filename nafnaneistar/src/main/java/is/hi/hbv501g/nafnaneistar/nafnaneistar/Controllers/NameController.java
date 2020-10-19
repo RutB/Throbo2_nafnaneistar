@@ -14,6 +14,7 @@ import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
+import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
 @Controller
 public class NameController {
@@ -38,10 +39,13 @@ public class NameController {
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
     public String SwipeNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        int mSize = UserUtils.getGenderList(currentUser,nameService,0).size();
+        int fSize = UserUtils.getGenderList(currentUser,nameService,1).size();
+        
+        model.addAttribute("maleleft","("+mSize+")" );
+        model.addAttribute("femaleleft","("+fSize+")" );
         if(currentUser == null)
             return "redirect:/login";
-
-        model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);

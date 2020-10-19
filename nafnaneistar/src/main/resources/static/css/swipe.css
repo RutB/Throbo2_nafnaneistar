@@ -17,7 +17,9 @@
     align-items: center;
 
 }
-
+.namesleft{
+    font-size: .5em;
+}
 .namecard__name {
     font-size: 3em;
 }

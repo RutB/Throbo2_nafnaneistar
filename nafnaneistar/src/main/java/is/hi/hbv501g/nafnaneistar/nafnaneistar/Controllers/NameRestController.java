@@ -86,6 +86,17 @@ public class NameRestController {
             
     }
 
+    @GetMapping(path="/swipe/getlistSize", produces = "application/json")
+    public Integer[] getRemainingSize(HttpSession session)  {
+        User currentUser = (User) session.getAttribute("currentUser");
+        int mSize = UserUtils.getGenderList(currentUser,nameService,0).size();
+        int fSize = UserUtils.getGenderList(currentUser,nameService,1).size();
+        Integer[] size = new Integer[] {mSize,fSize};
+        System.out.println(currentUser.getAvailableNamesSize());
+        return size;
+        
+    }
+
     private Optional<NameCard> getNewNameCard(User user, NameService nameService, int gender){
         if(gender == 3){
             Integer newID = user.getRandomNameId();      
