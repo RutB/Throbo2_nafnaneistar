@@ -165,15 +165,14 @@ class SettingsRestController<<@RestController>> {
 }
 
 NameServiceImplementation "1" --|> "1" NameService
-UserServiceImplementation "1" -|> "1" UserService
+UserServiceImplementation "1" -up-|> "1" UserService
 
 NameRepository "1" <- "1" NameServiceImplementation
-UserServiceImplementation "1" --> "1" UserRepository
+UserServiceImplementation "1" -l-> "1" UserRepository
 
 UserController "1" --> "1" UserService 
 NameController "1" --> "1" UserService
-SearchRestController "1" --> "1" UserService 
-SettingsRestController "1" -u-> "1" UserService
+SettingsRestController "1" -r-> "1" UserService
 
 UserRestController "1" --> "1" UserService
 NameService "1" <-- "1" UserRestController
@@ -183,12 +182,17 @@ HomeController "1" --> "1" UserService
 
 NameService "1" <-- "1" NameController
 NameService "1" <-- "1" UserController
-NameService "1" <-- "1" SearchRestController 
+
 NameService "1" <-- "1" SettingsRestController
 
 NameService "1" <-- "1" NameRestController
 NameRestController "1" --> "1" UserService
 
+SearchRestController "1" --> "1" UserService 
+SearchRestController "1" --> "1"  NameService
 
+NameCard -[hidden]> NameRepository
+User -[hidden]> NameCard
+User --[hidden]> UserUtils
 
 @enduml
