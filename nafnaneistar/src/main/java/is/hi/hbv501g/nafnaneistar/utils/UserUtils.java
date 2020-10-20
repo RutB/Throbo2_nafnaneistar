@@ -1,6 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.utils;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
@@ -20,6 +21,16 @@ public class UserUtils {
         for(NameCard nc : nameService.findAll()){
             if(nc.getGender() == gender){
                 if(user.getAvailableNames().indexOf(nc.getId()) >= 0)
+                    genderList.add(nc.getId());
+            }
+        }
+        return genderList;
+    }
+    public static ArrayList<Integer> getGenderList(Set<Integer> ids, NameService nameService,int gender){
+        ArrayList<Integer> genderList = new ArrayList<Integer>();
+        for(NameCard nc : nameService.findAll()){
+            if(nc.getGender() == gender){
+                if(ids.contains(nc.getId()))
                     genderList.add(nc.getId());
             }
         }

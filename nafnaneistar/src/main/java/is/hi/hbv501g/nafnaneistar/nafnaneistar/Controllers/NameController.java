@@ -59,44 +59,27 @@ public class NameController {
     @RequestMapping(value = "/viewliked", method = RequestMethod.GET)
     public String ViewLiked(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser)) return "redirect:/login";
+        
         ArrayList<User> partners = new ArrayList<User>();
-        int fnames = 0,mnames = 0, totalfnames = 0, totalmnames = 0,totalfnamesleft = 0, totalmnamesleft = 0;
-        if(!UserUtils.isLoggedIn(currentUser))
-            return "redirect:/login";
+        
+        int fnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 1).size();
+        int mnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 0).size();
+        int totalmnamesleft = UserUtils.getGenderList(currentUser,nameService,0).size();
+        int totalfnamesleft = UserUtils.getGenderList(currentUser,nameService,1).size();
+        int totalfnames = nameService.countByGender(true);
+        int totalmnames = nameService.countByGender(false);
         String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
-        System.out.println(meaning);
+
         for(Long id : currentUser.getLinkedPartners())
             partners.add(userService.findById(id).get());
 
-        for(Integer id : currentUser.getApprovedNames().keySet()){
-            int gender = nameService.findById(id).get().getGender();
-            if(gender == 1)
-                fnames++;
-            if(gender == 0)
-                mnames++;
-        }
-
-        for(Integer id : currentUser.getAvailableNames()){
-            int gender = nameService.findById(id).get().getGender();
-            if(gender == 1)
-                totalfnamesleft++;
-            if(gender == 0)
-                totalmnamesleft++;
-        }
-        ArrayList<NameCard> ncs = (ArrayList<NameCard>) nameService.findAll();
-        
-        for(NameCard nc : ncs){
-            int gender = nc.getGender();
-            if(gender == 1)
-                totalfnames++;
-            if(gender == 0)
-                totalmnames++;
-        }
 
         int femaledisliked = Math.abs(totalfnames - totalfnamesleft);
         int maledisliked = Math.abs(totalmnames - totalmnamesleft);
         Integer[] femalestats = new Integer[] {fnames,femaledisliked,totalfnamesleft};
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
+
         model.addAttribute("femalestats", femalestats);
         model.addAttribute("malestats", malestats);
         model.addAttribute("partners", partners);
