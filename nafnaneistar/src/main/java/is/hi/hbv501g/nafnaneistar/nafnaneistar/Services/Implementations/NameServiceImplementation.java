@@ -51,6 +51,14 @@ public class NameServiceImplementation implements NameService {
         return this.repository.findAllByGender(bool);
     }
 
+    @Override
+    public String findDescriptionByName(String s) {
+        NameCard nc = repository.findDescriptionByName(s).orElse(null);
+        if(nc == null)
+            return "Merking Óþekkt";
+        return nc.getDescription();
+    }
+
 
 
     

@@ -11,6 +11,7 @@
 <body>
     <main class="viewliked">
         <section class="viewliked__tabs">
+            <span class="viewliked__tab --active">Yfirlit</span>
             <span class="viewliked__tab">Skoða sameiginlegan lista með: 
                 <div class="viewliked__select">Velja: <i class="fas select__down fa-caret-down"></i>
                     <div class="viewliked__selectmenu">
@@ -20,13 +21,35 @@
                     </div>
                 </div>
             </span>
-            <span class="viewliked__tab">Option 2</span>
             <span class="viewliked__tab">Option 3</span>
             <span class="viewliked__tab">Option 4</span>
             <span class="viewliked__tab">Option 5</span>
         </section>
         <section class="viewliked__view">
-            <div class="viewliked__container">
+            <div class="viewliked__container viewliked__Tab1">
+                <div class="viewliked__info">
+                    <h2 class="viewliked__username" th:text="${user.getName()}"></h2>
+                    <p class="viewliked__description" th:text="${meaning}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ad, obcaecati ipsam quaerat nesciunt ipsum eaque dolore temporibus at hic adipisci laudantium necessitatibus corrupti alias, harum cupiditate nostrum magni numquam!</p>
+                </div>
+                <div class="viewliked__row">
+                    <div class="viewliked__genderInfo">
+                        <span class="viewliked__gendername">Kvenkynsnöfn<i class="fas fa-venus"></i></span>
+                        <div class="viewliked__statistics">
+                            <span class="viewliked__namestatistic">Þú hefur samþykkt <span class="statistic__femaleliked" th:text="${femalestats[0]}"></span> nöfn</span>
+                            <span class="viewliked__namestatistic">Þú hefur hafnað <span class="statistic__femaledisliked" th:text="${femalestats[1]}"></span> nöfnum</span>
+                            <span class="viewliked__namestatistic">Þá átt eftir að skoða <span class="statistic__femaleleft" th:text="${femalestats[2]}"></span> nöfn</span>
+                        </div>
+                    </div>
+                    <div class="viewliked__genderInfo">
+                        <span class="viewliked__gendername">Karlkynsnöfn <i class="fas fa-mars"></i></span>
+                        <div class="viewliked__statistics">
+                            <span class="viewliked__namestatistic">Þú hefur samþykkt <span class="statistic__maleliked" th:text="${malestats[0]}"></span> nöfn</span>
+                            <span class="viewliked__namestatistic">Þú hefur hafnað <span class="statistic__maledisliked" th:text="${malestats[1]}"></span> nöfnum</span>
+                            <span class="viewliked__namestatistic">Þá átt eftir að skoða <span class="statistic__maleleft" th:text="${malestats[2]}">10</span> nöfn</span>
+                        </div>
+                    </div>
+                </div>
+ 
             </div>
             
         </section>

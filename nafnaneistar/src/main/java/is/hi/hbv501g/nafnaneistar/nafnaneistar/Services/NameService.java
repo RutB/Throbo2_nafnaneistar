@@ -12,6 +12,7 @@ public interface NameService {
     Optional<NameCard> findById(Integer id);
     List<NameCard> findAllByDescriptionLike(String s); //Breyta í name?
     List<NameCard> findAllByGender(boolean bool);
+    String findDescriptionByName(String s);
 
 
 }
