@@ -30,7 +30,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String Login(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser != null)
+        if(UserUtils.isLoggedIn(currentUser))
             return "redirect:/swipe";
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", new User());
@@ -89,7 +89,7 @@ public class UserController {
     public String Linkpartner(@RequestParam(value = "email", required = true) String email, Model model,
             HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser == null)
+        if(!UserUtils.isLoggedIn(currentUser))
             return "redirect:/login";
         if (userService.findByEmail(email) == null) {
             System.out.print("onei thetta var rangt email");

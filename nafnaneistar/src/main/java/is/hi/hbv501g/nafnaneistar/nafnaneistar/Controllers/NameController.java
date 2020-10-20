@@ -1,5 +1,6 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,8 @@ public class NameController {
     @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
     public String ViewNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+            return "redirect:/login";
         model.addAttribute("user", currentUser);
         model.addAttribute("names", nameService.findAll());
         return "viewnames";
@@ -39,16 +42,33 @@ public class NameController {
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
     public String SwipeNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+            return "redirect:/login";
         int mSize = UserUtils.getGenderList(currentUser,nameService,0).size();
         int fSize = UserUtils.getGenderList(currentUser,nameService,1).size();
         
         model.addAttribute("maleleft","("+mSize+")" );
         model.addAttribute("femaleleft","("+fSize+")" );
-        if(currentUser == null)
-            return "redirect:/login";
+
         model.addAttribute("user", currentUser);
         Optional<NameCard> nc = nameService.findById(currentUser.getRandomNameId());
         model.addAttribute("name",nc);
         return "Swipe";
+    }
+
+    @RequestMapping(value = "/viewliked", method = RequestMethod.GET)
+    public String ViewLiked(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+            return "redirect:/login";
+        ArrayList<User> partners = new ArrayList<User>();
+        for(Long id : currentUser.getLinkedPartners()){
+            partners.add(userService.findById(id).get());
+        }
+        model.addAttribute("partners", partners);
+        System.out.println(partners.size());
+        model.addAttribute("user", currentUser);
+        model.addAttribute("names", nameService.findAll());
+        return "viewliked";
     }
 }

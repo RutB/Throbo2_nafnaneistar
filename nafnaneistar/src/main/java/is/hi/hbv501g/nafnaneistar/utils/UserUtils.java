@@ -26,4 +26,10 @@ public class UserUtils {
         return genderList;
     }
 
+    public static boolean isLoggedIn(User user){
+        if(user == null)
+            return false;
+        return true;
+    }
+
 }

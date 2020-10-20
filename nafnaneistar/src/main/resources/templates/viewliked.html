@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valin Nöfn | Nafnaneistar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/viewliked.css}">
+</head>
+<header th:replace="/Swipe.html :: header"></header>
+<body>
+    <main class="viewliked">
+        <section class="viewliked__tabs">
+            <span class="viewliked__tab">Skoða sameiginlegan lista með: 
+                <div class="viewliked__select">Velja: <i class="fas select__down fa-caret-down"></i>
+                    <div class="viewliked__selectmenu">
+                        <span th:each="partner : ${partners}" class="select__option" th:if="${partners.size() > 0}" th:id="${partner.getId()}"  th:text="${partner.getName()}">
+                        </span>
+                        <span class="select__option" th:unless="${partners.size() > 0}">Enginn tengdur</span>
+                    </div>
+                </div>
+            </span>
+            <span class="viewliked__tab">Option 2</span>
+            <span class="viewliked__tab">Option 3</span>
+            <span class="viewliked__tab">Option 4</span>
+            <span class="viewliked__tab">Option 5</span>
+        </section>
+        <section class="viewliked__view">
+            <div class="viewliked__container">
+            </div>
+            
+        </section>
+      
+    </main>
+</body>
+</html>
