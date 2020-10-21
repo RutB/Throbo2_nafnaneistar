@@ -6,11 +6,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     initStarConversion();
 
-    var rowmaxrank = 0;
     let rows = document.querySelectorAll('.gender__row');
     rows.forEach(row =>{
         row.addEventListener('mouseleave',(e) => {
-            console.log("leaving")
             starConvertRow(row)
         });
     })
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         let parent = e.target.parentNode;
         let nametd = grandpapa.querySelector('.gender__name');
         let id = nametd.getAttribute('id');
-        let name = nametd.textContent;
         let currank = parent.classList[0]
         let stars = parent.querySelectorAll('.filled');
         let rank = stars[stars.length-1].classList[4].split('-')[1];
@@ -34,15 +31,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         parent.classList.remove("gender__rank")
         parent.classList.add(`rank${rank}`);
         parent.classList.add('gender__rank')
+        sendUpdateRating(id,rank)
 
     }
     
-
-
-
-    function resetStars(e){
-        console.log(e.target)
-    }
 
     function starStruck(e){
         let parent  = e.target.parentNode;
@@ -149,10 +141,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
         views.forEach(view => view.classList.remove('viewliked__active'))
         let no = tabno.split('tab')[1];
         let window = `window${no}`;
-        console.log(window)
         document.getElementById(window).classList.add('viewliked__active')
     }
 
+    function sendUpdateRating(id,rating){
+        let url = `${window.location.origin}/viewliked/updaterating?id=${id}&rating=${rating}`;
+        fetch(url)
+        .then((resp) => {
+          if (resp.status !== 200) {
+            console.log(`Error ${resp.text()}`);
+            return;
+          }
+          return resp.json();
+        })
+        .then((data) => {
+            console.log(data)
+        });
+    }
 
 
 })

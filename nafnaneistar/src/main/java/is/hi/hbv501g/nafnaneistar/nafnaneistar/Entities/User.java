@@ -100,6 +100,12 @@ public class User {
         return newID;
     }
 
+    public void updateRatingById(Integer id, Integer rating){
+        this.approvedNames.put(id, rating);
+    }
+
+
+
 
     /*
     Getters and Setters    

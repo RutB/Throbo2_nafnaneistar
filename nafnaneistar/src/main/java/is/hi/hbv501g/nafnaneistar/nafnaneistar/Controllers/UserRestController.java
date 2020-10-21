@@ -1,15 +1,20 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
+import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
 @RestController
 public class UserRestController {
@@ -33,6 +38,21 @@ public class UserRestController {
             return true;
         }
         return false;
+    }
+
+    @GetMapping(path="/viewliked/updaterating", produces = "application/json")
+    public boolean updateNameRating(@RequestParam String id,@RequestParam String rating, HttpSession session) 
+    {   User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser)) return false;
+        Integer nameId = Integer.parseInt(id);
+        Integer nameRating = Integer.parseInt(rating);
+        try {
+            currentUser.updateRatingById(nameId, nameRating);
+            userService.save(currentUser);
+            return true;
+        }catch(Error e){
+            return false;
+        }       
     }
 
 }
