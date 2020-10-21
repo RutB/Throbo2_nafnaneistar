@@ -6,12 +6,41 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     initStarConversion();
 
-    
+    let rowmaxrank = 0;
+    let rows = document.querySelectorAll('.gender__row');
+    rows.forEach(row =>{
+        row.addEventListener('mouseover', (e)=> {
+            let parent = e.target.parentNode;
+            rowmaxrank = 0;
+            if(parent.classList.contains('.gender__row')){
+                let stars = parent.document.querySelectorAll('.filled');
+                stars.forEach(star => {
+                    rowmaxrank = Math.max(parseInt(star.classList[4].split('-')[1]),rowmaxrank)
+                })
+            }
+        })
+        row.addEventListener('mouseleave',(e) => {
+            starConvertRow(row,rowmaxrank)
+        });
+    })
+
     let stars  = document.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
         star.addEventListener('mouseover',starStruck)
+        star.addEventListener('click', updateRank)
     })
 
+    function updateRank(e){
+        console.log(e.target)
+        //TODO
+    }
+    
+
+
+
+    function resetStars(e){
+        console.log(e.target)
+    }
 
     function starStruck(e){
         let parent  = e.target.parentNode;
@@ -37,7 +66,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
     
-
+    function starConvertRow(row, maxrank){
+        let rank = row.querySelector('.gender__rank')
+        for(let i = 0; i < rank.children.length; i++){
+            let childclass = rank.children[i].classList[4];
+            let childrank = parseInt(childclass.split('-')[1])
+            if(maxrank == 0) {
+                rank.children[i].classList.remove('fas')
+                rank.children[i].classList.remove(childclass)
+                rank.children[i].classList.add('far')
+                rank.children[i].classList.add(childclass)
+            }
+            if(childrank > maxrank){
+                rank.children[i].classList.remove('fas')
+                rank.children[i].classList.remove(childclass)
+                rank.children[i].classList.add('far')
+                rank.children[i].classList.add(childclass)
+            }
+            
+        }
+    }
 
     function initStarConversion(){
         let ranks = document.querySelectorAll('.gender__rank');

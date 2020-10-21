@@ -77,7 +77,7 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
-                <tr th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
+                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
                     <td class="gender__name" th:text="${line.key.getName()}"></td>
                     <td class="gender__rank" th:text="${line.value}"></td>
                     <td class="gender__operations">X - X</td>
