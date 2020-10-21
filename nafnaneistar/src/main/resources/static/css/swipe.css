@@ -150,4 +150,14 @@
         justify-content: space-around;
     }
 
+    .swipe__filters {
+        width: 100%;
+        margin-top: 1em;
+    }
+    .swipe__checkboxes {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+
 }

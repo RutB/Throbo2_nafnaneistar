@@ -106,7 +106,7 @@
     top: 6.5em;
     border: 2px solid var(--nav-bg-color);
     background-color: var(--nav-bg-color-lg);
-    z-index: 10000;
+    z-index: 99999999;
     line-height: 2em;
     margin-right: 8em;
     min-width: fit-content;
