@@ -93,4 +93,12 @@ public class NameController {
         model.addAttribute("user", currentUser);
         return "viewliked";
     }
+
+    //HAT 
+    //
+    @RequestMapping(value = "/searchname", method = RequestMethod.GET)
+    public String searchName(Model model ){
+        return "searchname";
+    }
+    
 }
