@@ -6,33 +6,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     initStarConversion();
 
-    let rowmaxrank = 0;
+    var rowmaxrank = 0;
     let rows = document.querySelectorAll('.gender__row');
     rows.forEach(row =>{
-        row.addEventListener('mouseover', (e)=> {
-            let parent = e.target.parentNode;
-            rowmaxrank = 0;
-            if(parent.classList.contains('.gender__row')){
-                let stars = parent.document.querySelectorAll('.filled');
-                stars.forEach(star => {
-                    rowmaxrank = Math.max(parseInt(star.classList[4].split('-')[1]),rowmaxrank)
-                })
-            }
-        })
         row.addEventListener('mouseleave',(e) => {
-            starConvertRow(row,rowmaxrank)
+            console.log("leaving")
+            starConvertRow(row)
         });
     })
 
     let stars  = document.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
-        star.addEventListener('mouseover',starStruck)
+        star.addEventListener('mouseenter',starStruck)
         star.addEventListener('click', updateRank)
     })
 
     function updateRank(e){
-        console.log(e.target)
-        //TODO
+        let grandpapa = e.target.parentNode.parentNode
+        let parent = e.target.parentNode;
+        let nametd = grandpapa.querySelector('.gender__name');
+        let id = nametd.getAttribute('id');
+        let name = nametd.textContent;
+        let currank = parent.classList[0]
+        let stars = parent.querySelectorAll('.filled');
+        let rank = stars[stars.length-1].classList[4].split('-')[1];
+        parent.classList.remove(currank)
+        parent.classList.remove("gender__rank")
+        parent.classList.add(`rank${rank}`);
+        parent.classList.add('gender__rank')
+
     }
     
 
@@ -53,28 +55,42 @@ document.addEventListener('DOMContentLoaded', ()=>{
             if(cstarrank <= targetrank){
                 cstar.classList.remove('far')
                 cstar.classList.remove(cstarclass)
+                cstar.classList.remove('empty')
+                cstar.classList.add('filled')
                 cstar.classList.add('fas')
                 cstar.classList.add(cstarclass)
             }
             else {
+                cstar.classList.add('empty')
+                cstar.classList.remove('filled')
                 cstar.classList.remove('fas')
                 cstar.classList.remove(cstarclass)
                 cstar.classList.add('far')
                 cstar.classList.add(cstarclass)
             }
         })
+
     }
 
     
-    function starConvertRow(row, maxrank){
+    function starConvertRow(row){
         let rank = row.querySelector('.gender__rank')
+        let maxrank = parseInt(rank.classList[0].split('rank')[1]);
         for(let i = 0; i < rank.children.length; i++){
             let childclass = rank.children[i].classList[4];
             let childrank = parseInt(childclass.split('-')[1])
             if(maxrank == 0) {
                 rank.children[i].classList.remove('fas')
                 rank.children[i].classList.remove(childclass)
+                rank.children[i].classList.remove("filled")
+                rank.children[i].classList.add('empty')
                 rank.children[i].classList.add('far')
+                rank.children[i].classList.add(childclass)
+            }
+            if(childrank <= maxrank){
+                rank.children[i].classList.remove('far')
+                rank.children[i].classList.remove(childclass)
+                rank.children[i].classList.add('fas')
                 rank.children[i].classList.add(childclass)
             }
             if(childrank > maxrank){
@@ -83,7 +99,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 rank.children[i].classList.add('far')
                 rank.children[i].classList.add(childclass)
             }
-            
+
         }
     }
 
@@ -91,7 +107,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
         let ranks = document.querySelectorAll('.gender__rank');
         ranks.forEach(rank => {
             let value = parseInt(rank.textContent);
-            rank.removeChild(rank.firstChild);
+            while(rank.firstChild)
+                rank.removeChild(rank.firstChild);
             for(let i = 1; i < 6;i++){
                 if(i <= value)
                     rank.appendChild(createFilledStar(i))

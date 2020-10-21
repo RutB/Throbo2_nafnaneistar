@@ -182,7 +182,7 @@
 .gender__table tr:nth-of-type(even) {
     background-color: var(--ambient-color);
 }
-.gender__table tr:hover {
+.gender__table .gender__row:hover {
     transition: background-color 300ms ease-in;
     background-color: var(--nav-bg-color);
 }
