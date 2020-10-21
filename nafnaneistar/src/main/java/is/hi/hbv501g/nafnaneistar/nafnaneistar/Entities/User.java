@@ -100,6 +100,7 @@ public class User {
         return newID;
     }
 
+
     /*
     Getters and Setters    
     */

@@ -11,8 +11,8 @@
 <body>
     <main class="viewliked">
         <section class="viewliked__tabs">
-            <span class="viewliked__tab --active">Yfirlit</span>
-            <span class="viewliked__tab">Skoða sameiginlegan lista með: 
+            <span id="tab1" class="viewliked__tab --active">Yfirlit</span>
+            <span id="tab2" class="viewliked__tab">Skoða sameiginlegan lista með: 
                 <div class="viewliked__select">Velja: <i class="fas select__down fa-caret-down"></i>
                     <div class="viewliked__selectmenu">
                         <span th:each="partner : ${partners}" class="select__option" th:if="${partners.size() > 0}" th:id="${partner.getId()}"  th:text="${partner.getName()}">
@@ -21,12 +21,12 @@
                     </div>
                 </div>
             </span>
-            <span class="viewliked__tab">Option 3</span>
-            <span class="viewliked__tab">Option 4</span>
-            <span class="viewliked__tab">Option 5</span>
+            <span id="tab3" class="viewliked__tab">Gefa Nafni einkunn</span>
+            <span id="tab4" class="viewliked__tab">Option 4</span>
+            <span id="tab5" class="viewliked__tab">Option 5</span>
         </section>
-        <section class="viewliked__view">
-            <div class="viewliked__container viewliked__Tab1">
+        <section id="window1" class="viewliked__view viewliked__window viewliked__active">
+            <div class="viewliked__container">
                 <div class="viewliked__info">
                     <h2 class="viewliked__username" th:text="${user.getName()}"></h2>
                     <p class="viewliked__description" th:text="${meaning}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ad, obcaecati ipsam quaerat nesciunt ipsum eaque dolore temporibus at hic adipisci laudantium necessitatibus corrupti alias, harum cupiditate nostrum magni numquam!</p>
@@ -49,11 +49,40 @@
                         </div>
                     </div>
                 </div>
- 
             </div>
-            
         </section>
-      
+
+        <section id="window3" class="viewliked__view viewliked__window">
+            <table class="gender__table">
+                <caption>Kvenkyns</caption>
+                <tr class="table__headerrow">
+                    <th>Nafn</th>
+                    <th>Einkunn</th>
+                    <th>Aðgerðir</th>
+                </tr>
+                <tr th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
+                    <td class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td class="gender__rank" th:text="${line.value}"></td>
+                    <td class="gender__operations">X - X</td>
+                </tr>
+            </table>
+            <table class="gender__table">
+                <caption>KarlKyns</caption>
+                <tr class="table__headerrow">
+                    <th>Nafn</th>
+                    <th>Einkunn</th>
+                    <th>Aðgerðir</th>
+                </tr>
+                <tr th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
+                    <td class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td class="gender__rank" th:text="${line.value}"></td>
+                    <td class="gender__operations">X - X</td>
+                </tr>
+
+            </table>
+
+        </section>
     </main>
+    <script th:src="@{/js/viewliked.js}"></script>
 </body>
 </html>

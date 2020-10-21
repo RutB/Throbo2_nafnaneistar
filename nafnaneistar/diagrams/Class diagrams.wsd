@@ -6,7 +6,7 @@ Class  User <<@Entity >> {
     -email : String
     -password : String
     -availableNames : ArrayList<Integer>
-    -approvedNames : ArrayList<Integer>
+    -approvedNames : HashMap<Integer, Integer>
     -linkedPartners : ArrayList<Long>
     --
     +User()
@@ -39,7 +39,7 @@ class NameController <<@Controller>> {
     -nameService : NameService
     +NameController(userService : UserService, nameService : NameService)
     +SwipeNames(model: Model, session HttpSession) : String
-    +ViewLikedNames(model : Model, session HttpSession) : String
+    +ViewLiked(model : Model, session HttpSession) : String
 }
 
 class HomeController <<@Controller>> {
@@ -58,6 +58,7 @@ class NameRestController <<@RestController>> {
     +getNewName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewNameCard(user : User, nameService : NameService, gender : int) : Optional<NameCard>
     +showCombinedList(session : HttpSession) : ArrayList<NameCard>
+    +getRemainingSize( session : HttpSession) : Integer[]
     +removeNameFromApproved(session : HttpSession, id : Integer) : ArrayList<NameCard>
     +rankName(id : Integer , session : HttpSession) : ArrayList<NameCard>
 }
@@ -111,6 +112,9 @@ Interface NameRepository<<interface>> {
     findAll() : List<NameCard>
     findById(id : Integer ) : Optional<NameCard>
     findAllByGender(bool : boolean) : List<NameCard>
+    findDescriptionByName(s : String) : Optional<NameCard>
+    countByGender(gender : boolean) : Integer
+
 }
 
 Interface UserRepository<<interface>> {
@@ -128,6 +132,8 @@ Interface NameService <<Interface>> {
     findAll() : List<NameCard>
     findById(id : Integer) : Optional<NameCard>
     findAllByGender(bool : boolean) : List<NameCard>
+    findDescriptionByName(s : String) : String
+    contByGender(gender : boolean) : Integer
 }
 
 class NameServiceImplementation <<@Service>> {
@@ -139,11 +145,15 @@ class NameServiceImplementation <<@Service>> {
     +findAll() : List<NameCard>
     +findById(id : Integer) : Optional<NameCard>
     +findAllByGender(bool : boolean) : List<NameCard>
+    +findDescriptionByName(s : String) : String
+    +countByGender(gender : boolean) : Integer
 }
 
 class UserUtils {
-    +initAvailable(user : user, nameService NameService)
-    +getGenderList(U)
+    +initAvailable(user : user, nameService : NameService)
+    +getGenderList(user : User, nameService : NameService) : ArrayList<Integer>
+    +getGenderList(ids : Set<Integer>, nameService : NameService, int gender) : ArrayList<Integer>
+    +isLoggedIn(user : User) : boolean
 }
 
 class SearchRestController<<@RestController>> {

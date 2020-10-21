@@ -1,6 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -60,26 +61,31 @@ public class NameController {
     public String ViewLiked(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser)) return "redirect:/login";
-        
-        ArrayList<User> partners = new ArrayList<User>();
-        
+                
         int fnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 1).size();
         int mnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 0).size();
+
         int totalmnamesleft = UserUtils.getGenderList(currentUser,nameService,0).size();
         int totalfnamesleft = UserUtils.getGenderList(currentUser,nameService,1).size();
+
         int totalfnames = nameService.countByGender(true);
         int totalmnames = nameService.countByGender(false);
-        String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
-
-        for(Long id : currentUser.getLinkedPartners())
-            partners.add(userService.findById(id).get());
-
-
+        
         int femaledisliked = Math.abs(totalfnames - totalfnamesleft);
         int maledisliked = Math.abs(totalmnames - totalmnamesleft);
+        
         Integer[] femalestats = new Integer[] {fnames,femaledisliked,totalfnamesleft};
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
 
+        String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
+        ArrayList<User> partners = new ArrayList<User>();
+        for(Long id : currentUser.getLinkedPartners())
+            partners.add(userService.findById(id).get());
+
+        HashMap<NameCard,Integer> ncs = new HashMap<>();
+        currentUser.getApprovedNames().forEach((key,value) -> ncs.put((nameService.findById(key).orElse(null)),value)); 
+
+        model.addAttribute("ncs", ncs);
         model.addAttribute("femalestats", femalestats);
         model.addAttribute("malestats", malestats);
         model.addAttribute("partners", partners);
