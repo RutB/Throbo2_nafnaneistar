@@ -34,14 +34,14 @@ public class UserController {
             return "redirect:/swipe";
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", new User());
-        return "login";
+        return "Login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String PostLogin(@RequestParam(value = "email", required = true) String email,
             @RequestParam(value = "password", required = true) String password, Model model) {
         model.addAttribute("users", userService.findAll());
-        return "login";
+        return "Login";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -93,7 +93,7 @@ public class UserController {
             return "redirect:/login";
         if (userService.findByEmail(email) == null) {
             System.out.print("onei thetta var rangt email");
-            return "linkpartner";
+            return "linkpartner.html";
         } else {
             System.out.println("User fyrir netfang" + userService.findByEmail(email));
 
