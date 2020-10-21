@@ -54,25 +54,29 @@
 
         <section id="window3" class="viewliked__view viewliked__window">
             <table class="gender__table">
-                <caption>Kvenkyns</caption>
-                <tr class="table__headerrow">
-                    <th>Nafn</th>
-                    <th>Einkunn</th>
-                    <th>Aðgerðir</th>
-                </tr>
-                <tr th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
+                <caption>Kvenkyns </caption>
+                <thead>
+                    <tr class="table__headerrow">
+                        <th>Nafn</th>
+                        <th>Einkunn</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
+                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
                     <td class="gender__name" th:text="${line.key.getName()}"></td>
                     <td class="gender__rank" th:text="${line.value}"></td>
                     <td class="gender__operations">X - X</td>
                 </tr>
             </table>
             <table class="gender__table">
-                <caption>KarlKyns</caption>
-                <tr class="table__headerrow">
-                    <th>Nafn</th>
-                    <th>Einkunn</th>
-                    <th>Aðgerðir</th>
-                </tr>
+                <caption>Karlkyns</caption>
+                <thead>
+                    <tr class="table__headerrow">
+                        <th>Nafn</th>
+                        <th>Einkunn</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
                 <tr th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
                     <td class="gender__name" th:text="${line.key.getName()}"></td>
                     <td class="gender__rank" th:text="${line.value}"></td>

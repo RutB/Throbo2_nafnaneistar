@@ -1,6 +1,7 @@
 @import "resets.css";
 @import "FA/css/fontawesome.min.css";
 @import 'FA/css/solid.min.css';
+@import 'FA/css/regular.min.css';
 @import 'header.css';
 
 :root {
@@ -12,6 +13,7 @@
     --swipe-bg-color: #E2F0D9;
     --font-color: #7F7F7F;
     --ambient-color:#F0CDB4;
+    --star-color:#fCE295;
     --max-width: 70em;
 }
 html {

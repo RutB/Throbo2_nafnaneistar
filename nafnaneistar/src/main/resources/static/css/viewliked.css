@@ -147,11 +147,49 @@
 }
 
 .viewliked__window {
-    position: absolute;
-    right: -1000em;
-    transition: all 300ms ease-in;
+    display: none;
 }
 .viewliked__active {
-    position: unset;
-    transition: all 300ms ease-in;
+    display: flex;
+}
+
+.gender__table {
+    width: 48%;
+    border: 2px solid var(--nav-bg-color);
+}
+
+#window3.viewliked__view {
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.gender__table caption {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+.table__headerrow {
+    font-size: 1.1em;
+    font-weight: bold;
+  
+}
+.gender__table tr {
+    padding: .2em 0;
+    border-top: 1px solid var(--nav-bg-color);
+    border-bottom: 1px solid var(--nav-bg-color);
+    cursor: pointer;
+}
+.gender__table tr:nth-of-type(even) {
+    background-color: var(--ambient-color);
+}
+.gender__table tr:hover {
+    transition: background-color 300ms ease-in;
+    background-color: var(--nav-bg-color);
+}
+.gender__table td{
+    border: 1px solid var(--nav-bg-color);
+}
+.gender__rankstar.fas {
+    color: var(--star-color);
+    padding: 0;
 }
