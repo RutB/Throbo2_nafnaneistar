@@ -111,6 +111,7 @@
 
 .viewliked__username {
     margin-bottom: 1em;
+    text-transform: capitalize;
 }
 .viewliked__description {
     overflow: auto;
@@ -192,4 +193,35 @@
 .gender__rankstar.fas {
     color: var(--star-color);
     padding: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .viewliked__view {
+        margin-top: 1em;
+        min-width: unset;
+        width: 100%;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+    .viewliked__container {
+        align-items: center;
+        justify-content: center;
+    }
+    .viewliked__info {
+        align-self: center;
+    }
+    .viewliked__tabs {
+        width: 100%;
+        margin-top: 1em;
+    }
+    .gender__table {
+        width: 100%;
+        font-size: 1.1em;
+    }
+    .viewliked__genderInfo {
+        width: 100%;
+    }
+
+    
+
 }
