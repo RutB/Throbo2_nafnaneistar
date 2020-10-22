@@ -29,7 +29,6 @@ public class UserRestController {
     public boolean checkLogin(@PathVariable String email, @PathVariable String password, HttpSession session) 
     {   
         User user  = userService.findByEmailAndPassword(email, password);
-        
         if(user != null){
             session.setAttribute("currentUser", user);
             return true;
@@ -50,6 +49,14 @@ public class UserRestController {
         }catch(Error e){
             return false;
         }       
+    }
+
+    @GetMapping(path="/signup/checkemail", produces = "application/json")
+    public boolean validateEmail(@RequestParam String email) 
+    {   User user = userService.findByEmail(email);
+        if(user != null)
+            return false;
+        return true;
     }
 
 }

@@ -12,8 +12,6 @@ function submitHandler(e){
     let password = document.querySelector('#password').value
     let url = `${window.location.origin}/login/check/${user}/${password}`
     validateLogin(url)
-
-
 }
 
 function decreaseTimer(){
