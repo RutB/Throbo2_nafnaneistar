@@ -30,8 +30,8 @@ class NameRestController <<@RestController>> {
     -userService : UserService
     -nameService : NameService
     +NameRestController(userService : UserService, nameService : NameService)
-    +ApproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
-    +DisapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +approveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +disapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewNameCard(user : User, nameService : NameService, gender : int) : Optional<NameCard>
 }
