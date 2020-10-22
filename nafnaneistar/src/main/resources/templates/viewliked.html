@@ -13,7 +13,7 @@
         <section class="viewliked__tabs">
             <span id="tab1" class="viewliked__tab --active">Yfirlit</span>
             <span id="tab2" class="viewliked__tab">Skoða sameiginlegan lista með: 
-                <div class="viewliked__select">Velja: <i class="fas select__down fa-caret-down"></i>
+                <div class="viewliked__select"><span class="select__selected">Velja:</span> <i class="fas select__down fa-caret-down"></i>
                     <div class="viewliked__selectmenu">
                         <span th:each="partner : ${partners}" class="select__option" th:if="${partners.size() > 0}" th:id="${partner.getId()}"  th:text="${partner.getName()}">
                         </span>
@@ -51,7 +51,39 @@
                 </div>
             </div>
         </section>
+        <section id="window2" class="viewliked__view viewliked__window">
+            <table class="gender__table">
+                <caption>Kvenkyns </caption>
+                <thead>
+                    <tr class="table__headerrow">
+                        <th>Nafn</th>
+                        <th>Meðaleinkunn</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
+                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
+                    <td th:id="${line.key.getId()}" class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
+                    <td class="gender__operations">X - X</td>
+                </tr>
+            </table>
+            <table class="gender__table">
+                <caption>Karlkyns</caption>
+                <thead>
+                    <tr class="table__headerrow">
+                        <th>Nafn</th>
+                        <th>Meðaleinkunn</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
+                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
+                    <td th:id="${line.key.getId()}" class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
+                    <td class="gender__operations">X - X</td>
+                </tr>
 
+            </table>
+        </section>
         <section id="window3" class="viewliked__view viewliked__window">
             <table class="gender__table">
                 <caption>Kvenkyns </caption>
@@ -84,7 +116,6 @@
                 </tr>
 
             </table>
-
         </section>
     </main>
     <script th:src="@{/js/viewliked.js}"></script>

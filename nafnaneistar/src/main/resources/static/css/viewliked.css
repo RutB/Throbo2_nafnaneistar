@@ -159,7 +159,7 @@
     border: 2px solid var(--nav-bg-color);
 }
 
-#window3.viewliked__view {
+#window3.viewliked__view, #window2.viewliked__view{
     align-items: flex-start;
     justify-content: space-between;
 }
