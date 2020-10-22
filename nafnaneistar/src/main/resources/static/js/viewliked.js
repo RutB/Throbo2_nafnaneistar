@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStarConversion();
 
     let rows = document.querySelectorAll('.gender__row');
-    rows.forEach(row =>row.addEventListener('mouseleave', starConvertRow));
+    rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
 
 
     let stars = document.querySelectorAll('.gender__rankstar');
@@ -18,11 +18,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let partnerOptions = document.querySelectorAll('.select__option');
-    partnerOptions.forEach(partner => partner.addEventListener('click',customSelect))
+    partnerOptions.forEach(partner => partner.addEventListener('click', customSelect))
 
 
-    function customSelect(e){
+    function customSelect(e) {
+        let selected = document.querySelector('.select__selected')
+        let tabs = document.querySelectorAll('.viewliked__tab')
+        tabs.forEach(tab => tab.classList.remove('--active'));
+        tabs[1].classList.add('--active')
+        document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
+        document.querySelector('#window2').classList.add("viewliked__active")
+        let combopartner = document.querySelector('.combo__partner');
+        let id = e.target.getAttribute('id');
+        combopartner.textContent = e.target.textContent;
+        selected.textContent = e.target.textContent;
+        let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;
+        fetch(url)
+        .then((resp) => {
+            if (resp.status !== 200) {
+                console.log(`Error ${resp.text()}`);
+                return;
+            }
+            return resp.json();
+        })
+        .then((data) => {
+            populateTable(data);
+        });
+    }
 
+    function populateTable(data) {
+        let tables = document.querySelectorAll('.combo__table');
+        let ftable =tables[0]
+        let ftbody = ftable.querySelector('tbody');
+        let mtable = tables[1]
+        let mtbody = mtable.querySelector('tbody');
+        while(ftbody.firstChild)
+            ftbody.removeChild(ftbody.firstChild);
+        while(mtbody.firstChild)
+            mtbody.removeChild(mtbody.firstChild);
+        for (const [key, rank] of Object.entries(data)) {
+            info = key.split('-')
+            let name = info[0]
+            let id = info[1]
+            let gender = info[2];
+            let row = document.createElement('tr');
+            row.classList.add('combo__row')
+            let td = document.createElement('td');
+            td.setAttribute('id',id);
+            td.appendChild(document.createTextNode(name))
+            row.appendChild(td)
+
+            let startd = document.createElement('td');
+            startd.classList.add('gender__rank');
+            startd.appendChild(document.createTextNode(rank))
+            row.appendChild(startd)
+
+            let ops = document.createElement('td');
+            ops.classList.add('combo__operations')
+            ops.appendChild(document.createTextNode("X - X"));
+            row.appendChild(ops)
+            if(gender == 1)
+                ftbody.appendChild(row)
+            if(gender == 0)
+                mtbody.appendChild(row)
+            starConvertSingleRow(row);
+          }
+        
+        
     }
 
 
@@ -115,6 +177,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function starConvertSingleRow(row){
+        let ranks = row.querySelectorAll('.gender__rank');
+        ranks.forEach(rank => {
+            let value = parseInt(rank.textContent);
+            while (rank.firstChild)
+                rank.removeChild(rank.firstChild);
+            for (let i = 1; i < 6; i++) {
+                if (i <= value)
+                    rank.appendChild(createFilledStar(i))
+                else
+                    rank.appendChild(createEmptyStar(i));
+            }
+        })
+
+    }
     function createEmptyStar(rank) {
         let star = document.createElement('i');
         star.classList.add('far');
@@ -141,11 +218,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let tabno = e.target.getAttribute('id');
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
-        let views = document.querySelectorAll('.viewliked__window');
-        views.forEach(view => view.classList.remove('viewliked__active'))
+        let views = document.querySelectorAll('.viewliked__window');    
         let no = tabno.split('tab')[1];
+        if(parseInt(no)===2) return;
+        views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
+        document.querySelector('.select__selected').textContent = "Velja"
+    
     }
 
     function sendUpdateRating(id, rating) {
@@ -162,4 +242,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(data)
             });
     }
+
 })

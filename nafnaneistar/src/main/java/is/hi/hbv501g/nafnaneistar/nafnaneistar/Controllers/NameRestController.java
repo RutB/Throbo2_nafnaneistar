@@ -1,6 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -76,11 +78,9 @@ public class NameRestController {
         int gender = 3;
         if(male != null && female == null){
             gender = 0;
-            System.out.println("Looking for male");
         }
         if(male == null && female != null){
             gender = 1; 
-            System.out.println("Looking for Female");
         }
         return getNewNameCard(currentUser,nameService,gender);
             
@@ -97,6 +97,26 @@ public class NameRestController {
         
     }
 
+    @GetMapping(path="/viewliked/combolist", produces ="application/json")
+    public HashMap<String,Integer> getComboList(HttpSession session, @RequestParam String partnerid){
+        Long pID = Long.parseLong(partnerid);
+        User partner = userService.findById(pID).orElse(null);
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(partner == null || currentUser == null) return null;
+        HashMap<String,Integer> ncs = new HashMap<>();
+        Set<Integer> pids = partner.getApprovedNames().keySet();
+        Set<Integer> ids = currentUser.getApprovedNames().keySet();
+        for(Integer id : ids){
+            if(pids.contains(id)){
+                NameCard nc = nameService.findById(id).orElse(null);
+                int avg = (currentUser.getApprovedNames().get(id) + partner.getApprovedNames().get(id));
+                avg = (avg == 0) ? avg : avg/2;
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),avg); 
+            }
+        }
+        return ncs;      
+    }
+
     private Optional<NameCard> getNewNameCard(User user, NameService nameService, int gender){
         if(gender == 3){
             Integer newID = user.getRandomNameId();      
@@ -105,5 +125,7 @@ public class NameRestController {
         Integer newID = user.getRandomNameId(UserUtils.getGenderList(user,nameService,gender));
         return nameService.findById(newID);
     }
+
+
 
 }

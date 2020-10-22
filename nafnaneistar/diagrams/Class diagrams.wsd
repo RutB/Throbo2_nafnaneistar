@@ -38,15 +38,15 @@ class NameController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +NameController(userService : UserService, nameService : NameService)
-    +SwipeNames(model: Model, session HttpSession) : String
-    +ViewLiked(model : Model, session HttpSession) : String
+    +swipeNames(model: Model, session HttpSession) : String
+    +viewLiked(model : Model, session HttpSession) : String
 }
 
 class HomeController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +HomeController(userService : UserService, nameService : NameService)
-    +Home(model : Model) : String
+    +home(model : Model) : String
 }
 
 class NameRestController <<@RestController>> {
@@ -67,13 +67,13 @@ class UserController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +UserController (userService : UserService, nameService : NameService)
-    +Login(model : Model, session:HttpSession)
-    +PostLogin(email : String, password:String, model:Model)
-    +Signup(user:User, result : BindingResult, model:Model)
-    +SignupForm(model : Model)
-    +LogOut(model : Model,session : HttpSession)
-    +LinkparnerForm(model : Model, session : HttpSession)
-    +Linkpartner(email : String, model : Model, session : HttpSession)
+    +login(model : Model, session:HttpSession)
+    +postLogin(email : String, password:String, model:Model)
+    +signup(user:User, result : BindingResult, model:Model)
+    +signupForm(model : Model)
+    +logOut(model : Model,session : HttpSession)
+    +linkparnerForm(model : Model, session : HttpSession)
+    +linkpartner(email : String, model : Model, session : HttpSession)
 
 }
 
@@ -82,6 +82,7 @@ class UserRestController <<@RestController>> {
     -nameService : NameService
     +UserRestController (userService: UserService, nameService: NameService)
     +checkLogin(email:String, password:String, session:HttpSession) : boolean
+    +updateNameRating(id : String, rating : String, session : HttpSession) : boolean 
 }
 
 Interface UserService <<Interface>> {
@@ -133,7 +134,7 @@ Interface NameService <<Interface>> {
     findById(id : Integer) : Optional<NameCard>
     findAllByGender(bool : boolean) : List<NameCard>
     findDescriptionByName(s : String) : String
-    contByGender(gender : boolean) : Integer
+    countByGender(gender : boolean) : Integer
 }
 
 class NameServiceImplementation <<@Service>> {
@@ -201,8 +202,9 @@ NameRestController "1" --> "1" UserService
 SearchRestController "1" -> "1" UserService 
 SearchRestController "1" -> "1"  NameService
 
-NameCard -[hidden]> NameRepository
+UserServiceImplementation -[hidden]-> NameCard
+NameCard -[hidden]> UserUtils
+User -[hidden]> NameCard
 
-NameCard --[hidden]> UserUtils
 
 @enduml

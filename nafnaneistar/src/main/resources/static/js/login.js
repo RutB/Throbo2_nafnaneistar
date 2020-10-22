@@ -68,7 +68,6 @@ function validateLogin(url){
             return
         }
         return resp.json()}).then((data)=>{   
-            console.log(data)
             if(data)
                 createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","1");
             else
