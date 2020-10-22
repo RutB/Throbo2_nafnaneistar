@@ -58,6 +58,17 @@
 
     padding: .2em .5em
 }
+.hidden {
+    display: none;
+}
+.error__message {
+    color:red;
+    font-size: 1.1em;
+    font-weight:bold;
+}
+.error__message.--hidden {
+    display: none;
+}
 
 
 .login__signup .form__button {
