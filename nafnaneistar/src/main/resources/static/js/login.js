@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginform = document.querySelector('.login__form');
     loginform.addEventListener('submit', submitHandler);
-
+    var interval;
 
 function submitHandler(e){
     e.preventDefault();
@@ -13,7 +13,6 @@ function submitHandler(e){
     validateLogin(url)
 
 }
-
 
 function decreaseTimer(){
     let timer = document.querySelector('.popup__timer');
@@ -27,9 +26,10 @@ function decreaseTimer(){
             window.location.replace(url)
         else 
             document.querySelector('.popup').remove()
+        
+        clearInterval(interval)
     }
 }
-
 
 function el(tag,className,text = null){
     let element = document.createElement(tag)
@@ -60,7 +60,6 @@ function createPopup(title, text, timer) {
     
 }
 
-
 function validateLogin(url){
     fetch(url).then((resp) => {
         if(resp.status !== 200) {
@@ -70,10 +69,10 @@ function validateLogin(url){
         return resp.json()}).then((data)=>{   
             console.log(data)
             if(data)
-                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","3");
+                createPopup("Innskráning Tókst","Slóðin verður færð á aðalsíðuna eftir","1");
             else
-                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","3");
-            setInterval(decreaseTimer,1000)
+                createPopup("Innskráning Mistókst","Vitlaust notendanafn eða lykilorð","1");
+             interval = setInterval(decreaseTimer,1000)
 
     })
 }

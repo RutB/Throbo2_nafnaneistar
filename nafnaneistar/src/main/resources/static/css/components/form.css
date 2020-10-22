@@ -34,6 +34,12 @@
     background-color: var(--bt-color-lg);
 }
 
+.form__alert{
+    font-size: 1.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+
 .form__input:focus::placeholder {
     color: transparent;
 }

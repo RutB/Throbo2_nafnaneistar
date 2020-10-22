@@ -46,10 +46,14 @@ public class UserServiceImplementation implements UserService {
         return repository.findByEmailAndPassword(email, password);
     }
 
-    
     @Override
     public User findByEmail(String email) {
         return repository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return repository.findById(id);
     }
     
 }

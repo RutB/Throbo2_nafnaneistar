@@ -36,18 +36,6 @@ public class UserRestController {
         }
         return false;
     }
-    @GetMapping(path="/linkpartner/check/{email}", produces = "application/json")
-    public boolean checkValidEmail(@PathVariable String email, HttpSession session) 
-    {   
-        User user  = userService.findByEmail(email);
-        
-        if(user == null){
-            //ónei þetta var rangt email
-            return false;
-        }
-        return true;
-    }
-
 
     @GetMapping(path="/viewliked/updaterating", produces = "application/json")
     public boolean updateNameRating(@RequestParam String id,@RequestParam String rating, HttpSession session) 

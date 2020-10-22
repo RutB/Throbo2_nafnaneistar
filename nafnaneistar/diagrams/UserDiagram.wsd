@@ -1,0 +1,86 @@
+@startuml User
+Class  User <<@Entity >> {
+    -id : Long
+    -name : String
+    -email : String
+    -password : String
+    -availableNames : ArrayList<Integer>
+    -approvedNames : ArrayList<Integer>
+    -linkedPartners : ArrayList<Long>
+    --
+    +User()
+    +User(name : String, email : String, password : String, availableNames : ArrayList<Integer>)
+    +approveName(id : Integer) : ArrayList<Integer>
+    +disapproveName(id : Integer) : ArrayList<Integer>
+    +addLinkedPartner(id : Long)
+    +removeLinkedPartner(id : Long) : boolean
+    +getAvailableNamesSize() : int
+    +getRandomNameId() : Integer
+    +getRandomNameId(genderList : ArrayList<Integer>) : Integer
+    +[Getters & Setters]
+}
+Interface UserRepository<<interface>> {
+    delete(user User)
+    findAll() : List<User>
+    findByName(name : String) : List<User>
+    findByEmailAndPassword(email : String, password : String) : User
+    findByEmail(email : String) : User
+    findById(id : Long ) : Optional<User>
+}
+class UserController <<@Controller>> {
+    -userService : UserService
+    -nameService : NameService
+    +UserController (userService : UserService, nameService : NameService)
+    +Login(model : Model, session:HttpSession)
+    +PostLogin(email : String, password:String, model:Model)
+    +Signup(user:User, result : BindingResult, model:Model)
+    +SignupForm(model : Model)
+    +LogOut(model : Model,session : HttpSession)
+    +LinkparnerForm(model : Model, session : HttpSession)
+    +Linkpartner(email : String, model : Model, session : HttpSession)
+
+}
+class UserRestController <<@RestController>> {
+    -userService : UserService
+    -nameService : NameService
+    +UserRestController (userService: UserService, nameService: NameService)
+    +checkLogin(email:String, password:String, session:HttpSession) : boolean
+}
+Interface UserService <<Interface>> {
+    save( user: User): User
+    delete(user: User): void
+    findAll(): List<User>
+    findByName(name:String): List<User>
+    findByEmailAndPassword(email:String, password:String): User
+    findByEmail(email:String)
+    findById(id:Long): Optional<User>
+}
+class UserServiceImplementation <<@Service>> {
+    repository : UserRepository
+    --
+    +UserServiceImplementation(userRepo : UserRepository)
+    +save(user : User) : User
+    +delete(user : User)
+    +findAll() : List<User>
+    +findAllByName(name : String) : List<User>
+    +findByEmailAndPassword(email : String, password : Password) :User
+    +findByEmai(email : String) : User
+    +findById(id : Long) : Optional<User>
+}
+Interface UserRepository<<interface>> {
+    delete(user User)
+    findAll() : List<User>
+    findByName(name : String) : List<User>
+    findByEmailAndPassword(email : String, password : String) : User
+    findByEmail(email : String) : User
+    findById(id : Long ) : Optional<User>
+}
+
+UserService <|-- UserServiceImplementation
+
+UserRepository <-- UserServiceImplementation
+
+UserService <-- UserRestController
+
+UserService <-- HomeController
+@enduml

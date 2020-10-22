@@ -7,37 +7,58 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/swipe.css}">
 </head>
-<header class="header">
-    <div class="header__image">
+
+<header  th:fragment="header"  class="header header--nav">
+    <div class="header__image header__image--nav">
         <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
     </div>
-    <div class="header__content">
-        <h1>Velkomin(n)</h1>
-    </div>
+    <nav class="nav">
+        <ul class="nav__links">
+            <li class="nav__link"><a>Leita af Nafni<i class="fas fa-search"></i> </a> </li>
+            <li class="nav__link"><a th:href="@{/swipe}">Velja Nöfn <i class="fas fa-hand-pointer"></i></a> </li>
+            <li class="nav__link"><a th:href="@{/viewliked}">Skoða Valin Nöfn <i class="fas fa-heart"></i></a> </li>
+            <li class="nav__link"><a th:href="@{/linkpartner}">Tengjast Öðrum <i class="fas fa-user-friends"></i></a></li>
+            <div class="nav__submenu">
+                <i class="fas fa-cog"></i>
+                <ul class="nav__sublinks">
+                    <li class="nav__greeting"><i class="fas fa-user"></i> Halló <span class="nav__user" th:text="${user} ? ${user.getName().split(' ')[0]} : 'Enginn'"/></li>
+                    <li class="nav__sublink"><i class="fas fa-wrench"></i>Stillingar</li>
+                    <li class="nav__sublink"><i class="fas fa-fan"></i>Bla bla</li>
+                    <li class="nav__sublink"><i class="fas fa-birthday-cake"></i>Bla bla</li>
+                    <li class="nav__sublink"><i class="fas fa-comment"></i>Bla bla</li>
+                    <li class="nav__sublink"><i class="fas fa-sign-out-alt"></i><a th:href="@{/logout}">Skrá út</a></li>
+                </ul>
+            </div>
+            </li>
+        </ul>
+    </nav>
 </header>
 <body>
-    <span class="user" th:text="${user.getName()}"></span>
-    <main>
-        <section class="namecard">
+    <main class="swipe">
+        <section class="swipe__filters">
+            <div class="swipe__filter swipe__checkboxes"> 
+                <span class="filter__title">Kvenkyns<span th:text="${femaleleft}" class="namesleft"></span> <span class="filter__checkbox" id="female"></span></span>
+                <span class="filter__title">Karlkyns<span th:text="${maleleft}" class="namesleft"></span> <span class="filter__checkbox" id="male"></span></span>
+            </div>
+        </section>
+        <section draggable="true" class="namecard">
             <div class="namecard__container">
                 <h2 class="namecard__name" th:text="${name.get().getName()}"/> 
-                <i class="namecard__gender" th:if="${name.get().getGender()}">&#9792;</i>
-                <i class="namecard__gender" th:unless="${name.get().getGender()}">&#9794;</i> 
+                <i class="namecard__gender fas fa-venus" th:if="${name.get().getGender()}"></i>
+                <i class="namecard__gender fas fa-mars" th:unless="${name.get().getGender()}"></i> 
             </div>
             <div class="namecard__container">
                 <p class="namecard__description" th:text="${name.get().getDescription()}"/>
             </div>
             <div class="namecard__buttons">
-                <button class="namecard__button namecard__disapprove" th:value="${name.get().getId()}">Dislike</button>
-                <button class="namecard__button namecard__approve" th:value="${name.get().getId()}">Approve</button>
+                
+                <button class="namecard__button namecard__disapprove" th:value="${name.get().getId()}"><i class="fas fa-arrow-circle-left "></i></button>
+                <button class="namecard__button namecard__approve" th:value="${name.get().getId()}"><i class="fas fa-arrow-circle-right "></i></button>
             </div>
             
         </section>
-        <section class="users">
-            <table class="users__table" th:include="/Home.html :: table"></table>
-        </section>        
+      
     </main>
-
     <script th:src="@{/js/swipe.js}"></script>
 </body>
 </html>

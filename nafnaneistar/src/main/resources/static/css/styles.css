@@ -1,18 +1,24 @@
 @import "resets.css";
+@import "FA/css/fontawesome.min.css";
+@import 'FA/css/solid.min.css';
+@import 'FA/css/regular.min.css';
+@import 'header.css';
+
 :root {
     --main-bg-color: #FFF9CC;
     --nav-bg-color:#A3D9B9;
     --nav-bg-color-lg:#C6E8D4;
     --bt-color:#A3D9B9;
     --bt-color-lg:#C6E8D4;
+    --swipe-bg-color: #E2F0D9;
     --font-color: #7F7F7F;
     --ambient-color:#F0CDB4;
+    --star-color:#fCE295;
     --max-width: 70em;
 }
 html {
     font-size: 16px;
     text-align: justify;
-    
 }
 
 body {
@@ -52,10 +58,22 @@ table {
 .container {
     width: 50%;
     margin: 0 auto;
-
 }
 
 .container__img {
     width: 100%;
     height: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    body {
+        padding: 0 1em;
+    }
+    .main {
+        height: 60vh;
+        margin-top: 1em;
+    }
 }

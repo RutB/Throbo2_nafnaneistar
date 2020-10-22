@@ -1,6 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.persistence.Column;
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 public class User {
@@ -33,14 +32,14 @@ public class User {
     @Lob
     private ArrayList<Integer> availableNames;
     @Lob
-    private ArrayList<Integer> approvedNames;
-    private ArrayList<Integer> linkedPartners;
+    private HashMap<Integer, Integer> approvedNames;
+    private ArrayList<Long> linkedPartners;
 
 
     public User() {
         
-        this.approvedNames = new ArrayList<Integer>();
-        this.linkedPartners = new ArrayList<Integer>();
+        this.approvedNames = new HashMap<Integer,Integer>();
+        this.linkedPartners = new ArrayList<Long>();
     }
 
     public User(String name, String email, String password, ArrayList<Integer> availableNames){
@@ -48,8 +47,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.availableNames = availableNames;
-        this.approvedNames = new ArrayList<Integer>();
-        this.linkedPartners = new ArrayList<Integer>();
+        this.approvedNames = new HashMap<Integer,Integer>();
+        this.linkedPartners = new ArrayList<Long>();
     }
 
 
@@ -59,7 +58,9 @@ public class User {
     
     public ArrayList<Integer> approveName(Integer id){
         int index = this.availableNames.indexOf(id);
-        this.approvedNames.add(this.availableNames.remove(index));
+        if(index < 0)
+            return this.availableNames;
+        this.approvedNames.put(this.availableNames.remove(index), 0);
         return this.availableNames;
     }
 
@@ -69,11 +70,11 @@ public class User {
         return this.availableNames;
     }
 
-    public void addLinkedPartner(Integer id){
+    public void addLinkedPartner(Long id){
         this.linkedPartners.add(id);
     }
 
-    public boolean removeLinkedPartner(Integer id){
+    public boolean removeLinkedPartner(Long id){
         return this.linkedPartners.remove(id);
     }
 
@@ -89,6 +90,22 @@ public class User {
         Integer newID = this.availableNames.get(r.nextInt(size));
         return newID;
     }
+
+    public Integer getRandomNameId(ArrayList<Integer> genderList){
+        Random r = new Random();
+        int size = genderList.size();
+        if(size == 0)
+            return -1;
+        Integer newID = genderList.get(r.nextInt(size));
+        return newID;
+    }
+
+    public void updateRatingById(Integer id, Integer rating){
+        this.approvedNames.put(id, rating);
+    }
+
+
+
 
     /*
     Getters and Setters    
@@ -121,10 +138,10 @@ public class User {
     }
 
 
-    public ArrayList<Integer> getApprovedNames(){
+    public HashMap<Integer,Integer> getApprovedNames(){
         return this.approvedNames;
     }
-    public ArrayList<Integer> getLinkedPartners(){
+    public ArrayList<Long> getLinkedPartners(){
         return this.linkedPartners;
     }
 
@@ -138,6 +155,6 @@ public class User {
 
 	@Override
 	public String toString() {
-        return "User: " + this.name + "listleft: " + this.getAvailableNamesSize();
+        return "User: " + this.name + " listleft: " + this.getAvailableNamesSize();
     }
 }

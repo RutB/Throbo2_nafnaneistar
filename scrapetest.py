@@ -248,10 +248,11 @@ def initGettingFullList():
 
 def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDesc.json"):
     sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
+    descMissingText = "Merking Óþekkt"
     with open(f) as json_file:
         data = json.load(json_file)
         for p in data:
-                desc = "MISSING"
+                desc = descMissingText
                 if not p['desc'] == "":
                     desc = p['desc']
                 desc = desc.replace("'",'`')
@@ -259,12 +260,13 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 y = desc.count(")")
                 if x > y:
                     desc = desc+")"
+                desc = desc.rstrip('.');
                 line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
                 sql = sql+line.replace('"',"“")
     with open(m) as json_file:
         data = json.load(json_file)
         for p in data:
-                desc = "MISSING"
+                desc = descMissingText
                 if not p['desc'] == "":
                     desc = p['desc']
                 desc = desc.replace("'",'`')
@@ -272,6 +274,7 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 y = desc.count(")")
                 if x > y:
                     desc = desc+")"
+                desc = desc.rstrip('.');
                 line = "('{}','{}',{}),\n".format(p['name'],desc, 0)
                 sql = sql+line.replace('"',"“")
         sql = sql +  "INSERT INTO name_card (id,name, description, gender) VALUES \n"

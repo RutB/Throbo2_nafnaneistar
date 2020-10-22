@@ -5,25 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tengja saman | Nafnaneistar</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-  <!--  <link rel="stylesheet" th:href="@{/css/linking.css}">      búa til síðu-->     
-</head>
+    <link rel="stylesheet" th:href="@{/css/linkpartner.css}"></head> 
 <body>
-    <header class="header">
-        <div class="header__image">
-            <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
-        </div>
-        <div class="header__content">
-            <h1>Velkomin(n)</h1>
-        </div>
-    </header>
+    <header th:replace="Swipe.html :: header"></header>
     <main class="main">
-        <!--   <span class="user" th:text="${user.getName()}"></span> -->
         <section class="linking">
-            <h2 class="linking__title">Viltu tengja nafna listann þinn við einhvern annann? </h2>
-            <h2 class="linking__title">Skrifaðu póstfangið og tengist saman</h2> 
+            <div class="linkHead__content">
+                <h2 class="linking__title">Viltu tengja nafna listann þinn við einhvern annann? </h2>
+                <h2 class="linking__title">Skrifaðu póstfangið og tengist saman</h2> 
+            </div>
             <form class="linking__form form" th:action="@{/linkpartner}" method="post">
                 <input class="form__input" type="text" th:name="email" id="email" placeholder="Netfang" required/>
-                <button  class="link__button" type="submit" > Tengjast</button>
+                <button  class="form__button" type="submit" > Tengjast</button>
+                <p hidden class="form__alert"> Ónei þessi notandi er ekki til, prufaðu aftur </p> 
             </form>
         </section>
     </main>

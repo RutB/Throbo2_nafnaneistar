@@ -1,0 +1,208 @@
+@startuml Nafnaneistar
+scale 1.5
+Class  User <<@Entity >> {
+    -id : Long
+    -name : String
+    -email : String
+    -password : String
+    -availableNames : ArrayList<Integer>
+    -approvedNames : HashMap<Integer, Integer>
+    -linkedPartners : ArrayList<Long>
+    --
+    +User()
+    +User(name : String, email : String, password : String, availableNames : ArrayList<Integer>)
+    +approveName(id : Integer) : ArrayList<Integer>
+    +disapproveName(id : Integer) : ArrayList<Integer>
+    +addLinkedPartner(id : Long)
+    +removeLinkedPartner(id : Long) : boolean
+    +getAvailableNamesSize() : int
+    +getRandomNameId() : Integer
+    +getRandomNameId(genderList : ArrayList<Integer>) : Integer
+    +[Getters & Setters]
+}
+Class NameCard <<@Entity>> {
+    -id : Integer
+    -name : String
+    -description : String
+    -gender : boolean
+    --
+    +NameCard()
+    +NameCard(id : Integer, name : String, description : String)
+    .. Modified getter ..
+    +getGender() : int
+    --
+    +[Getters and Setters]
+}
+
+class NameController <<@Controller>> {
+    -userService : UserService
+    -nameService : NameService
+    +NameController(userService : UserService, nameService : NameService)
+    +SwipeNames(model: Model, session HttpSession) : String
+    +ViewLiked(model : Model, session HttpSession) : String
+}
+
+class HomeController <<@Controller>> {
+    -userService : UserService
+    -nameService : NameService
+    +HomeController(userService : UserService, nameService : NameService)
+    +Home(model : Model) : String
+}
+
+class NameRestController <<@RestController>> {
+    -userService : UserService
+    -nameService : NameService
+    +NameRestController(userService : UserService, nameService : NameService)
+    +approveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +disapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +getNewName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +getNewNameCard(user : User, nameService : NameService, gender : int) : Optional<NameCard>
+    +showCombinedList(session : HttpSession) : ArrayList<NameCard>
+    +getRemainingSize( session : HttpSession) : Integer[]
+    +removeNameFromApproved(session : HttpSession, id : Integer) : ArrayList<NameCard>
+    +rankName(id : Integer , session : HttpSession) : ArrayList<NameCard>
+}
+
+class UserController <<@Controller>> {
+    -userService : UserService
+    -nameService : NameService
+    +UserController (userService : UserService, nameService : NameService)
+    +Login(model : Model, session:HttpSession)
+    +PostLogin(email : String, password:String, model:Model)
+    +Signup(user:User, result : BindingResult, model:Model)
+    +SignupForm(model : Model)
+    +LogOut(model : Model,session : HttpSession)
+    +LinkparnerForm(model : Model, session : HttpSession)
+    +Linkpartner(email : String, model : Model, session : HttpSession)
+
+}
+
+class UserRestController <<@RestController>> {
+    -userService : UserService
+    -nameService : NameService
+    +UserRestController (userService: UserService, nameService: NameService)
+    +checkLogin(email:String, password:String, session:HttpSession) : boolean
+}
+
+Interface UserService <<Interface>> {
+    save( user: User): User
+    delete(user: User): void
+    findAll(): List<User>
+    findByName(name:String): List<User>
+    findByEmailAndPassword(email:String, password:String): User
+    findByEmail(email:String)
+    findById(id:Long): Optional<User>
+}
+class UserServiceImplementation <<@Service>> {
+    repository : UserRepository
+    --
+    +UserServiceImplementation(userRepo : UserRepository)
+    +save(user : User) : User
+    +delete(user : User)
+    +findAll() : List<User>
+    +findAllByName(name : String) : List<User>
+    +findByEmailAndPassword(email : String, password : Password) :User
+    +findByEmai(email : String) : User
+    +findById(id : Long) : Optional<User>
+}
+
+
+Interface NameRepository<<interface>> {
+    delete(namecard NameCard)
+    findAll() : List<NameCard>
+    findById(id : Integer ) : Optional<NameCard>
+    findAllByGender(bool : boolean) : List<NameCard>
+    findDescriptionByName(s : String) : Optional<NameCard>
+    countByGender(gender : boolean) : Integer
+
+}
+
+Interface UserRepository<<interface>> {
+    delete(user User)
+    findAll() : List<User>
+    findByName(name : String) : List<User>
+    findByEmailAndPassword(email : String, password : String) : User
+    findByEmail(email : String) : User
+    findById(id : Long ) : Optional<User>
+}
+
+Interface NameService <<Interface>> {
+    save(nameCard : NameCard) : NameCard
+    delete(nameCard : NameCard) : NameCard
+    findAll() : List<NameCard>
+    findById(id : Integer) : Optional<NameCard>
+    findAllByGender(bool : boolean) : List<NameCard>
+    findDescriptionByName(s : String) : String
+    contByGender(gender : boolean) : Integer
+}
+
+class NameServiceImplementation <<@Service>> {
+    repository : NameRepository
+    --
+    +NameServiceImplementation(nameRepo : NameRepository)
+    +save(nameCard : NameCard) : NameCard
+    +delete(nameCard : NameCard)
+    +findAll() : List<NameCard>
+    +findById(id : Integer) : Optional<NameCard>
+    +findAllByGender(bool : boolean) : List<NameCard>
+    +findDescriptionByName(s : String) : String
+    +countByGender(gender : boolean) : Integer
+}
+
+class UserUtils {
+    +initAvailable(user : user, nameService : NameService)
+    +getGenderList(user : User, nameService : NameService) : ArrayList<Integer>
+    +getGenderList(ids : Set<Integer>, nameService : NameService, int gender) : ArrayList<Integer>
+    +isLoggedIn(user : User) : boolean
+}
+
+class SearchRestController<<@RestController>> {
+    -userService : UserService
+    -nameService : NameService
+    +SearcRestController(userService : UserService, nameService : NameService)
+    +searchNameByString(s : String) : ArrayList<NameCard>
+    +addToApproved(id : Integer)
+}
+
+class SettingsRestController<<@RestController>> {
+    -userService : UserService
+    -nameService : NameService
+    +SettingsRestController(userService : UserService)
+    +changePassword(oldpassword : String, newpassword : String)
+    +changeName(name : String)
+    +restartNameLists(session : HttpSession)
+
+}
+
+NameServiceImplementation "1" --|> "1" NameService
+UserServiceImplementation "1" -up-|> "1" UserService
+
+NameRepository "1" <- "1" NameServiceImplementation
+UserServiceImplementation "1" -l-> "1" UserRepository
+
+UserController "1" --> "1" UserService 
+NameController "1" --> "1" UserService
+SettingsRestController "1" -r-> "1" UserService
+
+UserRestController "1" --> "1" UserService
+NameService "1" <-- "1" UserRestController
+
+NameService "1" <-- "1" HomeController
+HomeController "1" --> "1" UserService
+
+NameService "1" <- "1" NameController
+NameService "1" <-- "1" UserController
+
+NameService "1" <-- "1" SettingsRestController
+
+NameService "1" <-- "1" NameRestController
+NameRestController "1" --> "1" UserService
+
+SearchRestController "1" -> "1" UserService 
+SearchRestController "1" -> "1"  NameService
+
+NameCard -[hidden]> NameRepository
+
+NameCard --[hidden]> UserUtils
+
+@enduml

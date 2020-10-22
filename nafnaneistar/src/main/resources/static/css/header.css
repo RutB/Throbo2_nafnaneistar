@@ -1,0 +1,84 @@
+@import 'components/nav.css';
+
+.header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    max-height: 12em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+.header--nav {
+    flex-wrap: nowrap;
+    max-height: none;
+}
+.header__image--nav{
+    position: unset;
+    padding: 2em 0 0 2em;
+}
+
+.header__signup {
+    justify-content: flex-start;
+}
+
+.header__image {
+    position: absolute;
+    left: 2em;
+    top: 2em;
+}
+
+
+.header__image img {
+    height: 8em;
+}
+
+.header__image--nav{
+    position: unset;
+    padding: 2em 0 0 2em;
+}
+
+.header__content {
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+@media only screen and (max-width: 768px) {
+    .header__image {
+        position: relative;
+        left: 0;
+        top: 1em;
+        height: 5em;
+        align-self: center;
+    }
+    
+    .header__image img {
+        height: 5em;
+    }
+    
+    .header__content {
+        width: 100%;
+        height: unset;
+        text-align: center;
+        margin: 1em 0;
+    }
+
+    .header--nav {
+        flex-wrap: wrap;
+    }
+    .header__image--nav{
+        width: 100%;
+        position: unset;
+        height: unset;
+        padding: .5em 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    
+}
+

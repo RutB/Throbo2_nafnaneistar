@@ -1,6 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Services;
 
 import java.util.List;
+import java.util.Optional;
+
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 
 public interface UserService {
@@ -10,5 +12,5 @@ public interface UserService {
     List<User> findByName(String name);
     User findByEmailAndPassword(String email, String password);
     User findByEmail(String email);
-    
+    Optional<User> findById(Long id);
 }
