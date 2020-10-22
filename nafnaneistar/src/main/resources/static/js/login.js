@@ -27,8 +27,10 @@ function decreaseTimer(){
     if(value <= 1){
         code = (error.classList.contains('--hidden')) ? 1 : 0;
         console.log(code)
-        if(code == 1)
-            window.location.replace(url)
+        if(code == 1){
+                ptitle.textContent = "Innskráning Tókst!"
+                window.location.replace(url)
+            }
         else 
             document.querySelector('.popup').remove()
         
