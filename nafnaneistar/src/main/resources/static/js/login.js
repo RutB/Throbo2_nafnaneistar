@@ -12,7 +12,6 @@ function submitHandler(e){
     let url = `${window.location.origin}/login/check/${user}/${password}`
     validateLogin(url)
 
-
 }
 
 
