@@ -211,6 +211,18 @@
     width: 100%;
     justify-content: space-around;
 }
+.gender__removeName {
+    border-radius: 2em;
+    background-color: var(--ambient-color);
+    cursor: pointer;
+    transition: background-color 300ms ease-in;
+}
+.gender__removeName:hover {
+    transition: background-color 300ms ease-in;
+    transition: transform 300ms ease-in;
+    transform: scale(1.1);
+    background-color: lightcoral;
+}
 
 @media only screen and (max-width: 768px) {
     .viewliked__view {

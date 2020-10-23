@@ -59,4 +59,17 @@ public class UserRestController {
         return true;
     }
 
+    @GetMapping(path="/viewliked/remove", produces = "application/json")
+    public boolean removeFromApproved(@RequestParam String id, HttpSession session) 
+    {  User user = (User) session.getAttribute("currentUser");
+
+        try {
+            user.removeApprovedName(Integer.parseInt(id));
+            return true;
+        } catch(Error e){
+            return false;
+        }
+    }
+
+
 }

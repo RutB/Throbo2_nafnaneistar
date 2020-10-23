@@ -96,10 +96,10 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
-                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
-                    <td th:id="${line.key.getId()}" class="gender__name" th:text="${line.key.getName()}"></td>
+                <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
+                    <td  class="gender__name" th:text="${line.key.getName()}"></td>
                     <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
-                    <td class="gender__operations">X - X</td>
+                    <td class="gender__operations"><button class="gender__removeName">Taka af lista</button></td>
                 </tr>
             </table>
             <table class="gender__table">
@@ -111,10 +111,10 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
-                <tr class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
-                    <td th:id="${line.key.getId()}" class="gender__name" th:text="${line.key.getName()}"></td>
+                <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
+                    <td  class="gender__name" th:text="${line.key.getName()}"></td>
                     <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
-                    <td class="gender__operations">X - X</td>
+                    <td class="gender__operations"><button class="gender__removeName">Taka af lista</button></td>
                 </tr>
 
             </table>

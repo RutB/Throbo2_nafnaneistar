@@ -71,6 +71,10 @@ public class User {
         return this.availableNames;
     }
 
+    public void removeApprovedName(Integer id){
+        this.approvedNames.remove(id);
+    }
+
     public void addLinkedPartner(Long id){
         this.linkedPartners.add(id);
     }

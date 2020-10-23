@@ -16,14 +16,32 @@ document.addEventListener('DOMContentLoaded', () => {
         star.addEventListener('click', updateRank)
     })
 
-
+    let removeButtons = document.querySelectorAll('.gender__removeName');
+    removeButtons.forEach(button => button.addEventListener('click', removeNameFromList))
     let partnerOptions = document.querySelectorAll('.select__option');
     partnerOptions.forEach(partner => partner.addEventListener('click', customSelect))
 
+    function removeNameFromList(e) {
+        let grandpapa = e.target.parentNode.parentNode; //row
+        let id = grandpapa.getAttribute('id');
+        let url = `${window.location.origin}/viewliked/remove?id=${id}`;
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                if (data)
+                    grandpapa.remove();
+            })
+    }
 
     function customSelect(e) {
         let id = e.target.getAttribute('id');
-        if(!id) return;
+        if (!id) return;
         let selected = document.querySelector('.select__selected')
         let tabs = document.querySelectorAll('.viewliked__tab')
         tabs.forEach(tab => tab.classList.remove('--active'));
@@ -31,33 +49,37 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
         document.querySelector('#window2').classList.add("viewliked__active")
         let combopartner = document.querySelector('.combo__partner');
-        
+
         combopartner.textContent = e.target.textContent;
         selected.textContent = e.target.textContent;
         let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;
+        clearTable(0)
+        clearTable(1)
         fetch(url)
-        .then((resp) => {
-            if (resp.status !== 200) {
-                console.log(`Error ${resp.text()}`);
-                return;
-            }
-            return resp.json();
-        })
-        .then((data) => {
-            populateTable(data);
-        });
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                populateTable(data);
+            });
+    }
+
+    function clearTable(gender) {
+        let tables = document.querySelectorAll('.combo__table');
+        let table = tables[gender]
+        let tbody = table.querySelector('tbody');
+        while (tbody.firstChild)
+            tbody.removeChild(tbody.firstChild);
+        return tbody;
     }
 
     function populateTable(data) {
-        let tables = document.querySelectorAll('.combo__table');
-        let ftable =tables[0]
-        let ftbody = ftable.querySelector('tbody');
-        let mtable = tables[1]
-        let mtbody = mtable.querySelector('tbody');
-        while(ftbody.firstChild)
-            ftbody.removeChild(ftbody.firstChild);
-        while(mtbody.firstChild)
-            mtbody.removeChild(mtbody.firstChild);
+        let ftbody = clearTable(0)
+        let mtbody = clearTable(1)
         for (const [key, rank] of Object.entries(data)) {
             info = key.split('-')
             let name = info[0]
@@ -66,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let row = document.createElement('tr');
             row.classList.add('combo__row')
             let td = document.createElement('td');
-            td.setAttribute('id',id);
+            row.setAttribute('id', id);
             td.appendChild(document.createTextNode(name))
             row.appendChild(td)
 
@@ -77,25 +99,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let ops = document.createElement('td');
             ops.classList.add('combo__operations')
-            ops.appendChild(document.createTextNode("X - X"));
+            //<button class="gender__removeName">Taka af lista</button>
+            let bt = document.createElement('button')
+            bt.classList.add('gender__removeName')
+            bt.addEventListener('click', removeNameFromList)
+            bt.appendChild(document.createTextNode("Taka af Lista"))
+            ops.appendChild(bt);
             row.appendChild(ops)
-            if(gender == 1)
+            if (gender == 1)
                 ftbody.appendChild(row)
-            if(gender == 0)
+            if (gender == 0)
                 mtbody.appendChild(row)
             starConvertSingleRow(row);
-          }
-        
-        
+
+        }
+
+
     }
 
 
 
     function updateRank(e) {
         let grandpapa = e.target.parentNode.parentNode
+        console.log(grandpapa)
         let parent = e.target.parentNode;
-        let nametd = grandpapa.querySelector('.gender__name');
-        let id = nametd.getAttribute('id');
+        let id = grandpapa.getAttribute('id');
         let currank = parent.classList[0]
         let stars = parent.querySelectorAll('.filled');
         let rank = stars[stars.length - 1].classList[4].split('-')[1];
@@ -179,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    function starConvertSingleRow(row){
+    function starConvertSingleRow(row) {
         let ranks = row.querySelectorAll('.gender__rank');
         ranks.forEach(rank => {
             let value = parseInt(rank.textContent);
@@ -220,14 +248,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let tabno = e.target.getAttribute('id');
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
-        let views = document.querySelectorAll('.viewliked__window');    
+        let views = document.querySelectorAll('.viewliked__window');
         let no = tabno.split('tab')[1];
-        if(parseInt(no)===2) return;
+        if (parseInt(no) === 2) return;
         views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
         document.querySelector('.select__selected').textContent = "Velja"
-    
+
     }
 
     function sendUpdateRating(id, rating) {

@@ -40,7 +40,7 @@
     text-align: center;
 }
 
-.form__input:focus::placeholder {
+.form__input:focus::placeholder,button:focus::placeholder {
     color: transparent;
 }
 ::placeholder {
