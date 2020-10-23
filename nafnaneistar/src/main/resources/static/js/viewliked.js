@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function customSelect(e) {
+        let id = e.target.getAttribute('id');
+        if(!id) return;
         let selected = document.querySelector('.select__selected')
         let tabs = document.querySelectorAll('.viewliked__tab')
         tabs.forEach(tab => tab.classList.remove('--active'));
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
         document.querySelector('#window2').classList.add("viewliked__active")
         let combopartner = document.querySelector('.combo__partner');
-        let id = e.target.getAttribute('id');
+        
         combopartner.textContent = e.target.textContent;
         selected.textContent = e.target.textContent;
         let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;

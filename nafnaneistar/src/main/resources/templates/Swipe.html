@@ -15,7 +15,7 @@
     </div>
     <nav class="nav">
         <ul class="nav__links">
-            <li class="nav__link"><a>Leita af Nafni<i class="fas fa-search"></i> </a> </li>
+            <li class="nav__link"><a th:href="@{/searchname}">Leita af Nafni<i class="fas fa-search"></i> </a> </li>
             <li class="nav__link"><a th:href="@{/swipe}">Velja Nöfn <i class="fas fa-hand-pointer"></i></a> </li>
             <li class="nav__link"><a th:href="@{/viewliked}">Skoða Valin Nöfn <i class="fas fa-heart"></i></a> </li>
             <li class="nav__link"><a th:href="@{/linkpartner}">Tengjast Öðrum <i class="fas fa-user-friends"></i></a></li>
@@ -23,7 +23,7 @@
                 <i class="fas fa-cog"></i>
                 <ul class="nav__sublinks">
                     <li class="nav__greeting"><i class="fas fa-user"></i> Halló <span class="nav__user" th:text="${user} ? ${user.getName().split(' ')[0]} : 'Enginn'"/></li>
-                    <li class="nav__sublink"><i class="fas fa-wrench"></i>Stillingar</li>
+                    <li class="nav__sublink"><i class="fas fa-wrench"></i><a th:href="@{/settings}">Stillingar</a></li>
                     <li class="nav__sublink"><i class="fas fa-fan"></i>Bla bla</li>
                     <li class="nav__sublink"><i class="fas fa-birthday-cake"></i>Bla bla</li>
                     <li class="nav__sublink"><i class="fas fa-comment"></i>Bla bla</li>

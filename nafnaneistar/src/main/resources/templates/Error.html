@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+    <link rel="shortcut icon" th:href="@{/img/fav.png}" type="image/x-icon">
+    <title>Error | Nafnaneistar</title>
+    
+</head>
+<body>
+    <header class="header header--nav">
+        <div class="header__image header__image--nav">
+            <img th:src="@{img/fill.png}" alt="Mynd af krúttlegum fíl">
+        </div>
+        <nav class="nav">
+            <ul class="nav__links">
+                <li class="nav__link"><a th:href="@{/searchname}">Leita af Nafni<i class="fas fa-search"></i> </a> </li>
+                <li class="nav__link"><a th:href="@{/swipe}">Velja Nöfn <i class="fas fa-hand-pointer"></i></a> </li>
+                <li class="nav__link"><a th:href="@{/viewliked}">Skoða Valin Nöfn <i class="fas fa-heart"></i></a> </li>
+                <li class="nav__link"><a th:href="@{/linkpartner}">Tengjast Öðrum <i class="fas fa-user-friends"></i></a></li>
+                <div class="nav__submenu">
+                    <i class="fas fa-cog"></i>
+                    <ul class="nav__sublinks">
+                        <li class="nav__sublink"><i class="fas fa-wrench"></i><a th:href="@{/settings}">Stillingar</a></li>
+                        <li class="nav__sublink"><i class="fas fa-fan"></i>Bla bla</li>
+                        <li class="nav__sublink"><i class="fas fa-birthday-cake"></i>Bla bla</li>
+                        <li class="nav__sublink"><i class="fas fa-comment"></i>Bla bla</li>
+                        <li class="nav__sublink"><i class="fas fa-sign-out-alt"></i><a th:href="@{/logout}">Skrá út</a></li>
+                    </ul>
+                </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="error__main">
+        <section class="error__section">
+            <div class="error__container">
+                <h1 class="error__title">Það er frekar tómlegt hérna</h1>
+                <p class="error__text">Eitthvað hefur farið úrskeiðis, annaðhvort fannstu síðu sem er ekki tilbúin eða hefur slegið inn einhverja slóð sem er ekki til en ekki örvænta veldu bara eitthvað annað hér fyrir ofan</p>
+                <p class="error__text">Ef þú áttir eftir að skrá þig inn getur þú gert það <a th:href="@{/login}">hér</a></p>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>
