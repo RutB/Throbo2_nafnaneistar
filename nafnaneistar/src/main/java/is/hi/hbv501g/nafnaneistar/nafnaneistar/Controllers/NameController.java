@@ -78,6 +78,7 @@ public class NameController {
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
 
         String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
+        System.out.println(currentUser.getName().split(" ")[0]);
         ArrayList<User> partners = new ArrayList<User>();
         for(Long id : currentUser.getLinkedPartners())
             partners.add(userService.findById(id).get());

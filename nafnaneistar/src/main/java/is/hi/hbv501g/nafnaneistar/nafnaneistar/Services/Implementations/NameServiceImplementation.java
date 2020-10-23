@@ -57,6 +57,7 @@ public class NameServiceImplementation implements NameService {
         NameCard nc = repository.findDescriptionByName(s).orElse(null);
         if(nc == null)
             return "Merking Óþekkt";
+        System.out.println(nc.getName());
         return nc.getDescription();
     }
 
