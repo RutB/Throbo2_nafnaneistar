@@ -38,6 +38,7 @@
     font-size: 1.5rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
+    /*visibility: hidden;*/
 }
 
 .form__input:focus::placeholder {
