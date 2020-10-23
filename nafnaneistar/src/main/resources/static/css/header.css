@@ -10,11 +10,13 @@
     align-items: flex-end;
     justify-content: center;
 }
+
 .header--nav {
     flex-wrap: nowrap;
     max-height: none;
 }
-.header__image--nav{
+
+.header__image--nav {
     position: unset;
     padding: 2em 0 0 2em;
 }
@@ -34,7 +36,7 @@
     height: 8em;
 }
 
-.header__image--nav{
+.header__image--nav {
     position: unset;
     padding: 2em 0 0 2em;
 }
@@ -54,11 +56,11 @@
         height: 5em;
         align-self: center;
     }
-    
+
     .header__image img {
         height: 5em;
     }
-    
+
     .header__content {
         width: 100%;
         height: unset;
@@ -69,7 +71,8 @@
     .header--nav {
         flex-wrap: wrap;
     }
-    .header__image--nav{
+
+    .header__image--nav {
         width: 100%;
         position: unset;
         height: unset;
@@ -79,6 +82,5 @@
         justify-content: center;
     }
 
-    
-}
 
+}
