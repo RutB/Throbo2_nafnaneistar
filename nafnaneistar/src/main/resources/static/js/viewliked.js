@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
 
 
-    let stars = document.querySelectorAll('.gender__rankstar');
+    let window3 = document.querySelector("#window3")
+    let stars = window3.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
         star.addEventListener('mouseenter', starStruck)
         star.addEventListener('click', updateRank)
@@ -18,8 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let removeButtons = document.querySelectorAll('.gender__removeName');
     removeButtons.forEach(button => button.addEventListener('click', removeNameFromList))
-    let partnerOptions = document.querySelectorAll('.select__option');
+
+    let tab2 = document.querySelector('#tab2')
+    let partnerOptions = tab2.querySelectorAll('.select__option');
     partnerOptions.forEach(partner => partner.addEventListener('click', customSelect))
+
+    let tab4 = document.querySelector("#tab4");
+    let rankSelect = tab4.querySelectorAll('.select__option');;
+    console.log(rankSelect)
+    rankSelect.forEach(select => select.addEventListener('click', initRankSelect))
 
     function removeNameFromList(e) {
         let grandpapa = e.target.parentNode.parentNode; //row
@@ -41,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function customSelect(e) {
         let id = e.target.getAttribute('id');
+
         if (!id) return;
         let selected = document.querySelector('.select__selected')
         let tabs = document.querySelectorAll('.viewliked__tab')
@@ -242,15 +251,47 @@ document.addEventListener('DOMContentLoaded', () => {
             star.classList.add(`starrank-${rank}`)
         return star;
     }
+    function initRankSelect(e) {
+        let target = e.target;
+        let grandpapa = target.parentNode
+        let grandgranpapa = grandpapa.parentNode;
+        let id = null;
+        if(target.getAttribute('id') !== null){
+            if(target.getAttribute('id').includes('rank')){
+                id = target.getAttribute('id').split('rank')[1]
+            }
+        }
+        else if(grandgranpapa.getAttribute('id') !== null){
+            if(grandgranpapa.getAttribute('id').includes('rank')){
+                id = grandgranpapa.getAttribute('id').split('rank')[1]
+            }
+        }
+        else if(grandgranpapa.getAttribute('id') !== null){
+            if(grandgranpapa.getAttribute('id').includes('rank')){
+                id = grandgranpapa.getAttribute('id').split('rank')[1]
+            }
+        }
+                
+        if(id !== null)
+            showTopList(id)
+
+    }
+
+    function showTopList(id){
+        tabs.forEach(tab => tab.classList.remove('--active'));
+        tabs[3].classList.add('--active')
+    }
 
     function openWindow(e) {
+        if(e.target.getAttribute('id') == null) return
         if (!e.target.getAttribute('id').includes('tab')) return;
         let tabno = e.target.getAttribute('id');
+        if(tabno === null) return;
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
         let views = document.querySelectorAll('.viewliked__window');
         let no = tabno.split('tab')[1];
-        if (parseInt(no) === 2) return;
+        if (parseInt(no) === 2 || parseInt(no)=== 4) return; 
         views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
