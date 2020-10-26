@@ -280,6 +280,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function showTopList(id){
         tabs.forEach(tab => tab.classList.remove('--active'));
         tabs[3].classList.add('--active')
+        let url = `${window.location.origin}/viewliked/getrankedList?id=${id}`;
+        fetch(url)
+        .then((resp) => {
+            if (resp.status !== 200) {
+                console.log(`Error ${resp.text()}`);
+                return;
+            }
+            return resp.json();
+        })
+        .then((data) => {
+            console.log(data)
+        });
     }
 
     function openWindow(e) {
