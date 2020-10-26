@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let tab4 = document.querySelector("#tab4");
     let rankSelect = tab4.querySelectorAll('.select__option');;
-    console.log(rankSelect)
     rankSelect.forEach(select => select.addEventListener('click', initRankSelect))
 
     function removeNameFromList(e) {
@@ -62,8 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         combopartner.textContent = e.target.textContent;
         selected.textContent = e.target.textContent;
         let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;
-        clearTable(0)
-        clearTable(1)
+        let tables = document.querySelectorAll('.combo__table');
+        clearTable(0,tables)
+        clearTable(1,tables)
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
@@ -73,12 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return resp.json();
             })
             .then((data) => {
-                populateTable(data);
+                let tables = document.querySelectorAll('.combo__table');
+                populateTable(data, tables);
             });
     }
 
-    function clearTable(gender) {
-        let tables = document.querySelectorAll('.combo__table');
+    function clearTable(gender,tables) {
         let table = tables[gender]
         let tbody = table.querySelector('tbody');
         while (tbody.firstChild)
@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return tbody;
     }
 
-    function populateTable(data) {
-        let ftbody = clearTable(0)
-        let mtbody = clearTable(1)
+    function populateTable(data,tables) {
+        let ftbody = clearTable(0,tables)
+        let mtbody = clearTable(1,tables)
         for (const [key, rank] of Object.entries(data)) {
             info = key.split('-')
             let name = info[0]
@@ -280,6 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function showTopList(id){
         tabs.forEach(tab => tab.classList.remove('--active'));
         tabs[3].classList.add('--active')
+        document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
+        document.querySelector('#window4').classList.add("viewliked__active")
         let url = `${window.location.origin}/viewliked/getrankedList?id=${id}`;
         fetch(url)
         .then((resp) => {
@@ -290,7 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return resp.json();
         })
         .then((data) => {
-            console.log(data)
+            let tables = document.querySelectorAll('.rating__table');
+            populateTable(data, tables);
         });
     }
 

@@ -241,7 +241,7 @@
     flex-wrap: wrap;
 }
 
-.combo__tables {
+.combo__tables,.rating__tables {
     display: flex;
     flex-wrap: wrap;
     width: 100%;

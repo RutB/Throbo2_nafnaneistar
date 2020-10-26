@@ -1,6 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
+import javassist.expr.Instanceof;
 
 /**
  * UserRestController contains methods and functions to process 
@@ -102,6 +104,7 @@ public class UserRestController {
 
         try {
             user.removeApprovedName(Integer.parseInt(id));
+            userService.save(user);
             return true;
         } catch(Error e){
             return false;
@@ -111,18 +114,19 @@ public class UserRestController {
     @GetMapping(path="/viewliked/getrankedList", produces = "application/json")
     public HashMap<String,Integer> getrankedList(@RequestParam String id, HttpSession session) 
     {   HashMap<String,Integer> ncs = new HashMap<>();
-        User currentUser = (User) session.getAttribute("currentUser");
-        Set<Integer> ids = currentUser.getApprovedNames().keySet();
+        User currentUser = (User) session.getAttribute("currentUser"); 
         Integer rank = Integer.parseInt(id);
 
-        for(Integer i : ids){
-            System.out.println(currentUser.getApprovedNames().get(i));
-            if(currentUser.getApprovedNames().get(i) == rank){
-                NameCard nc = nameService.findById(i).orElse(null);
-                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),rank); 
+        currentUser.getApprovedNames().forEach((key,value) -> {
+            if(value.equals(rank)) {
+                NameCard nc = nameService.findById(key).orElse(null);
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),value); 
             }
-        }
-        return ncs;      
+        });
+
+        
+        return ncs;
+
     }
 
 
