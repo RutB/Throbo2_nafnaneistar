@@ -112,11 +112,20 @@ public class NameController {
         return "viewliked";
     }
 
-    //HAT 
-    //
+    // HAT
     @RequestMapping(value = "/searchname", method = RequestMethod.GET)
-    public String searchName(Model model ){
+    public String searchName(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+            return "redirect:/login";
+        model.addAttribute("user", currentUser);
+        //model.addAttribute("names", nameService.findAllByNameLike(s)); // Þyrfti að vera POST fyrir þetta
+        //model.addAttribute("names", nameService.findAll());
+        ArrayList<NameCard> tempList = (ArrayList<NameCard>) nameService.findAllByNameLike("Sigur");
+        //ArrayList<NameCard> tempList = (ArrayList<NameCard>) nameService.findAll();
+        System.out.print(tempList.get(0).getName());
+        //System.out.println(nameService.findAllByNameLike("sigur"));
         return "searchname";
     }
-    
+
 }

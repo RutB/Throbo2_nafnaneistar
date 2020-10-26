@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NafnaneistarApplication<nafnaneistar>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "is.hi.hbv501g.nafnaneistar.nafnaneistar.NafnaneistarApplication",
+            "projectName": "nafnaneistar",
+            "args": ""
+        }
+    ]
+}
