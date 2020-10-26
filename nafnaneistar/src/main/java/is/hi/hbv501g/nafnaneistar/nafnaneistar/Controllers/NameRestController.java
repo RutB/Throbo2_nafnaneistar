@@ -31,7 +31,7 @@ public class NameRestController {
     }
 
     @GetMapping(path="/swipe/approve/{id}", produces = "application/json")
-    public Optional<NameCard> ApproveName(@PathVariable String id,
+    public Optional<NameCard> approveName(@PathVariable String id,
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 
@@ -50,7 +50,7 @@ public class NameRestController {
     }
 
     @GetMapping(path="/swipe/disapprove/{id}", produces = "application/json")
-    public Optional<NameCard> DisapproveName(@PathVariable String id,
+    public Optional<NameCard> disapproveName(@PathVariable String id,
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 
@@ -69,7 +69,7 @@ public class NameRestController {
     }
     
     @GetMapping(path="/swipe/newname", produces = "application/json")
-    public Optional<NameCard> GetNewName(
+    public Optional<NameCard> getNewName(
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 

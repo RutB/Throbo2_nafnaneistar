@@ -129,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return resp.json();
       })
       .then((data) => {
-        console.log(data)
         spans[0].textContent = `(${data[1]})`
         spans[1].textContent = `(${data[0]})`
       });
@@ -140,7 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let id = document.querySelector(".namecard__button").value;
     if (e.key === "ArrowRight") url = getDecision(id, 1);
     if (e.key === "ArrowLeft") url = getDecision(id, 0);
-    getNewName(url);
+    if(url)
+      getNewName(url);
   }
 
   function createCheckMark(){

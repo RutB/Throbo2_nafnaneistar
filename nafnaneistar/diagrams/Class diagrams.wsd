@@ -13,11 +13,13 @@ Class  User <<@Entity >> {
     +User(name : String, email : String, password : String, availableNames : ArrayList<Integer>)
     +approveName(id : Integer) : ArrayList<Integer>
     +disapproveName(id : Integer) : ArrayList<Integer>
+    +removeApprovedName(id: Integer)
     +addLinkedPartner(id : Long)
     +removeLinkedPartner(id : Long) : boolean
     +getAvailableNamesSize() : int
     +getRandomNameId() : Integer
     +getRandomNameId(genderList : ArrayList<Integer>) : Integer
+    +updateRatingById(id : Integer, rating : Integer)
     +[Getters & Setters]
 }
 Class NameCard <<@Entity>> {
@@ -57,10 +59,10 @@ class NameRestController <<@RestController>> {
     +disapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewNameCard(user : User, nameService : NameService, gender : int) : Optional<NameCard>
-    +showCombinedList(session : HttpSession) : ArrayList<NameCard>
+    +getComboList(session : HttpSession, partnerid : String) : HashMap<String, Integer>
     +getRemainingSize( session : HttpSession) : Integer[]
-    +removeNameFromApproved(session : HttpSession, id : Integer) : ArrayList<NameCard>
     +rankName(id : Integer , session : HttpSession) : ArrayList<NameCard>
+
 }
 
 class UserController <<@Controller>> {
@@ -75,6 +77,7 @@ class UserController <<@Controller>> {
     +linkparnerForm(model : Model, session : HttpSession)
     +linkpartner(email : String, model : Model, session : HttpSession)
 
+
 }
 
 class UserRestController <<@RestController>> {
@@ -82,16 +85,18 @@ class UserRestController <<@RestController>> {
     -nameService : NameService
     +UserRestController (userService: UserService, nameService: NameService)
     +checkLogin(email:String, password:String, session:HttpSession) : boolean
+    +validateEmail(email : String) : boolean
     +updateNameRating(id : String, rating : String, session : HttpSession) : boolean 
+    +removeNameFromApproved(session : HttpSession, id : Integer) : ArrayList<NameCard>
 }
 
 Interface UserService <<Interface>> {
     save( user: User): User
     delete(user: User): void
     findAll(): List<User>
-    findByName(name:String): List<User>
+    findAllByNameLike(name:String): List<User>
     findByEmailAndPassword(email:String, password:String): User
-    findByEmail(email:String)
+    findByEmail(email:String) : User
     findById(id:Long): Optional<User>
 }
 class UserServiceImplementation <<@Service>> {
@@ -101,7 +106,7 @@ class UserServiceImplementation <<@Service>> {
     +save(user : User) : User
     +delete(user : User)
     +findAll() : List<User>
-    +findAllByName(name : String) : List<User>
+    +findAllByNameLike(name : String) : List<User>
     +findByEmailAndPassword(email : String, password : Password) :User
     +findByEmai(email : String) : User
     +findById(id : Long) : Optional<User>
@@ -109,6 +114,7 @@ class UserServiceImplementation <<@Service>> {
 
 
 Interface NameRepository<<interface>> {
+    save(namecard : NameCard) : NameCard
     delete(namecard NameCard)
     findAll() : List<NameCard>
     findById(id : Integer ) : Optional<NameCard>
@@ -119,9 +125,10 @@ Interface NameRepository<<interface>> {
 }
 
 Interface UserRepository<<interface>> {
+    save(user User) : User
     delete(user User)
     findAll() : List<User>
-    findByName(name : String) : List<User>
+    findAllByNameLike(name : String) : List<User>
     findByEmailAndPassword(email : String, password : String) : User
     findByEmail(email : String) : User
     findById(id : Long ) : Optional<User>
