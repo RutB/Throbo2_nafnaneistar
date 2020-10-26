@@ -12,6 +12,7 @@ https://docs.google.com/document/d/17YIhGQTzE54LR_iJFvDep4WH4QxbHmts7SLBumwcKJk/
 * @Óli Geta flokkað nöfnin eftir vinsældum úr listanum
 * @Helga Settings síða, hægt verði að uppfæra nafn og lykilorð og fleira?
 * @Rut linkedpartner síða, hægt að bæta, fjarlæga og sjá linkaða partners
+* Hægt verði að "núllstilla" lista til að byrja uppá nýtt eða halda approved names en fara aftur í gegnum availableNames
 * fleira...?
 
 #Mögulega seinni tíma dæmi

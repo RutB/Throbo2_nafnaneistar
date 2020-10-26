@@ -18,19 +18,37 @@ import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
+/**
+ * NameController
+ * Listens to most of the paths connected to activities that have
+ * primary focus the name aspect of the application
+ */
 @Controller
 public class NameController {
     private UserService userService;
     private NameService nameService;
 
 
-        @Autowired
-        public NameController(UserService userService, NameService nameService) {
+    /**
+     * Constructor for NameController, it Needs a UserService and a NameService to function
+     * @param userService
+     * @param nameService
+     */
+    @Autowired
+    public NameController(UserService userService, NameService nameService) {
         this.userService = userService;
         this.nameService = nameService;
     }
 
 
+    /**
+     * swipeNames is activated when the user accesses /swipe on the domain.
+     * to access /swipe the user have logged in and maintain an active session.
+     * if there is no session of currentUser the user is redirected to /login 
+     * @param model manages the data for the viewing template
+     * @param session manages the session of the user
+     * @return on a valid session, the user is rendered the Swipe template
+     */
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
     public String swipeNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
@@ -48,6 +66,14 @@ public class NameController {
         return "Swipe";
     }
 
+    /**
+     * On accessing /viewliked from the domain, if the user is logged in and has a
+     * valid session the model is populated with data and the User is rendered the viewliked 
+     * template
+     * @param model manages the data for the viewing template
+     * @param session manages the session of the user
+     * @return viewliked viewing template on succssfull authentication
+     */
     @RequestMapping(value = "/viewliked", method = RequestMethod.GET)
     public String viewLiked(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
