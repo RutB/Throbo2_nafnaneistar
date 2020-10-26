@@ -6,16 +6,17 @@
 
 :root {
     --main-bg-color: #FFF9CC;
-    --nav-bg-color:#A3D9B9;
-    --nav-bg-color-lg:#C6E8D4;
-    --bt-color:#A3D9B9;
-    --bt-color-lg:#C6E8D4;
+    --nav-bg-color: #A3D9B9;
+    --nav-bg-color-lg: #C6E8D4;
+    --bt-color: #A3D9B9;
+    --bt-color-lg: #C6E8D4;
     --swipe-bg-color: #E2F0D9;
     --font-color: #7F7F7F;
-    --ambient-color:#F0CDB4;
-    --star-color:#fCE295;
+    --ambient-color: #F0CDB4;
+    --star-color: #fCE295;
     --max-width: 70em;
 }
+
 html {
     font-size: 16px;
     text-align: justify;
@@ -24,7 +25,13 @@ html {
 body {
     background-color: var(--main-bg-color);
 }
-h1,h2,h3,h4,h5,h6{
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--font-color);
     line-height: 1.15;
 }
@@ -40,7 +47,7 @@ h2 {
 }
 
 
-main{
+main {
     max-width: var(--max-width);
     display: flex;
     flex-direction: column;
@@ -69,9 +76,11 @@ table {
     html {
         font-size: 14px;
     }
+
     body {
         padding: 0 1em;
     }
+
     .main {
         height: 60vh;
         margin-top: 1em;

@@ -1,4 +1,3 @@
-
 .viewliked {
     display: flex;
     flex-direction: row;
@@ -6,6 +5,7 @@
     width: 100%;
     justify-content: space-evenly;
 }
+
 .viewliked__view {
     display: flex;
     justify-content: center;
@@ -24,9 +24,10 @@
     height: fit-content;
     padding: .5em;
     align-items: center;
-    justify-content:center ;
-    
+    justify-content: center;
+
 }
+
 .viewliked__tab {
     text-align: unset;
     width: 100%;
@@ -36,23 +37,27 @@
     color: var(--font-color);
     font-size: 1.2em;
     font-weight: bold;
-    padding:1em 0;
+    padding: 1em 0;
     border-bottom: 2px solid var(--nav-bg-color-lg);
     cursor: pointer;
 }
+
 .viewliked__tab.--active {
     background-color: var(--nav-bg-color);
 }
+
 .viewliked__tab:hover {
     background-color: var(--nav-bg-color);
     transition: background-color 300ms ease-in;
 }
-.viewliked__tab:nth-of-type(2){
+
+.viewliked__tab:nth-of-type(2) {
     line-height: 1.5;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
+
 .viewliked__select {
     background-color: var(--nav-bg-color-lg);
     min-width: 80%;
@@ -61,13 +66,14 @@
     cursor: pointer;
     border: 1px solid var(--nav-bg-color);
 }
+
 .select__down {
     align-self: flex-end;
     transition: transform 300ms ease-in;
     transform: rotate(-90deg);
 }
 
-.viewliked__selectmenu{
+.viewliked__selectmenu {
     display: flex;
     flex-direction: column;
     transform: scaleY(0);
@@ -78,21 +84,30 @@
 
 }
 
-.viewliked__select:hover .viewliked__selectmenu{
+.viewliked__tab:nth-of-type(2):hover .viewliked__selectmenu {
     transition: transform 300ms ease-in;
     position: relative;
     transform: scaleY(1);
-    
 }
-.viewliked__select:hover .select__down{
+
+.viewliked__select:hover .viewliked__selectmenu {
+    transition: transform 300ms ease-in;
+    position: relative;
+    transform: scaleY(1);
+
+}
+
+.viewliked__select:hover .select__down {
     transition: transform 300ms ease-in;
     transform: rotate(0);
-    
+
 }
-.select__option{
+
+.select__option {
     border-bottom: 2px solid var(--nav-bg-color);
 }
-.select__option:hover{
+
+.select__option:hover {
     background-color: var(--nav-bg-color);
     transition: background-color 300ms ease-in;
 }
@@ -113,15 +128,18 @@
     margin-bottom: 1em;
     text-transform: capitalize;
 }
+
 .viewliked__description {
     overflow: auto;
 }
-.viewliked__row{
+
+.viewliked__row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
 }
+
 .viewliked__genderInfo {
     width: 50%;
     padding: 1em;
@@ -131,17 +149,20 @@
     align-items: center;
 
 }
+
 .viewliked__statistics {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
+
 .viewliked__gendername {
     font-size: 2em;
     text-align: center;
     margin-bottom: 1em;
 }
-.viewliked__namestatistic{
+
+.viewliked__namestatistic {
     height: 100%;
     margin: .5em 0;
     text-align: justify;
@@ -150,49 +171,89 @@
 .viewliked__window {
     display: none;
 }
+
 .viewliked__active {
     display: flex;
 }
 
-.gender__table {
+.gender__table,
+.combo__table {
     width: 48%;
     border: 2px solid var(--nav-bg-color);
 }
 
-#window3.viewliked__view {
+#window3.viewliked__view,
+#window2.viewliked__view {
     align-items: flex-start;
     justify-content: space-between;
 }
 
-.gender__table caption {
+.gender__table caption,
+.combo__table caption {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 1em;
 }
+
 .table__headerrow {
     font-size: 1.1em;
     font-weight: bold;
-  
+
 }
-.gender__table tr {
+
+.gender__table tr,
+.combo__table tr {
     padding: .2em 0;
     border-top: 1px solid var(--nav-bg-color);
     border-bottom: 1px solid var(--nav-bg-color);
     cursor: pointer;
 }
-.gender__table tr:nth-of-type(even) {
+
+.gender__table tr:nth-of-type(even),
+.combo__table tr:nth-child(even) {
     background-color: var(--ambient-color);
 }
-.gender__table .gender__row:hover {
+
+.gender__table .gender__row:hover,
+.combo__table tr:hover {
     transition: background-color 300ms ease-in;
     background-color: var(--nav-bg-color);
 }
-.gender__table td{
+
+.gender__table td,
+.combo__table td {
     border: 1px solid var(--nav-bg-color);
 }
+
 .gender__rankstar.fas {
     color: var(--star-color);
     padding: 0;
+}
+
+#window2 .viewliked__container {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.combo__tables {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.gender__removeName {
+    border-radius: 2em;
+    background-color: var(--ambient-color);
+    cursor: pointer;
+    transition: background-color 300ms ease-in;
+}
+
+.gender__removeName:hover {
+    transition: background-color 300ms ease-in;
+    transition: transform 300ms ease-in;
+    transform: scale(1.1);
+    background-color: lightcoral;
 }
 
 @media only screen and (max-width: 768px) {
@@ -203,25 +264,35 @@
         padding: 0;
         flex-wrap: wrap;
     }
+
     .viewliked__container {
         align-items: center;
         justify-content: center;
     }
+
     .viewliked__info {
         align-self: center;
     }
+
     .viewliked__tabs {
         width: 100%;
         margin-top: 1em;
     }
-    .gender__table {
+
+    .gender__table,
+    .combo__table {
         width: 100%;
         font-size: 1.1em;
     }
+
     .viewliked__genderInfo {
         width: 100%;
     }
 
-    
+    #window2 .viewliked__container {
+        padding: 1em;
+    }
+
+
 
 }

@@ -17,21 +17,21 @@ class NameController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +NameController(userService : UserService, nameService : NameService)
-    +SwipeNames(model: Model, session HttpSession) : String
+    +swipeNames(model: Model, session HttpSession) : String
 }
 
 class HomeController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +HomeController(userService : UserService, nameService : NameService)
-    +Home(model : Model) : String
+    +home(model : Model) : String
 }
 class NameRestController <<@RestController>> {
     -userService : UserService
     -nameService : NameService
     +NameRestController(userService : UserService, nameService : NameService)
-    +ApproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
-    +DisapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +approveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
+    +disapproveName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewName(id : String, male : String, female : String, session : HttpSession) : Optional<NameCard>
     +getNewNameCard(user : User, nameService : NameService, gender : int) : Optional<NameCard>
 }

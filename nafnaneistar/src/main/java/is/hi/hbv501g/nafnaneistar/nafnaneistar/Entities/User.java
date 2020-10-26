@@ -3,6 +3,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
+/**
+ * User class - Each User has his own list of id that contain names they have yet to see,
+ * ids of names that they have approved, and names of partners they have linked to
+ */
 @Entity
 public class User {
 
@@ -31,17 +35,32 @@ public class User {
     private String password;
     @Lob
     private ArrayList<Integer> availableNames;
+    //aprovedNames is kept as a key,value pair to contain the Id of the namecard and the 1-5 rating of the namecard
     @Lob
     private HashMap<Integer, Integer> approvedNames;
     private ArrayList<Long> linkedPartners;
 
 
+    /**
+     * User Constructor without parameters to initialize a user via reflections for
+     * the persistance framework, but we initalize the approvedNames and the linkedPartners
+     * variables so they are not undefined or null. if using reflections the created User
+     * must be given an List of availableNames after initialization or else the User will throw error.
+     */
     public User() {
         
         this.approvedNames = new HashMap<Integer,Integer>();
         this.linkedPartners = new ArrayList<Long>();
     }
 
+    /**
+     * User Constructor with parameters. Initializes User with the given parameters and initializes
+     * the approvedNames and linkedPartner List
+     * @param name
+     * @param email
+     * @param password
+     * @param availableNames
+     */
     public User(String name, String email, String password, ArrayList<Integer> availableNames){
         this.name = name;
         this.email = email;
@@ -52,10 +71,16 @@ public class User {
     }
 
 
-    /*
-    Custom Functions and Metods
-    */
     
+    //Custom Functions and Metods
+    
+    /**
+     * Function to approve a name. if the id is not a negative number an Id is removed from the
+     * available names list and added to the approved names, with the default rating of 0.
+     * an updated list of availableNams is returned.
+     * @param id id of the Name chosen
+     * @return List that has the selected name removed
+     */
     public ArrayList<Integer> approveName(Integer id){
         int index = this.availableNames.indexOf(id);
         if(index < 0)
@@ -64,24 +89,57 @@ public class User {
         return this.availableNames;
     }
 
+    /**
+     * Disapproves name by removing it from the availablenames list and returns an updated list of 
+     * available names
+     * @param id id of the name that was disliked
+     * @return an updated list 
+     */
     public ArrayList<Integer> disapproveName(Integer id){
         int index = this.availableNames.indexOf(id);
+        if(index < 0)
+            return this.availableNames;
         this.availableNames.remove(index);
         return this.availableNames;
     }
 
+    /**
+     * Removes the id from the approvedNames
+     * @param id - id of the name to remove
+     */
+    public void removeApprovedName(Integer id){
+        this.approvedNames.remove(id);
+    }
+
+    /**
+     * Adds another User with the given id to the linkedpartner List
+     * @param id of the User to link
+     */
     public void addLinkedPartner(Long id){
         this.linkedPartners.add(id);
     }
 
+    /**
+     * Removes the Id from the linked partner list
+     * @param id
+     * @return if the removing was a success or not
+     */
     public boolean removeLinkedPartner(Long id){
         return this.linkedPartners.remove(id);
     }
 
+    /**
+     * Maybe this function will be removed, returns size of availableNames list
+     * @return size of the availableNamesList
+     */
     public int getAvailableNamesSize(){
         return this.availableNames.size();
     }
 
+    /**
+     * Gets a random Id from the availableNames
+     * @return an Id that is from the availableNames list
+     */
     public Integer getRandomNameId(){
         Random r = new Random();
         int size = this.availableNames.size();
@@ -90,7 +148,10 @@ public class User {
         Integer newID = this.availableNames.get(r.nextInt(size));
         return newID;
     }
-
+    /**
+     * Gets a random Id from the ids in the given list
+     * @return an Id that is from the given list
+     */
     public Integer getRandomNameId(ArrayList<Integer> genderList){
         Random r = new Random();
         int size = genderList.size();
@@ -100,6 +161,11 @@ public class User {
         return newID;
     }
 
+    /**
+     * Updates the rating of the id that represents the Name
+     * @param id id of the name
+     * @param rating rating to associate with the name
+     */
     public void updateRatingById(Integer id, Integer rating){
         this.approvedNames.put(id, rating);
     }
@@ -116,7 +182,7 @@ public class User {
     }
 
     public String getName(){
-        return this.name;
+        return StringUtils.capitalize(this.name);
     }
 
     public void setName(String name){

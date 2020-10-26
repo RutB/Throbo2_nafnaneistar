@@ -1,6 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,20 +18,38 @@ import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 import is.hi.hbv501g.nafnaneistar.utils.*;
 
+/**
+ * NameRestController contains methonds and function to process 
+ * fetch calls from the viewing template
+ */
 @RestController
 public class NameRestController {
 
     NameService nameService;
     UserService userService;
 
+    /**
+     * The NameRestController requires a NameService and UserService
+     * @param nameService
+     * @param userService
+     */
     @Autowired
     public NameRestController(NameService nameService, UserService userService) {
         this.nameService = nameService;
         this.userService = userService;
     }
 
+    /**
+     * Adds the name to the approvedNames list if the user has an active session
+     * and returns a new namecard from the availableList of the logged in User
+     * @param id id of the name
+     * @param male getparameter that implies if viewing only male names
+     * @param female getparameter that implies if viewing only female names
+     * @param session to get the User session
+     * @return a new NameCard
+     */
     @GetMapping(path="/swipe/approve/{id}", produces = "application/json")
-    public Optional<NameCard> ApproveName(@PathVariable String id,
+    public Optional<NameCard> approveName(@PathVariable String id,
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 
@@ -46,9 +66,17 @@ public class NameRestController {
         }
         return getNewNameCard(currentUser,nameService,gender);
     }
-
+    /**
+     * Disapproves the name with the id and removes it from the availableNames list
+     * and then returns a new name
+     * @param id id of the name
+     * @param male getparameter that implies if viewing only male names
+     * @param female getparameter that implies if viewing only female names
+     * @param session to get the User session
+     * @return a new NameCard
+     */
     @GetMapping(path="/swipe/disapprove/{id}", produces = "application/json")
-    public Optional<NameCard> DisapproveName(@PathVariable String id,
+    public Optional<NameCard> disapproveName(@PathVariable String id,
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 
@@ -66,8 +94,15 @@ public class NameRestController {
         return getNewNameCard(currentUser,nameService,gender);
     }
     
+    /**
+     * requests a new name without adding or removing from a list
+     * @param male getparameter that implies if viewing only male names
+     * @param female getparameter that implies if viewing only female names
+     * @param session to get the User session
+     * @return a new namecard
+     */
     @GetMapping(path="/swipe/newname", produces = "application/json")
-    public Optional<NameCard> GetNewName(
+    public Optional<NameCard> getNewName(
         @RequestParam(required = false) String male,
         @RequestParam(required = false) String female,
         HttpSession session) 
@@ -76,27 +111,64 @@ public class NameRestController {
         int gender = 3;
         if(male != null && female == null){
             gender = 0;
-            System.out.println("Looking for male");
         }
         if(male == null && female != null){
             gender = 1; 
-            System.out.println("Looking for Female");
         }
         return getNewNameCard(currentUser,nameService,gender);
             
     }
 
+    /**
+     * function to get the updated list size of female and male names from the availablenames list
+     * @param session - to manage who the user requesting is
+     * @return information regarding the remaining male names and remaining female names
+     */
     @GetMapping(path="/swipe/getlistSize", produces = "application/json")
     public Integer[] getRemainingSize(HttpSession session)  {
         User currentUser = (User) session.getAttribute("currentUser");
         int mSize = UserUtils.getGenderList(currentUser,nameService,0).size();
         int fSize = UserUtils.getGenderList(currentUser,nameService,1).size();
         Integer[] size = new Integer[] {mSize,fSize};
-        System.out.println(currentUser.getAvailableNamesSize());
         return size;
         
     }
 
+    /**
+     * Gets the joint list of approved names from the current user and the selected id of the partner
+     * returns information containing the name, id and gender and the avarage grade of combined rating
+     * @param session - to get the current user session
+     * @param partnerid - the id of the linked partner
+     * @return a list of information of the joint names and avarage rating
+     */
+    @GetMapping(path="/viewliked/combolist", produces ="application/json")
+    public HashMap<String,Integer> getComboList(HttpSession session, @RequestParam String partnerid){
+        Long pID = Long.parseLong(partnerid);
+        User partner = userService.findById(pID).orElse(null);
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(partner == null || currentUser == null) return null;
+        HashMap<String,Integer> ncs = new HashMap<>();
+        Set<Integer> pids = partner.getApprovedNames().keySet();
+        Set<Integer> ids = currentUser.getApprovedNames().keySet();
+        for(Integer id : ids){
+            if(pids.contains(id)){
+                NameCard nc = nameService.findById(id).orElse(null);
+                int avg = (currentUser.getApprovedNames().get(id) + partner.getApprovedNames().get(id));
+                avg = (avg == 0) ? avg : avg/2;
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),avg); 
+            }
+        }
+        return ncs;      
+    }
+
+    /**
+     * an Helper function to reduce redundancy, gets a new namecard based on gender or if both gender are
+     * selected
+     * @param user the active user
+     * @param nameService the current nameService
+     * @param gender male, female or both
+     * @return returns a new NameCard from the id of the randomly selected name
+     */
     private Optional<NameCard> getNewNameCard(User user, NameService nameService, int gender){
         if(gender == 3){
             Integer newID = user.getRandomNameId();      
@@ -105,5 +177,7 @@ public class NameRestController {
         Integer newID = user.getRandomNameId(UserUtils.getGenderList(user,nameService,gender));
         return nameService.findById(newID);
     }
+
+
 
 }
