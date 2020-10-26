@@ -247,8 +247,9 @@ def initGettingFullList():
     writeToJsonFile(fullFemaleList,"fullFemaleNamesWithDesc.json")
 
 def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDesc.json"):
-    sql = "INSERT INTO name_card (name, description, gender) VALUES \n"
+    sql = "INSERT INTO name_card (id,name, description, gender) VALUES \n"
     descMissingText = "Merking Óþekkt"
+    idno = 1
     with open(f) as json_file:
         data = json.load(json_file)
         for p in data:
@@ -261,8 +262,9 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 if x > y:
                     desc = desc+")"
                 desc = desc.rstrip('.');
-                line = "('{}','{}',{}),\n".format(p['name'],desc, 1)
+                line = "({},'{}','{}',{}),\n".format(idno,p['name'],desc, 1)
                 sql = sql+line.replace('"',"“")
+                idno = idno + 1
     with open(m) as json_file:
         data = json.load(json_file)
         for p in data:
@@ -275,8 +277,9 @@ def createDataForDB(f = "fullFemaleNamesWithDesc.json", m = "fullMAleNamesWithDe
                 if x > y:
                     desc = desc+")"
                 desc = desc.rstrip('.');
-                line = "('{}','{}',{}),\n".format(p['name'],desc, 0)
+                line = "({},'{}','{}',{}),\n".format(idno,p['name'],desc, 0)
                 sql = sql+line.replace('"',"“")
+                idno = idno+1
         sql = sql +  "INSERT INTO name_card (id,name, description, gender) VALUES \n"
         line = "({},'{}','{}',{}),\n".format(-1, 'Til Hamingju! þú kláraðir listann','Vá! þetta var vel gert núna er það bara að fara í gegnum listan, linka sig við félaga og komast að niðurstöðu!', 1)
         sql = sql + line

@@ -29,7 +29,6 @@ public class UserRestController {
     public boolean checkLogin(@PathVariable String email, @PathVariable String password, HttpSession session) 
     {   
         User user  = userService.findByEmailAndPassword(email, password);
-        
         if(user != null){
             session.setAttribute("currentUser", user);
             return true;
@@ -64,5 +63,26 @@ public class UserRestController {
             return false;
         }       
     }
+
+    @GetMapping(path="/signup/checkemail", produces = "application/json")
+    public boolean validateEmail(@RequestParam String email) 
+    {   User user = userService.findByEmail(email);
+        if(user != null)
+            return false;
+        return true;
+    }
+
+    @GetMapping(path="/viewliked/remove", produces = "application/json")
+    public boolean removeFromApproved(@RequestParam String id, HttpSession session) 
+    {  User user = (User) session.getAttribute("currentUser");
+
+        try {
+            user.removeApprovedName(Integer.parseInt(id));
+            return true;
+        } catch(Error e){
+            return false;
+        }
+    }
+
 
 }

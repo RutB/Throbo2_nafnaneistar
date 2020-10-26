@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStarConversion();
 
     let rows = document.querySelectorAll('.gender__row');
-    rows.forEach(row =>row.addEventListener('mouseleave', starConvertRow));
+    rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
 
 
     let stars = document.querySelectorAll('.gender__rankstar');
@@ -16,12 +16,104 @@ document.addEventListener('DOMContentLoaded', () => {
         star.addEventListener('click', updateRank)
     })
 
-
+    let removeButtons = document.querySelectorAll('.gender__removeName');
+    removeButtons.forEach(button => button.addEventListener('click', removeNameFromList))
     let partnerOptions = document.querySelectorAll('.select__option');
-    partnerOptions.forEach(partner => partner.addEventListener('click',customSelect))
+    partnerOptions.forEach(partner => partner.addEventListener('click', customSelect))
 
+    function removeNameFromList(e) {
+        let grandpapa = e.target.parentNode.parentNode; //row
+        let id = grandpapa.getAttribute('id');
+        let url = `${window.location.origin}/viewliked/remove?id=${id}`;
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                if (data)
+                    grandpapa.remove();
+            })
+    }
 
-    function customSelect(e){
+    function customSelect(e) {
+        let id = e.target.getAttribute('id');
+        if (!id) return;
+        let selected = document.querySelector('.select__selected')
+        let tabs = document.querySelectorAll('.viewliked__tab')
+        tabs.forEach(tab => tab.classList.remove('--active'));
+        tabs[1].classList.add('--active')
+        document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
+        document.querySelector('#window2').classList.add("viewliked__active")
+        let combopartner = document.querySelector('.combo__partner');
+
+        combopartner.textContent = e.target.textContent;
+        selected.textContent = e.target.textContent;
+        let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;
+        clearTable(0)
+        clearTable(1)
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                populateTable(data);
+            });
+    }
+
+    function clearTable(gender) {
+        let tables = document.querySelectorAll('.combo__table');
+        let table = tables[gender]
+        let tbody = table.querySelector('tbody');
+        while (tbody.firstChild)
+            tbody.removeChild(tbody.firstChild);
+        return tbody;
+    }
+
+    function populateTable(data) {
+        let ftbody = clearTable(0)
+        let mtbody = clearTable(1)
+        for (const [key, rank] of Object.entries(data)) {
+            info = key.split('-')
+            let name = info[0]
+            let id = info[1]
+            let gender = info[2];
+            let row = document.createElement('tr');
+            row.classList.add('combo__row')
+            let td = document.createElement('td');
+            row.setAttribute('id', id);
+            td.appendChild(document.createTextNode(name))
+            row.appendChild(td)
+
+            let startd = document.createElement('td');
+            startd.classList.add('gender__rank');
+            startd.appendChild(document.createTextNode(rank))
+            row.appendChild(startd)
+
+            let ops = document.createElement('td');
+            ops.classList.add('combo__operations')
+            //<button class="gender__removeName">Taka af lista</button>
+            let bt = document.createElement('button')
+            bt.classList.add('gender__removeName')
+            bt.addEventListener('click', removeNameFromList)
+            bt.appendChild(document.createTextNode("Taka af Lista"))
+            ops.appendChild(bt);
+            row.appendChild(ops)
+            if (gender == 1)
+                ftbody.appendChild(row)
+            if (gender == 0)
+                mtbody.appendChild(row)
+            starConvertSingleRow(row);
+
+        }
+
 
     }
 
@@ -29,9 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateRank(e) {
         let grandpapa = e.target.parentNode.parentNode
+        console.log(grandpapa)
         let parent = e.target.parentNode;
-        let nametd = grandpapa.querySelector('.gender__name');
-        let id = nametd.getAttribute('id');
+        let id = grandpapa.getAttribute('id');
         let currank = parent.classList[0]
         let stars = parent.querySelectorAll('.filled');
         let rank = stars[stars.length - 1].classList[4].split('-')[1];
@@ -115,6 +207,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function starConvertSingleRow(row) {
+        let ranks = row.querySelectorAll('.gender__rank');
+        ranks.forEach(rank => {
+            let value = parseInt(rank.textContent);
+            while (rank.firstChild)
+                rank.removeChild(rank.firstChild);
+            for (let i = 1; i < 6; i++) {
+                if (i <= value)
+                    rank.appendChild(createFilledStar(i))
+                else
+                    rank.appendChild(createEmptyStar(i));
+            }
+        })
+
+    }
     function createEmptyStar(rank) {
         let star = document.createElement('i');
         star.classList.add('far');
@@ -142,10 +249,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
         let views = document.querySelectorAll('.viewliked__window');
-        views.forEach(view => view.classList.remove('viewliked__active'))
         let no = tabno.split('tab')[1];
+        if (parseInt(no) === 2) return;
+        views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
+        document.querySelector('.select__selected').textContent = "Velja"
+
     }
 
     function sendUpdateRating(id, rating) {
@@ -162,4 +272,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(data)
             });
     }
+
 })

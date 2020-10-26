@@ -37,8 +37,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<User> findByName(String name) {
-        return this.repository.findByName(name);
+    public List<User> findAllByNameLike(String name) {
+        return this.repository.findAllByNameLike(name);
     }
 
     @Override

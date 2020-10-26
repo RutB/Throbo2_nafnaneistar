@@ -1,15 +1,14 @@
 @import 'components/form.css';
 
 
-.main{
+.main {
     margin: 2em auto;
 
 }
 
-.linkHead__content{
+.linkHead__content {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
-

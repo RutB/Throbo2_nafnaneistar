@@ -4,11 +4,13 @@
     justify-content: space-evenly;
     align-items: center;
 }
+
 .form * {
     margin: .5em 0;
 }
 
-.form__input,.form__button {
+.form__input,
+.form__button {
     height: 3.5rem;
     font-size: 1.75rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -25,6 +27,7 @@
     cursor: pointer;
     width: 80%
 }
+
 .form__button {
     background-color: var(--bt-color);
 }
@@ -34,16 +37,18 @@
     background-color: var(--bt-color-lg);
 }
 
-.form__alert{
+.form__alert {
     font-size: 1.5rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     /*visibility: hidden;*/
 }
 
-.form__input:focus::placeholder {
+.form__input:focus::placeholder,
+button:focus::placeholder {
     color: transparent;
 }
+
 ::placeholder {
     text-align: center;
     font-size: 1.75rem;
@@ -52,7 +57,9 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .form__input,.form__button {
+
+    .form__input,
+    .form__button {
         height: 3.5rem;
         font-size: 1.75rem;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -61,6 +68,7 @@
         width: 90%;
         border: none;
     }
+
     .form__button {
         width: 80%;
     }

@@ -30,18 +30,9 @@ public class NameController {
         this.nameService = nameService;
     }
 
-    @RequestMapping(value = "/viewnames", method = RequestMethod.GET)
-    public String ViewNames(Model model, HttpSession session) {
-        User currentUser = (User) session.getAttribute("currentUser");
-        if(!UserUtils.isLoggedIn(currentUser))
-            return "redirect:/login";
-        model.addAttribute("user", currentUser);
-        model.addAttribute("names", nameService.findAll());
-        return "viewnames";
-    }
 
     @RequestMapping(value = "/swipe", method = RequestMethod.GET)
-    public String SwipeNames(Model model, HttpSession session) {
+    public String swipeNames(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser))
             return "redirect:/login";
@@ -58,7 +49,7 @@ public class NameController {
     }
 
     @RequestMapping(value = "/viewliked", method = RequestMethod.GET)
-    public String ViewLiked(Model model, HttpSession session) {
+    public String viewLiked(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser)) return "redirect:/login";
                 
@@ -78,6 +69,7 @@ public class NameController {
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
 
         String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
+        System.out.println(currentUser.getName().split(" ")[0]);
         ArrayList<User> partners = new ArrayList<User>();
         for(Long id : currentUser.getLinkedPartners())
             partners.add(userService.findById(id).get());

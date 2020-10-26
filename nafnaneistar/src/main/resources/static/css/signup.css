@@ -7,9 +7,11 @@
     justify-content: center;
 
 }
+
 .signup__form {
     background-color: lightpink;
 }
+
 ::placeholder {
     padding-left: .5em;
 }

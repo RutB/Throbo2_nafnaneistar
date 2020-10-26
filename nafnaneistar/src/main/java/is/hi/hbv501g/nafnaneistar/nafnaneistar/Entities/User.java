@@ -3,6 +3,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +71,10 @@ public class User {
         return this.availableNames;
     }
 
+    public void removeApprovedName(Integer id){
+        this.approvedNames.remove(id);
+    }
+
     public void addLinkedPartner(Long id){
         this.linkedPartners.add(id);
     }
@@ -116,7 +121,7 @@ public class User {
     }
 
     public String getName(){
-        return this.name;
+        return StringUtils.capitalize(this.name);
     }
 
     public void setName(String name){

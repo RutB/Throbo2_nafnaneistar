@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String Login(Model model, HttpSession session) {
+    public String login(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(UserUtils.isLoggedIn(currentUser))
             return "redirect:/swipe";
@@ -38,14 +38,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String PostLogin(@RequestParam(value = "email", required = true) String email,
+    public String postLogin(@RequestParam(value = "email", required = true) String email,
             @RequestParam(value = "password", required = true) String password, Model model) {
         model.addAttribute("users", userService.findAll());
         return "Login";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String Signup(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+    public String signup(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         model.addAttribute("names", nameService.findAll());
         model.addAttribute("users", userService.findAll());
 
@@ -59,20 +59,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String SignupForm(Model model) {
+    public String signupForm(Model model) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", new User());
         return "Signup";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String LogOut(Model model, HttpSession session) {
+    public String logOut(Model model, HttpSession session) {
         session.removeAttribute("currentUser");
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/linkpartner", method = RequestMethod.GET)
-    public String LinkpartnerForm(Model model, HttpSession session) {
+    public String linkpartnerForm(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null)
             return "redirect:/login";
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/linkpartner", method = RequestMethod.POST)
-    public String Linkpartner(@RequestParam(value = "email", required = true) String email, Model model,
+    public String linkpartner(@RequestParam(value = "email", required = true) String email, Model model,
             HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser))

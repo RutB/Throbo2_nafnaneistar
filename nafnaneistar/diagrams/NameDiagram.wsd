@@ -17,14 +17,14 @@ class NameController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +NameController(userService : UserService, nameService : NameService)
-    +SwipeNames(model: Model, session HttpSession) : String
+    +swipeNames(model: Model, session HttpSession) : String
 }
 
 class HomeController <<@Controller>> {
     -userService : UserService
     -nameService : NameService
     +HomeController(userService : UserService, nameService : NameService)
-    +Home(model : Model) : String
+    +home(model : Model) : String
 }
 class NameRestController <<@RestController>> {
     -userService : UserService
