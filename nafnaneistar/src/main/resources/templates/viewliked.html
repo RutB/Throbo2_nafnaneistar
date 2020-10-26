@@ -23,7 +23,19 @@
                 </div>
             </span>
             <span id="tab3" class="viewliked__tab">Gefa Nafni einkunn</span>
-            <span id="tab4" class="viewliked__tab">Option 4</span>
+            <span id="tab4" class="viewliked__tab">Skoða nöfn með: 
+                <div class="viewliked__select"><span class="select__selected">Einkunn</span> <i class="fas select__down fa-caret-down"></i>
+                    <div class="viewliked__selectmenu">
+                        <span class="select__option" id="rank5"><span class="gender__rank">5</span></span>
+                        <span class="select__option" id="rank4"><span class="gender__rank">4</span></span>                        
+                        <span class="select__option" id="rank3"><span class="gender__rank">3</span></span>                        
+                        <span class="select__option" id="rank2"><span class="gender__rank">2</span></span>
+                        <span class="select__option" id="rank1"><span class="gender__rank">1</span></span>
+                        <span class="select__option" id="rank0"><span class="gender__rank">0</span></span>
+
+                    </div>
+                </div>
+            </span>
             <span id="tab5" class="viewliked__tab">Option 5</span>
         </section>
         <section id="window1" class="viewliked__view viewliked__window viewliked__active">
@@ -119,6 +131,41 @@
 
             </table>
         </section>
+        <section id="window4" class="viewliked__view viewliked__window">
+            <div class="viewliked__container">
+               <h2 class="rating__title">Nöfn með <span class="rating__rank"></span></h2> 
+               <div class="rating__tables">
+               <table class="rating__table gender__table">
+                   <caption>Kvenkyns</caption>
+                    <thead>
+                        <tr class="table__headerrow">
+                            <th>Nafn</th>
+                            <th>Einkunn</th>
+                            <th>Aðgerðir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <table class="rating__table gender__table">
+                    <caption>Karlkyns</caption>
+                    <thead>
+                        <tr class="table__headerrow">
+                            <th>Nafn</th>
+                            <th>Einkunn</th>
+                            <th>Aðgerðir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+        </section>
+        
     </main>
     <script th:src="@{/js/viewliked.js}"></script>
 </body>

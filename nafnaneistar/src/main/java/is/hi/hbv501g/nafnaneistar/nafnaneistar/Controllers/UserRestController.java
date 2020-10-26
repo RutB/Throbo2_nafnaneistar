@@ -1,5 +1,8 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.HashMap;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
@@ -103,6 +107,26 @@ public class UserRestController {
             return false;
         }
     }
+
+    @GetMapping(path="/viewliked/getrankedList", produces = "application/json")
+    public HashMap<String,Integer> getrankedList(@RequestParam String id, HttpSession session) 
+    {   HashMap<String,Integer> ncs = new HashMap<>();
+        User currentUser = (User) session.getAttribute("currentUser");
+        Set<Integer> ids = currentUser.getApprovedNames().keySet();
+        Integer rank = Integer.parseInt(id);
+        for(Integer i : ids){
+
+            if(i == rank){
+                NameCard nc = nameService.findById(id).orElse(null);
+                int avg = (currentUser.getApprovedNames().get(id) + partner.getApprovedNames().get(id));
+                avg = (avg == 0) ? avg : avg/2;
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),avg); 
+            }
+        }
+        return ncs;      
+    }
+
+
 
 
 }

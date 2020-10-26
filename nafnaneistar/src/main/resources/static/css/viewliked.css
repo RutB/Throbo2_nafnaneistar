@@ -51,7 +51,7 @@
     transition: background-color 300ms ease-in;
 }
 
-.viewliked__tab:nth-of-type(2) {
+.viewliked__tab:nth-of-type(2),.viewliked__tab:nth-of-type(4) {
     line-height: 1.5;
     display: flex;
     flex-direction: column;
@@ -89,6 +89,12 @@
     position: relative;
     transform: scaleY(1);
 }
+.viewliked__tab:nth-of-type(4):hover .viewliked__selectmenu {
+    transition: transform 300ms ease-in;
+    position: relative;
+    transform: scaleY(1);
+}
+
 
 .viewliked__select:hover .viewliked__selectmenu {
     transition: transform 300ms ease-in;
