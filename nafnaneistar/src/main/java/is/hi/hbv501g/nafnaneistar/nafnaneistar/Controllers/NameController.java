@@ -115,10 +115,11 @@ public class NameController {
     }
 
     /**
-     * 
+     * On accessing /searchname from the domain, if the user is logged in and has a
+     * valid session the User is rendered the searchname template
      * @param model 
-     * 
-     * 
+     * @param session
+     * @return searchname template rendered
      */
     @RequestMapping(value = "/searchname", method = RequestMethod.GET)
     public String searchName(Model model, HttpSession session) {
@@ -130,6 +131,13 @@ public class NameController {
         return "searchname";
     }
 
+    /**
+     * Takes input from user and populates the model with names that are like the users input 
+     * @param searchedName String which is used for a search of available names
+     * @param model Model populated with related data
+     * @param session Current users session
+     * @return searchname template
+     */
     @RequestMapping(value="/searchname", method = RequestMethod.POST)
     public String searchName(@RequestParam(value = "searchedName", required = true)
             String searchedName, Model model, HttpSession session) {
