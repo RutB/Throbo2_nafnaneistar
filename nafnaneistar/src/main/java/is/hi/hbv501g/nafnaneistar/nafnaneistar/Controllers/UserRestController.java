@@ -114,13 +114,12 @@ public class UserRestController {
         User currentUser = (User) session.getAttribute("currentUser");
         Set<Integer> ids = currentUser.getApprovedNames().keySet();
         Integer rank = Integer.parseInt(id);
-        for(Integer i : ids){
 
-            if(i == rank){
-                NameCard nc = nameService.findById(id).orElse(null);
-                int avg = (currentUser.getApprovedNames().get(id) + partner.getApprovedNames().get(id));
-                avg = (avg == 0) ? avg : avg/2;
-                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),avg); 
+        for(Integer i : ids){
+            System.out.println(currentUser.getApprovedNames().get(i));
+            if(currentUser.getApprovedNames().get(i) == rank){
+                NameCard nc = nameService.findById(i).orElse(null);
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),rank); 
             }
         }
         return ncs;      
