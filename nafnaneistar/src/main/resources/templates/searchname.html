@@ -12,7 +12,12 @@
     <main class="main">
         <form th:action="@{searchname}" method="post">
             <input type="text" th:name="searchedName" id="searchedname" placeholder="Leita að nafni" required/>
-            <button type="submit">Leita</button> 
+            <button type="submit">Leita</button>
+            <select>
+                <option value="3" selected>Öll kyn</option>
+                <option value="0">Karlkyn</option>
+                <option value="1">Kvenkyn</option>    
+            </select>
         </form>
         <div th:switch="${names}">
             <p th:case="null">---</p>
@@ -30,7 +35,6 @@
                         <td th:text="${name.getName()}" ></td>
                         <td th:text="${name.getDescription()}"></td>
                     </tr>
-                        <!--<td th:text="${name.getDescription()}"></td> -->
                 </tbody>
             </table>    
             </div>

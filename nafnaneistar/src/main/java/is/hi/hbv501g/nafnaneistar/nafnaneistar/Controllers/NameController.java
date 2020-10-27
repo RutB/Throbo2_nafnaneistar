@@ -131,6 +131,7 @@ public class NameController {
         return "searchname";
     }
 
+    // 0 er male,  1 er female, 3 bæði
     /**
      * Takes input from user and populates the model with names that are like the users input 
      * @param searchedName String which is used for a search of available names
@@ -139,8 +140,11 @@ public class NameController {
      * @return searchname template
      */
     @RequestMapping(value="/searchname", method = RequestMethod.POST)
-    public String searchName(@RequestParam(value = "searchedName", required = true)
-            String searchedName, Model model, HttpSession session) {
+    public String searchName(
+            @RequestParam(required = true) String searchedName,
+            @RequestParam(required = false) String female,
+            @RequestParam(required = false) String Male,
+            Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
@@ -154,4 +158,22 @@ public class NameController {
         return "searchname";
     }
 
+    
+    /*
+    @RequestMapping(value="/searchname", method = RequestMethod.POST)
+    public String searchFemaleName(
+            @RequestParam(value = "searchedName", required = true) 
+            String searchedName, Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser)){
+            return "redirect:login";
+        }
+        String s = searchedName.concat("%");
+        s = StringUtils.capitalize(s);
+        
+        //ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService;
+        
+        return "searchname";
+    }
+    */
 }
