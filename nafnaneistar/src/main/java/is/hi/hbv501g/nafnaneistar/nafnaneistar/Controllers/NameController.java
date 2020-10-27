@@ -145,6 +145,8 @@ public class NameController {
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
         }
+        model.addAttribute("user", currentUser);
+        
         String s = searchedName.concat("%");
         s = StringUtils.capitalize(s);
         ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
