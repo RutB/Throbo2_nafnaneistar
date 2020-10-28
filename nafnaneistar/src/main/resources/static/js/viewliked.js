@@ -347,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sortTable(table) {
+        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝZÞÆÖ`
         let rows,x,y,shouldSwitch;
         let switching = true;
         let i;
@@ -357,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 shouldSwitch = false;
                 x = rows[i].querySelector('td');
                 y = rows[j].querySelector('td');
-               if(x.textContent.toLowerCase() > y.textContent.toLowerCase()){
+               if(LETTERS.indexOf(x.textContent[0].toUpperCase()) > LETTERS.indexOf(y.textContent[0].toUpperCase())){
                    shouldSwitch = true;
                    break;
                }
