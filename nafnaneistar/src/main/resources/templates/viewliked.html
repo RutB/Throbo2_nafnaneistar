@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </span>
-            <span id="tab5" class="viewliked__tab">Option 5</span>
+            <span id="tab5" class="viewliked__tab">Nafna Samsetningar</span>
         </section>
         <section id="window1" class="viewliked__view viewliked__window viewliked__active">
             <div class="viewliked__container">
@@ -165,7 +165,33 @@
             </div>
 
         </section>
-        
+        <section id="window5" class="viewliked__view viewliked__window">
+            <div class="viewliked__container">
+                <div class="viewliked__namemaker">
+                    <div class="viewliked__namemakerText">
+                        <h2 class="viewliked__title">Nafna Samsetningar</h2>
+                        <p>Settu inn eftirnafn og fáðu uppástungur fyrir nafn</p>
+                        <input class="form__input" type="text" id="lastname" placeholder="Eftirnafn">
+                    </div>
+                    <div class="viewliked__namemakerCriteria">
+                        <label>Karlkyns
+                            <input checked class="gender__radio" type="radio" name="gender" id="male">
+                        </label>
+                        <label>Kvenkyns
+                            <input class="gender__radio" type="radio" name="gender" id="female">
+                        </label>
+                    </div>
+                    <div class="viewliked__namemakerButtons">
+                        <button class="viewliked__nameButton">Fá Nafn</button>
+                        <button class="viewliked__nameButton">Fá Nafn og Millinafn</button>
+                    </div>
+                    <span class="viewliked__nameResult"></span>
+                </div>
+
+               
+            
+            </div>
+        </section>
     </main>
     <script th:src="@{/js/viewliked.js}"></script>
 </body>

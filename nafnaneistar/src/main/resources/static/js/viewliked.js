@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
         star.addEventListener('click', updateRank)
     })
 
+    let window5 = document.querySelector("#window5")
+    let nameButtons = window5.querySelectorAll('.viewliked__nameButton');
+    nameButtons.forEach(nb => nb.addEventListener('click', createRandomName))
+
     let removeButtons = document.querySelectorAll('.gender__removeName');
     removeButtons.forEach(button => button.addEventListener('click', removeNameFromList))
 
@@ -27,6 +31,40 @@ document.addEventListener('DOMContentLoaded', () => {
     let tab4 = document.querySelector("#tab4");
     let rankSelect = tab4.querySelectorAll('.select__option');;
     rankSelect.forEach(select => select.addEventListener('click', initRankSelect))
+
+    function createRandomName(e){
+        let result = document.querySelector('.viewliked__nameResult')
+        let radioButtons = document.querySelectorAll('.gender__radio');
+        let lastname = document.querySelector('#lastname').value
+        let gender,middle;
+        radioButtons.forEach(rb => {
+            if(rb.checked) 
+                gender = (rb.getAttribute('id') === "female") ? 1 : 0;
+            
+        });
+        if(e.target.textContent.toLowerCase().includes('millinafn'))
+            middle = true
+        let url = (middle) ? `${window.location.origin}/viewliked/namemaker?middle=${middle}&gender=${gender}` : `${window.location.origin}/viewliked/namemaker?gender=${gender}`;
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                let name = ""
+                data.forEach(d => {
+                    if(d !== "")
+                        name += d;
+                })
+                name += " "+lastname;
+                result.textContent = name
+            });
+
+
+    }
 
     function removeNameFromList(e) {
         let w3 = document.querySelector('#window3')
@@ -369,4 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+
 })
