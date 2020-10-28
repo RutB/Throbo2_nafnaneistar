@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-
-
     function updateRank(e) {
         let grandpapa = e.target.parentNode.parentNode
         console.log(grandpapa)
