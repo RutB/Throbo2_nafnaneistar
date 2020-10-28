@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rankSelect.forEach(select => select.addEventListener('click', initRankSelect))
 
     function removeNameFromList(e) {
+        let w3 = document.querySelector('#window3')
         let grandpapa = e.target.parentNode.parentNode; //row
         let id = grandpapa.getAttribute('id');
         let url = `${window.location.origin}/viewliked/remove?id=${id}`;
@@ -43,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((data) => {
                 if (data)
                     grandpapa.remove();
+                    let rows = w3.querySelectorAll('.gender__row');
+                    for(let row of rows){
+                        if(parseInt(row.getAttribute('id')) === parseInt(id)){
+                            row.remove();
+                            break;
+                        }
+                    }
             })
     }
 
@@ -120,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (gender == 0)
                 mtbody.appendChild(row)
             starConvertSingleRow(row);
+            
 
         }
 
@@ -277,10 +286,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showTopList(id){
         tabs.forEach(tab => tab.classList.remove('--active'));
+        let gender__rank = document.querySelector('.rating__title');
+        let ranks = gender__rank.querySelector('.gender__rank');
         tabs[3].classList.add('--active')
         document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
         document.querySelector('#window4').classList.add("viewliked__active")
         let url = `${window.location.origin}/viewliked/getrankedList?id=${id}`;
+        ranks.textContent = id
+        starConvertSingleRow(gender__rank)
         fetch(url)
         .then((resp) => {
             if (resp.status !== 200) {
@@ -292,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((data) => {
             let tables = document.querySelectorAll('.rating__table');
             populateTable(data, tables);
+            tables.forEach(t => sortTable(t))
         });
     }
 
@@ -303,8 +317,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
         let views = document.querySelectorAll('.viewliked__window');
-        let no = tabno.split('tab')[1];
-        if (parseInt(no) === 2 || parseInt(no)=== 4) return; 
+        let no = parseInt(tabno.split('tab')[1]);
+        if( no ===3){
+            let window3 = document.querySelector('#window3');
+            let tables = window3.querySelectorAll('.gender__table')
+            tables.forEach(t => sortTable(t))
+        }
+        if (no === 2 || no === 4) return; 
         views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
@@ -327,4 +346,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    function sortTable(table) {
+        let rows,x,y,shouldSwitch;
+        let switching = true;
+        let i;
+        while(switching){
+            switching = false;
+            rows = table.rows;
+            for(i = 1, j=2 ; i< (rows.length-1); i++,j++){
+                shouldSwitch = false;
+                x = rows[i].querySelector('td');
+                y = rows[j].querySelector('td');
+               if(x.textContent.toLowerCase() > y.textContent.toLowerCase()){
+                   shouldSwitch = true;
+                   break;
+               }
+            }
+            if(shouldSwitch){
+                rows[i].parentNode.insertBefore(rows[i+1],rows[i]);
+                switching = true;
+            }
+        }
+    }
 })
