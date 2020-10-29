@@ -17,7 +17,6 @@ import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
-import javassist.expr.Instanceof;
 
 /**
  * UserRestController contains methods and functions to process 
@@ -101,7 +100,6 @@ public class UserRestController {
     @GetMapping(path="/viewliked/remove", produces = "application/json")
     public boolean removeFromApproved(@RequestParam String id, HttpSession session) 
     {  User user = (User) session.getAttribute("currentUser");
-
         try {
             user.removeApprovedName(Integer.parseInt(id));
             userService.save(user);
@@ -111,6 +109,12 @@ public class UserRestController {
         }
     }
 
+    /**
+     * A fetch call to get the list of names that match the given rank specified in the id of the element
+     * @param id - id of the element that represents the rank of the name
+     * @param session - to get from current user
+     * @return - Returns a list of approved names matching the selected rank
+     */
     @GetMapping(path="/viewliked/getrankedList", produces = "application/json")
     public HashMap<String,Integer> getrankedList(@RequestParam String id, HttpSession session) 
     {   HashMap<String,Integer> ncs = new HashMap<>();
@@ -123,8 +127,6 @@ public class UserRestController {
                 ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),value); 
             }
         });
-
-        
         return ncs;
 
     }

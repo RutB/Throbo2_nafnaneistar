@@ -98,9 +98,12 @@ public class NameController {
 
         String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
         ArrayList<User> partners = new ArrayList<User>();
-        for(Long id : currentUser.getLinkedPartners())
-            partners.add(userService.findById(id).get());
-
+        for(Long id : currentUser.getLinkedPartners()) {
+            User partner = userService.findById(id).get();
+            if(!partners.contains(partner))
+                 partners.add(partner);
+        }
+            
         HashMap<NameCard,Integer> ncs = new HashMap<>();
         currentUser.getApprovedNames().forEach((key,value) -> ncs.put((nameService.findById(key).orElse(null)),value)); 
 
