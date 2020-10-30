@@ -240,6 +240,41 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+.gender__nameInfo{
+    display: flex;
+    flex-direction: row;
+
+}
+.gender__name {
+    position: relative;
+    font-size: 1.1em;
+}
+.gender__name span {
+    width: 80%;
+}
+.gener__name i {
+    width: 20%;
+}
+.gender__description {
+    position: absolute;
+    z-index: 999999999999;
+    display: none;
+    top: 1.5em;
+    background-color: var(--nav-bg-color-lg);
+    padding: 1em;
+    font-size: 1.1em;
+    max-width: 15em;
+    min-width: 15em;
+    border-radius: 2em;
+}
+
+.gender__name:hover .gender__description {
+    display: inline;
+}
+.fa-info {
+    color:var(--font-color) ;
+}
+
 
 .combo__tables,.rating__tables {
     display: flex;
