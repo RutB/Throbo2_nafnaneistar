@@ -1,5 +1,7 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.lang.reflect.Array;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -30,7 +32,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if(UserUtils.isLoggedIn(currentUser))
+        if (UserUtils.isLoggedIn(currentUser))
             return "redirect:/swipe";
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", new User());
@@ -79,8 +81,11 @@ public class UserController {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", currentUser);
         System.out.println("current linked partner" + currentUser.getLinkedPartners());
+
         for (Long id : currentUser.getLinkedPartners()) {
+           // ArrayList<Long> sko = userService.findById(id);
             System.out.println(userService.findById(id));
+            //model.addAttribute("linkedPartner", userService.findById(id));
         }
         return "linkpartner";
     }
@@ -93,19 +98,14 @@ public class UserController {
             return "redirect:/login";
         if (userService.findByEmail(email) == null) {
             System.out.print("onei thetta var rangt email");
+            
             return "linkpartner.html";
         } else {
-            System.out.println("User fyrir netfang" + userService.findByEmail(email));
-
-            System.out.println("ID fyrir netfang" + userService.findByEmail(email).getId());
-            currentUser.addLinkedPartner(userService.findByEmail(email).getId()); // current user að uppfæra linked list
-                                                                                  // og tengjast email user
-            userService.findByEmail(email).addLinkedPartner(currentUser.getId()); // email user að uppfæra linked list
-                                                                                  // og tengjast current user
+            currentUser.addLinkedPartner(userService.findByEmail(email).getId()); // current user að uppfæra linked list og tengjast email user
+            userService.findByEmail(email).addLinkedPartner(currentUser.getId()); // email user að uppfæra linked list og tengjast current user
             userService.save(currentUser);
-            System.out.println("current linked partner" + currentUser.getLinkedPartners());
-
-            System.out.println("email user linked parnter " + userService.findByEmail(email).getLinkedPartners());
+            System.out.println("email user linked part" + userService.findByEmail(email).getLinkedPartners());
+           System.out.println("Notandi fyrir netfang"+ userService.findByEmail(email));
             return "redirect:/linkpartner";
         }
     }

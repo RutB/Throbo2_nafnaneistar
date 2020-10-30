@@ -1,50 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    const loginform = document.querySelector('.linking__form');
-    loginform.addEventListener('submit', submitHandler);
-    var interval;
+    const linkingform = document.querySelector('.linking__form');
+    linkingform.addEventListener('submit', submitHandler);
 
     function submitHandler(e){
         e.preventDefault();
-       
+        let error = document.querySelector('.error__message');
+        error.classList.add('--hidden')
+        
         let user = document.querySelector('#email').value
         let url = `${window.location.origin}/linkpartner/check/${user}`
-        validateLogin(url)
-    }
-    function el(tag,className,text = null){
-        let element = document.createElement(tag)
-        element.classList.add(className)
-        if(text)
-            element.appendChild(document.createTextNode(text))
+        console.log(url);
+        validatePartner(url)
     }
 
-    function createAlert(text){
-        //document.getElementById("hiddenAlert").style.visibility = "visible"
-        
-        let alertText = el('p','form__alert', text)
 
-        let alertContainer = el('div','alert__container')
-        alertContainer.appendChild(alertText)
-        document.querySelector(".linking__submit").appendChild(alertContainer)
-
-    }
-
-    function validateLogin(url){
+    function validatePartner(url){
         fetch(url).then((resp) => {
             if(resp.status !== 200) {
                 console.log(`Error ${resp.text()}`);
+                console.log('Err');
                 return
             }
             return resp.json()}).then((data)=>{   
-                console.log(data)
-                if(data)
-                    createAlert("Tenging tókst");
-                else
-                    createAlert("Tenging mistókst");    
+                if(!data)
+                    ShowError()
+            //connectPartner(data)
+            console.log(data);
+                 
         })
     }
 
+    function connectPartner(data){
+        let code = (error.classList.contains('--hidden')) ? 1 : 0;
 
+    }
+    function ShowError(message = null){
+        let error = document.querySelector('.error__message');
+        let username = document.querySelector('#email');
+        console.log(username.value.trim())
+        if(username.value.trim().length === 0)
+            message = "Vinsamlegast sláðu inn netfang"
+        if (!username.value.includes("@")){
+            message = "Ath að slá inn gilt netfang"
+        }
+        error.classList.remove("--hidden")
+        if(message)
+            error.textContent = message
+    }
 
     
 });

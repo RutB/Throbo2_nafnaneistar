@@ -20,10 +20,23 @@
                     <input class="form__input" type="text" th:name="email" id="email" placeholder="Netfang" required/>
                     <button  class="form__button" type="submit" > Tengjast</button>
         <!--  <p id = "hiddenAlert" class="form__alert"> Ónei þessi notandi er ekki til, prufaðu aftur </p> -->     
-                </form>
+                 <span class="error__message --hidden">Vitlaust netfang</span>
+                 </form>
             </div>
+            
+            <p class = "link_userName" th:text= "${user.getName()}"> </p>
+            <table class="linked__table">
+                <caption class= " link_cap">þú ert tengd(ur) við </caption>
+                <thead>
+                    <tr class="linkTable__headerrow">
+                        <th>Nafn</th>
+                        <th>Netfang</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
+            </table>
         </section>
     </main>
- <script th:src="@{/js/linkpartner.js}"></script>  
+    <script th:src="@{/js/linkpartner.js}"></script>  
 </body>
 </html>

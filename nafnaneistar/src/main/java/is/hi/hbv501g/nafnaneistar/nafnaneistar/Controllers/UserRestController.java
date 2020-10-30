@@ -41,10 +41,11 @@ public class UserRestController {
         User user  = userService.findByEmail(email);
         
         if(user == null){
-           // session.setAttribute("currentUser", user);
+            session.setAttribute("validUser", true);
            //ónei þetta var rangt email
             return false;
         }
+        session.setAttribute("validUser", false);
         return true;
         
     }

@@ -61,6 +61,8 @@ public class NameController {
 
         int totalfnames = nameService.countByGender(true);
         int totalmnames = nameService.countByGender(false);
+        System.out.print(totalfnames);
+        System.out.print(totalmnames);
         
         int femaledisliked = Math.abs(totalfnames - totalfnamesleft + fnames);
         int maledisliked = Math.abs(totalmnames - totalmnamesleft + mnames);
