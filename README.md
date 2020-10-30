@@ -4,6 +4,13 @@ Heimasíða:
 http://www.nafnaneistar.xyz/
 
 
+#Fyrir Code Exchange:
+* Use Case Document: https://notendur.hi.is/ojv1/hugbo1/Use%20Case%20Document.pdf 
+* UML diagrams: https://notendur.hi.is/ojv1/hugbo1/Assignment%202%20-%20Content.pdf 
+* Class Diagram: https://notendur.hi.is/ojv1/hugbo1/Assignment%203/Assignment%203%20-%20Class%20Diagram.pdf
+* Class Diagram svg: https://notendur.hi.is/ojv1/hugbo1/Assignment%203/Nafnaneistar.svg
+
+
 
 #TODO
 * Code exchange 1.Nóv - spurningum að yfirfara kóða - Póstur sendur
