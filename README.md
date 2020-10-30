@@ -14,6 +14,7 @@ http://www.nafnaneistar.xyz/
 Það þarf að vera með á vélinni sem keyrir forritið Java 11 eða nýrra.
 Forritið keyrir sjálfgefið á http://localhost:7979/ og taka skal eftir að það er port 7979 svo ef að það port er í notkun þarf að slökkva á þeirri þjónustu sem er keyrand þar.
 * ef að repo-ið er sótt er hægt að breyta sjálfgefnu porti í application.properties skránni og breyta línunni sem inniheldur: server.port=7979 og breyta þá 7979 í eitthvað annað
+
 Það ætti að vera hægt bara að clone-a repoið eða sækja repo-ið og keyra í VsCode með springboot extension pakkanum eða í öðrum studdum ritlum (t.d. Eclipse).
 Einnig er hægt að sækja JAR skránna frá : https://notendur.hi.is/ojv1/hugbo1/nafnaneistar-301020-SNAPSHOT.jar og keyra með java -jar nafnaneistar-301020-SNAPSHOT.jar og þá keyrir forritið á porti 7979
 
