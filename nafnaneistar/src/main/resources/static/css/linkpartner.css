@@ -13,14 +13,12 @@
     align-items: center;
 }
 .error__message {
-    /* stolið :D*/
     color: red;
     font-size: 1.1em;
     font-weight: bold;
 }
 
 .error__message.--hidden {
-    /* stolið :D*/
     display: none;
 }
 
