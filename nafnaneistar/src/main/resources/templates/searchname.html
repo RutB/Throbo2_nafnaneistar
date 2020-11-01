@@ -1,0 +1,41 @@
+<!--HAT - HTML fyrir leit af nafni-->
+<!DOCTYPE html>
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/img/fav.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Leit að nafni</title>
+</head>
+<header th:replace="Swipe.html :: header"></header>
+<body>
+    <main class="main">
+        <form th:action="@{searchname}" method="post">
+            <input type="text" th:name="searchedName" id="searchedname" placeholder="Leita að nafni" required/>
+            <button type="submit">Leita</button> 
+        </form>
+        <div th:switch="${names}">
+            <p th:case="null">---</p>
+            <div th:case="*">
+            <h2>Leit skilaði:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nafn:</th>
+                        <th>Meining:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="name : ${names}">
+                        <td th:text="${name.getName()}" ></td>
+                        <td th:text="${name.getDescription()}"></td>
+                    </tr>
+                        <!--<td th:text="${name.getDescription()}"></td> -->
+                </tbody>
+            </table>    
+            </div>
+        </div>
+    </main>
+</body>
+</html>

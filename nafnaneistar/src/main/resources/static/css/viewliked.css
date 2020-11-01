@@ -51,7 +51,7 @@
     transition: background-color 300ms ease-in;
 }
 
-.viewliked__tab:nth-of-type(2) {
+.viewliked__tab:nth-of-type(2),.viewliked__tab:nth-of-type(4) {
     line-height: 1.5;
     display: flex;
     flex-direction: column;
@@ -89,6 +89,12 @@
     position: relative;
     transform: scaleY(1);
 }
+.viewliked__tab:nth-of-type(4):hover .viewliked__selectmenu {
+    transition: transform 300ms ease-in;
+    position: relative;
+    transform: scaleY(1);
+}
+
 
 .viewliked__select:hover .viewliked__selectmenu {
     transition: transform 300ms ease-in;
@@ -234,8 +240,43 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+.gender__nameInfo{
+    display: flex;
+    flex-direction: row;
 
-.combo__tables {
+}
+.gender__name {
+    position: relative;
+    font-size: 1.1em;
+}
+.gender__name span {
+    width: 80%;
+}
+.gener__name i {
+    width: 20%;
+}
+.gender__description {
+    position: absolute;
+    z-index: 999999999999;
+    display: none;
+    top: 1.5em;
+    background-color: var(--nav-bg-color-lg);
+    padding: 1em;
+    font-size: 1.1em;
+    max-width: 15em;
+    min-width: 15em;
+    border-radius: 2em;
+}
+
+.gender__name:hover .gender__description {
+    display: inline;
+}
+.fa-info {
+    color:var(--font-color) ;
+}
+
+
+.combo__tables,.rating__tables {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -256,6 +297,89 @@
     background-color: lightcoral;
 }
 
+.viewliked__namemaker {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.viewliked__namemaker .form__input {
+    height: 1.75em;
+    font-size: 1.25em;
+    width: 70%;
+}
+.viewliked__namemaker .form__input::placeholder {
+    font-size: 1.25em;
+}
+.viewliked__namemakerText p {
+    margin: 1em 0;
+}
+.viewliked__namemakerCriteria, .viewliked__namemakerButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.viewliked__nameButton {
+    font-size: 1.1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    border-radius: .5em;
+    border: none;
+    color: var(--font-color);
+    justify-self: center;
+    cursor: pointer;
+    background-color: var(--bt-color);
+    min-width: 20%;
+    padding: .5em;
+    
+}
+
+.viewliked__nameButton:hover {
+    transition: background-color 300ms ease-in;
+    background-color: var(--bt-color-lg);
+}
+label {
+    color: var(--font-color);
+    font-size: 1.1em;
+    font-weight: 400;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--swipe-bg-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid var(--ambient-color);
+    cursor: pointer;
+}
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--ambient-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid var(--ambient-color);
+    cursor: pointer;
+}
+.viewliked__nameResult {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    width: 100%;
+    margin: 0 auto;
+}
 @media only screen and (max-width: 768px) {
     .viewliked__view {
         margin-top: 1em;

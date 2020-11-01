@@ -71,7 +71,9 @@ table {
     width: 100%;
     height: auto;
 }
-
+button:focus, button:focus-within,input:focus, input:focus-within,a:focus,a:focus-within{
+    outline:none;
+}
 @media only screen and (max-width: 768px) {
     html {
         font-size: 14px;

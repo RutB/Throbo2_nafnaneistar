@@ -1,3 +1,48 @@
+@keyframes swipe {
+    0% {transform: rotate(0deg);}
+    25% {transform: rotate(-25deg);}
+    50% {transform: rotate(0deg);}
+    75% {transform: rotate(25deg);}
+    100% {transform: rotate(0);}
+  }
+
+  @keyframes spin {
+    0% {transform: rotate(0deg);}
+    25% {transform: rotate(90deg);}
+    50% {transform: rotate(180deg);}
+    75% {transform: rotate(240deg);}
+    100% {transform: rotate(360deg);}
+  }
+
+  @keyframes dance {
+    0% {transform: rotateY(0deg);}
+    25% {transform: rotateY(90deg);}
+    50% {transform: rotateY(180deg);}
+    75% {transform: rotateY(240deg);}
+    100% {transform: rotateY(360deg);}
+  }
+
+  @keyframes search {
+    0% {
+        transform: scale(1.1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(1.3);
+    }
+    60% {
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+  }
+
 .nav {
     display: flex;
     height: 3em;
@@ -7,6 +52,7 @@
     background-color: var(--nav-bg-color);
     margin: auto 0;
     border-radius: 1em;
+    font-weight: bold;
 }
 
 .nav__links {
@@ -70,6 +116,35 @@
     background-color: var(--nav-bg-color-lg);
 }
 
+.nav__link:hover .fa-hand-pointer{
+    animation-name: swipe;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.nav__link:hover .fa-search{
+    animation-name: search;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+.nav__link:hover .fa-heart{
+    transition: transform 300ms ease-in;
+    transform: scale(1.1);
+}
+
+.nav__link:hover .fa-user-friends{
+    animation-name: dance;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+
+.nav__submenu:hover .fa-cog{
+    animation-name: spin;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
 .nav__sublink:hover {
     transition: background-color 300ms ease-in;
     background-color: var(--nav-bg-color);
@@ -126,6 +201,7 @@
 
 .nav__user {
     font-weight: bold;
+
 }
 
 @media only screen and (max-width: 768px) {

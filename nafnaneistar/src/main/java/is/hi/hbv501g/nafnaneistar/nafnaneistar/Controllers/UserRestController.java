@@ -1,5 +1,9 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.NameCard;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Entities.User;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.NameService;
 import is.hi.hbv501g.nafnaneistar.nafnaneistar.Services.UserService;
 import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
+/**
+ * UserRestController contains methods and functions to process 
+ * fetch calls from the viewing template
+ */
 @RestController
 public class UserRestController {
 
@@ -25,6 +34,14 @@ public class UserRestController {
         this.userService = userService;
     }
 
+    /**
+     * function that validates the information from the User to login, if the User with the given email matches 
+     * the given password the user is logged in
+     * @param email - Email of User
+     * @param password - Password of the User
+     * @param session - Session to keep information 
+     * @return true if the credentials were right, false otherwise
+     */
     @GetMapping(path="/login/check/{email}/{password}", produces = "application/json")
     public boolean checkLogin(@PathVariable String email, @PathVariable String password, HttpSession session) 
     {   
@@ -36,7 +53,13 @@ public class UserRestController {
         return false;
     }
 
-
+    /**
+     * A fetch call to update the rating for a users approvedName
+     * @param id id of the name to update
+     * @param rating a rating of 1-5 
+     * @param session manages the session of the user
+     * @return true or false depending if the operation was a success
+     */
     @GetMapping(path="/viewliked/updaterating", produces = "application/json")
     public boolean updateNameRating(@RequestParam String id,@RequestParam String rating, HttpSession session) 
     {   User currentUser = (User) session.getAttribute("currentUser");
@@ -52,6 +75,13 @@ public class UserRestController {
         }       
     }
 
+    /**
+     * A fetch call to process if the entered email is in use or not before a User 
+     * tries to use it to signup.
+     * @param email - the desired email to signup with
+     * @return true or false depending on if the email is in use or not
+     */
+    
     @GetMapping(path="/signup/checkemail", produces = "application/json")
     public boolean validateEmail(@RequestParam String email) 
     {   User user = userService.findByEmail(email);
@@ -81,17 +111,48 @@ public class UserRestController {
         }
     }
 
+    /**
+     * Processes if the User wants to remove name from approved Names, and removes the name from the 
+     * approved names
+     * @param id
+     * @param session
+     * @return
+     */
     @GetMapping(path="/viewliked/remove", produces = "application/json")
     public boolean removeFromApproved(@RequestParam String id, HttpSession session) 
     {  User user = (User) session.getAttribute("currentUser");
-
         try {
             user.removeApprovedName(Integer.parseInt(id));
+            userService.save(user);
             return true;
         } catch(Error e){
             return false;
         }
     }
+
+    /**
+     * A fetch call to get the list of names that match the given rank specified in the id of the element
+     * @param id - id of the element that represents the rank of the name
+     * @param session - to get from current user
+     * @return - Returns a list of approved names matching the selected rank
+     */
+    @GetMapping(path="/viewliked/getrankedList", produces = "application/json")
+    public HashMap<String,Integer> getrankedList(@RequestParam String id, HttpSession session) 
+    {   HashMap<String,Integer> ncs = new HashMap<>();
+        User currentUser = (User) session.getAttribute("currentUser"); 
+        Integer rank = Integer.parseInt(id);
+
+        currentUser.getApprovedNames().forEach((key,value) -> {
+            if(value.equals(rank)) {
+                NameCard nc = nameService.findById(key).orElse(null);
+                ncs.put(nc.getName()+"-"+nc.getId()+"-"+nc.getGender(),value); 
+            }
+        });
+        return ncs;
+
+    }
+
+
 
 
 }

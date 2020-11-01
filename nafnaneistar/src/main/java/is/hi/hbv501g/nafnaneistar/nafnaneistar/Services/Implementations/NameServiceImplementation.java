@@ -66,6 +66,12 @@ public class NameServiceImplementation implements NameService {
         return this.repository.countByGender(gender);
     }
 
+    //HAT
+    @Override
+    public List<NameCard> findAllByNameLike(String s) {
+        return this.repository.findAllByNameLike(s);
+    }
+
 
 
     
