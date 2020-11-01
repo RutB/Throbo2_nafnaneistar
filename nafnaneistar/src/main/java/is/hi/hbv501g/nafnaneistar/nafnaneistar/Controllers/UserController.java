@@ -1,7 +1,6 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
-import java.lang.reflect.Array;
-
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -87,6 +86,10 @@ public class UserController {
             System.out.println(userService.findById(id));
             //model.addAttribute("linkedPartner", userService.findById(id));
         }
+        ArrayList<User> partners = new ArrayList<User>();
+         for(Long id : currentUser.getLinkedPartners())
+             partners.add(userService.findById(id).get());
+        model.addAttribute("partners", partners);
         return "linkpartner";
     }
 
@@ -94,13 +97,19 @@ public class UserController {
     public String linkpartner(@RequestParam(value = "email", required = true) String email, Model model,
             HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        ArrayList<User> partners = new ArrayList<User>();
+        for(Long id : currentUser.getLinkedPartners())
+            partners.add(userService.findById(id).get());
+       model.addAttribute("partners", partners);
+
         if(!UserUtils.isLoggedIn(currentUser))
             return "redirect:/login";
-        if (userService.findByEmail(email) == null) {
+        else if (userService.findByEmail(email) == null) {
             System.out.print("onei thetta var rangt email");
             
             return "linkpartner.html";
-        } else {
+        } 
+        else {
             currentUser.addLinkedPartner(userService.findByEmail(email).getId()); // current user að uppfæra linked list og tengjast email user
             userService.findByEmail(email).addLinkedPartner(currentUser.getId()); // email user að uppfæra linked list og tengjast current user
             userService.save(currentUser);
@@ -108,6 +117,7 @@ public class UserController {
            System.out.println("Notandi fyrir netfang"+ userService.findByEmail(email));
             return "redirect:/linkpartner";
         }
+        
     }
     // truncate table name_card; og notendurnar
 }

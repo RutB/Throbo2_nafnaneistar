@@ -82,9 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let mtbody = clearTable(1)
         for (const [key, rank] of Object.entries(data)) {
             info = key.split('-')
+            
             let name = info[0]
             let id = info[1]
             let gender = info[2];
+            console.log(name);
+            console.log(id);
+            console.log(gender);
             let row = document.createElement('tr');
             row.classList.add('combo__row')
             let td = document.createElement('td');

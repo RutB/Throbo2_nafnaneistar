@@ -7,6 +7,7 @@
     <link rel="shortcut icon" th:href="@{/img/fav.png}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/linkpartner.css}"></head> 
+    <link rel="stylesheet" th:href="@{/css/viewliked.css}">
 <body>
     <header th:replace="Swipe.html :: header"></header>
     <main class="main">
@@ -19,14 +20,13 @@
                 <form class="linking__form form" th:action="@{/linkpartner}" method="post">
                     <input class="form__input" type="text" th:name="email" id="email" placeholder="Netfang" required/>
                     <button  class="form__button" type="submit" > Tengjast</button>
-        <!--  <p id = "hiddenAlert" class="form__alert"> Ónei þessi notandi er ekki til, prufaðu aftur </p> -->     
                  <span class="error__message --hidden">Vitlaust netfang</span>
                  </form>
             </div>
             
             <p class = "link_userName" th:text= "${user.getName()}"> </p>
-            <table class="linked__table">
-                <caption class= " link_cap">þú ert tengd(ur) við </caption>
+             <p class = "link_desc"> þú ert tengd(ur) við</p>
+            <table class="link__table">
                 <thead>
                     <tr class="linkTable__headerrow">
                         <th>Nafn</th>
@@ -34,7 +34,12 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
-            </table>
+                <tr th:id="${partner.getId()}" class="link__row" th:each="partner : ${partners}"  th:if="${partners.size() > 0}" >
+                    <td  class="link__name" th:text="${partner.getName()}"></td>
+                    <td  class="link__email" th:text="${partner.getEmail()}"></td>
+                    <td class="link__operations"><button class="link__remove">Taka af lista</button></td>
+                </tr>
+            </table> 
         </section>
     </main>
     <script th:src="@{/js/linkpartner.js}"></script>  

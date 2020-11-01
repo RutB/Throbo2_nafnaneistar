@@ -35,20 +35,7 @@ public class UserRestController {
         }
         return false;
     }
-    @GetMapping(path="/linkpartner/check/{email}", produces = "application/json")
-    public boolean checkValidEmail(@PathVariable String email,  HttpSession session) 
-    {   
-        User user  = userService.findByEmail(email);
-        
-        if(user == null){
-            session.setAttribute("validUser", true);
-           //ónei þetta var rangt email
-            return false;
-        }
-        session.setAttribute("validUser", false);
-        return true;
-        
-    }
+
 
     @GetMapping(path="/viewliked/updaterating", produces = "application/json")
     public boolean updateNameRating(@RequestParam String id,@RequestParam String rating, HttpSession session) 
@@ -71,6 +58,27 @@ public class UserRestController {
         if(user != null)
             return false;
         return true;
+    }
+    @GetMapping(path="/linkpartner/checkemail", produces = "application/json")
+    public boolean validateEmailPartner(@RequestParam String email) 
+    {   User user = userService.findByEmail(email);
+        if(user != null){
+            System.out.println("valid Rest");
+            return true;
+        }
+        System.out.println("ekki validRest");
+            return false;
+    }
+    @GetMapping(path="/linkpartner/remove", produces = "application/json")
+    public boolean removeFromLink(@RequestParam String id, HttpSession session) 
+    {  User user = (User) session.getAttribute("currentUser");
+        try {
+            user.removeLinkedPartner(Long.parseLong(id));
+            userService.save(user);
+            return true;
+        } catch(Error e){
+            return false;
+        }
     }
 
     @GetMapping(path="/viewliked/remove", produces = "application/json")

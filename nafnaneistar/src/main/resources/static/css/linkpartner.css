@@ -13,12 +13,26 @@
     align-items: center;
 }
 .error__message {
+    /* stolið :D*/
     color: red;
     font-size: 1.1em;
     font-weight: bold;
 }
 
 .error__message.--hidden {
+    /* stolið :D*/
     display: none;
 }
+
+.viewliked__selectmenu {
+    display: flex;
+    flex-direction: column;
+    transform: scaleY(0);
+    transform-origin: top;
+    cursor: pointer;
+    transition: transform 300ms ease-in;
+    background-color: var(--nav-bg-color-lg);
+
+}
+
 

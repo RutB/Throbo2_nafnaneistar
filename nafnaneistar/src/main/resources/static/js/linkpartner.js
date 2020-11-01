@@ -1,53 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    const linkingform = document.querySelector('.linking__form');
-    linkingform.addEventListener('submit', submitHandler);
+    const linkingform = document.querySelector('#email');
+    linkingform.addEventListener('focusout', validHandler);
 
-    function submitHandler(e){
-        e.preventDefault();
+    let removeButtons = document.querySelectorAll('.link__remove');
+    removeButtons.forEach(button => button.addEventListener('click', removeNameFromList));
+
+    function validHandler(e){
         let error = document.querySelector('.error__message');
-        error.classList.add('--hidden')
+        let button = document.querySelector('.form__button');
+        let msg = "Netfang er ekki til";
+        if (!e.target.value.includes("@")){
+            button.disabled = true;
+            error.classList.remove('--hidden');
+            error.textContent = "Netfang er rangt slegið inn";
+            return;
+        }
+        let url = `${window.location.origin}/linkpartner/checkemail?email=${e.target.value}`
         
-        let user = document.querySelector('#email').value
-        let url = `${window.location.origin}/linkpartner/check/${user}`
-        console.log(url);
-        validatePartner(url)
-    }
-
-
-    function validatePartner(url){
         fetch(url).then((resp) => {
             if(resp.status !== 200) {
                 console.log(`Error ${resp.text()}`);
-                console.log('Err');
                 return
-            }
-            return resp.json()}).then((data)=>{   
-                if(!data)
-                    ShowError()
-            //connectPartner(data)
-            console.log(data);
-                 
+            } return resp.json()}).then((data)=>{   
+                if(data){
+                   button.disabled = false;
+                   error.classList.add('--hidden')
+                   error.textContent = msg;
+                   console.log("hér er ég");
+                }
+                else {
+                    button.disabled = true;
+                    error.classList.remove('--hidden');
+                    populateTable(data);
+                    console.log("eða hér");
+                } 
         })
     }
-
-    function connectPartner(data){
-        let code = (error.classList.contains('--hidden')) ? 1 : 0;
-
+    function removeNameFromList(e) {
+        let grandpapa = e.target.parentNode.parentNode; //row
+        let id = grandpapa.getAttribute('id');
+        let url = `${window.location.origin}/linkpartner/remove?id=${id}`;
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.log(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                if (data)
+                    grandpapa.remove();
+            })
     }
-    function ShowError(message = null){
-        let error = document.querySelector('.error__message');
-        let username = document.querySelector('#email');
-        console.log(username.value.trim())
-        if(username.value.trim().length === 0)
-            message = "Vinsamlegast sláðu inn netfang"
-        if (!username.value.includes("@")){
-            message = "Ath að slá inn gilt netfang"
-        }
-        error.classList.remove("--hidden")
-        if(message)
-            error.textContent = message
-    }
 
+    function populateTable(data) {
+        let bt = document.querySelector('.link__remove');
+        bt.addEventListener('click', removeNameFromList);
+    }
     
 });
