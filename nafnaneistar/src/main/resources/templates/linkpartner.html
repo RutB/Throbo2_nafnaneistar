@@ -15,14 +15,32 @@
                 <h2 class="linking__title">Viltu tengja nafna listann þinn við einhvern annann? </h2>
                 <h2 class="linking__title">Skrifaðu póstfangið og tengist saman</h2> 
             </div>
-            <form class="linking__form form" th:action="@{/linkpartner}" method="post">
-                <input class="form__input" type="text" th:name="email" id="email" placeholder="Netfang" required/>
-                <button  class="form__button" type="submit" > Tengjast</button>
-                <p hidden class="form__alert"> Ónei þessi notandi er ekki til, prufaðu aftur </p> 
-            </form>
+            <div class="linking__submit">
+                <form class="linking__form form" th:action="@{/linkpartner}" method="post">
+                    <input class="form__input" type="text" th:name="email" id="email" placeholder="Netfang" required/>
+                    <button  class="form__button" type="submit" > Tengjast</button>
+                 <span class="error__message --hidden">Vitlaust netfang</span>
+                 </form>
+            </div>
+            
+            <p class = "link_userName" th:text= "${user.getName()}"> </p>
+             <p class = "link_desc"> þú ert tengd(ur) við</p>
+            <table class="link__table">
+                <thead>
+                    <tr class="linkTable__headerrow">
+                        <th>Nafn</th>
+                        <th>Netfang</th>
+                        <th>Aðgerðir</th>
+                    </tr>
+                </thead>
+                <tr th:id="${partner.getId()}" class="link__row" th:each="partner : ${partners}"  th:if="${partners.size() > 0}" >
+                    <td  class="link__name" th:text="${partner.getName()}"></td>
+                    <td  class="link__email" th:text="${partner.getEmail()}"></td>
+                    <td class="link__operations"><button class="link__remove">Taka af lista</button></td>
+                </tr>
+            </table> 
         </section>
     </main>
-    <!--  <script th:src="@{/js/login.js}"></script>   búa til javascript, popup sem segir notandinn er til og verður látin vita þegar tekst --> 
-</div>
+    <script th:src="@{/js/linkpartner.js}"></script>  
 </body>
 </html>

@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let mtbody = clearTable(1, tables)
         for (const [key, rank] of Object.entries(data)) {
             info = key.split('-')
+            
             let name = info[0]
             let id = info[1]
             let gender = info[2];

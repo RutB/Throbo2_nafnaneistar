@@ -52,6 +52,52 @@ public class UserRestController {
     }
 
     /**
+     * A fetch call to process if the entered email is in use or not before a User 
+     * tries to use it to signup.
+     * @param email - the desired email to signup with
+     * @return true or false depending on if the email is in use or not
+     */
+    @GetMapping(path="/signup/checkemail", produces = "application/json")
+    public boolean validateEmail(@RequestParam String email) 
+    {   User user = userService.findByEmail(email);
+        if(user != null)
+            return false;
+        return true;
+    }
+    
+    /**
+     * A fetch call to process if the entered email has an established user to link to.
+     * @param email - the desired email to signup with
+     * @return true or false depending on if the email is valid or not
+     */
+    @GetMapping(path="/linkpartner/checkemail", produces = "application/json")
+    public boolean validateEmailPartner(@RequestParam String email) 
+    {   User user = userService.findByEmail(email);
+        if(user != null)
+            return true;
+        return false;
+    }
+
+    /**
+     * Processes if the User wants to remove a partner from linked partners, and removes the partner from the 
+     * linked partners
+     * @param id
+     * @param session
+     * @return
+     */
+    @GetMapping(path="/linkpartner/remove", produces = "application/json")
+    public boolean removeFromLink(@RequestParam String id, HttpSession session) 
+    {  User user = (User) session.getAttribute("currentUser");
+        try {
+            user.removeLinkedPartner(Long.parseLong(id));
+            userService.save(user);
+            return true;
+        } catch(Error e){
+            return false;
+        }
+    }
+    
+    /**
      * A fetch call to update the rating for a users approvedName
      * @param id id of the name to update
      * @param rating a rating of 1-5 
@@ -71,21 +117,6 @@ public class UserRestController {
         }catch(Error e){
             return false;
         }       
-    }
-
-    /**
-     * A fetch call to process if the entered email is in use or not before a User 
-     * tries to use it to signup.
-     * @param email - the desired email to signup with
-     * @return true or false depending on if the email is in use or not
-     */
-    
-    @GetMapping(path="/signup/checkemail", produces = "application/json")
-    public boolean validateEmail(@RequestParam String email) 
-    {   User user = userService.findByEmail(email);
-        if(user != null)
-            return false;
-        return true;
     }
 
     /**

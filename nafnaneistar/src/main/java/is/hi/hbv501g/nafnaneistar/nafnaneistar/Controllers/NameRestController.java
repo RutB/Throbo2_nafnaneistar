@@ -119,6 +119,13 @@ public class NameRestController {
             
     }
 
+    /**
+     * 
+     * @param middle
+     * @param gender
+     * @param session to get the User session
+     * @return
+     */
     @GetMapping(path="/viewliked/namemaker", produces = "application/json")
     public String[] getRandomName(
         @RequestParam(required = false) String middle,

@@ -211,6 +211,7 @@ public class User {
         return this.linkedPartners;
     }
 
+
     public String getPassword() {
         return password;
     }

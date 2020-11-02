@@ -32,7 +32,7 @@ public class NameController {
 
 
     /**
-     * Constructor for NameController, it Needs a UserService and a NameService to function
+     * Constructor for NameController, it needs a UserService and a NameService to function
      * @param userService
      * @param nameService
      */
@@ -89,6 +89,8 @@ public class NameController {
 
         int totalfnames = nameService.countByGender(true);
         int totalmnames = nameService.countByGender(false);
+        System.out.print(totalfnames);
+        System.out.print(totalmnames);
         
         int femaledisliked = Math.abs((totalfnames - (totalfnamesleft)) - fnames) ;
         int maledisliked = Math.abs((totalmnames - (totalmnamesleft) ) - mnames) ;
@@ -119,8 +121,8 @@ public class NameController {
     /**
      * On accessing /searchname from the domain, if the user is logged in and has a
      * valid session the User is rendered the searchname template
-     * @param model 
-     * @param session
+     * @param model manages the data for the viewing template
+     * @param session manages the session of the user
      * @return searchname template rendered
      */
     @RequestMapping(value = "/searchname", method = RequestMethod.GET)
