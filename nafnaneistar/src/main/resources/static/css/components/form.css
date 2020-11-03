@@ -76,6 +76,10 @@ table th {
 table tr:nth-of-type(even) {
     background-color: var(--ambient-color);
 }
+table tr:nth-of-type(odd) {
+    background-color: var(--swipe-bg-color);
+}
+
 table tr:hover{
     transition: background-color 300ms ease-in;
     background-color: var(--nav-bg-color);

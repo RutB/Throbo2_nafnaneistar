@@ -29,7 +29,7 @@
 }
 
 .viewliked__tab {
-    text-align: unset;
+    text-align: center;
     width: 100%;
     display: flex;
     align-items: center;
@@ -229,8 +229,12 @@
 .gender__table td,
 .combo__table td {
     border: 1px solid var(--nav-bg-color);
+    width: 33.33%;
 }
 
+.gender__rank{
+    text-align: center  ;
+}
 .gender__rankstar.fas {
     color: var(--star-color);
     padding: 0;
@@ -248,6 +252,7 @@
 .gender__name {
     position: relative;
     font-size: 1.1em;
+    vertical-align: middle;
 }
 .gender__name span {
     width: 80%;
@@ -407,6 +412,12 @@ input[type='radio']:checked:after {
     .combo__table {
         width: 100%;
         font-size: 1.1em;
+        align-items: center;
+        text-align: center;
+    }
+
+    .gender__table th {
+        text-align: center;
     }
 
     .viewliked__genderInfo {

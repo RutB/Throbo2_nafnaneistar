@@ -23,7 +23,7 @@ public class HomeController {
     public String Home(Model model) {
         return "redirect:/login";
     }
-    
+
 
    
 }

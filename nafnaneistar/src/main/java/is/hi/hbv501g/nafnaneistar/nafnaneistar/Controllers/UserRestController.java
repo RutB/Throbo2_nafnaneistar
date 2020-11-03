@@ -1,7 +1,6 @@
 package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.HashMap;
-import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
