@@ -33,12 +33,9 @@ public class UserUtils {
      */
     public static ArrayList<Integer> getGenderList(User user, NameService nameService,int gender){
         ArrayList<Integer> genderList = new ArrayList<Integer>();
-        for(NameCard nc : nameService.findAll()){
-            if(nc.getGender() == gender){
-                if(user.getAvailableNames().indexOf(nc.getId()) >= 0)
-                    genderList.add(nc.getId());
-            }
-        }
+        ArrayList<NameCard> ncs = (ArrayList<NameCard>) nameService.findAll();
+        ncs.removeIf(nc -> nc.getGender() != gender);
+        ncs.forEach(n -> genderList.add(n.getId()));
         return genderList;
     }
 

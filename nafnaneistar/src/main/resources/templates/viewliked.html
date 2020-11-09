@@ -136,7 +136,7 @@
                 <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
                     <td  class="gender__name">
                         <div class="gender__nameInfo">
-                            <span  th:text="${line.key.getName()}"></span>
+                            <span  th:text="${line.key.getName()    }"></span>
                             <i class="fas fa-info"></i>
                         </div>
                         <span class="gender__description" th:text="${line.key.getDescription()}"> </span>

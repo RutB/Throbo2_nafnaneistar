@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (no === 3) {
             let window3 = document.querySelector('#window3');
             let tables = window3.querySelectorAll('.gender__table')
-            tables.forEach(t => sortTable(t))
+            tables.forEach(t => sortMiddleTable(t))
         }
         if (no === 2 || no === 4) return;
         views.forEach(view => view.classList.remove('viewliked__active'))
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const sortTable = (table) => {
-        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝZÞÆÖ`
+        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVWXYÝZÞÆÖ`
         let rows, x, y, shouldSwitch;
         let switching = true;
         let i;
@@ -379,6 +379,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 shouldSwitch = false;
                 x = rows[i].querySelector('td');
                 y = rows[j].querySelector('td');
+                if (LETTERS.indexOf(x.textContent[0].toUpperCase()) > LETTERS.indexOf(y.textContent[0].toUpperCase())) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    const sortMiddleTable = (table) => {
+        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVWXYÝZÞÆÖ`
+        let rows, x, y, shouldSwitch;
+        let switching = true;
+        let i;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1, j = 2; i < (rows.length - 1); i++, j++) {
+                shouldSwitch = false;
+                x = rows[i].querySelector('span');
+                y = rows[j].querySelector('span');  
                 if (LETTERS.indexOf(x.textContent[0].toUpperCase()) > LETTERS.indexOf(y.textContent[0].toUpperCase())) {
                     shouldSwitch = true;
                     break;
