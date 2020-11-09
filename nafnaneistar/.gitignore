@@ -23,6 +23,7 @@ target/
 /nbproject/private/
 /nbbuild/
 /dist/
+
 /nbdist/
 /.nb-gradle/
 build/
@@ -35,3 +36,7 @@ build/
 ### Database ###
 *.db
 *.log
+
+### Stuff ###
+/walking-elephant/
+*.psd
