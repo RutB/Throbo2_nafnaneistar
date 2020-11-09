@@ -379,7 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let loading__img = el('div','loading__imgdiv')
         table_loader.appendChild(loading__img);
         let img = el('img','loading__img')
-        img.setAttribute('src','/walking-elephant/fill.gif')
+        img.setAttribute('src','/img/fill.gif')
+        img.setAttribute('alt',"Walking elephant that represents a loading gif")
         loading__img.appendChild(img)
         let span = el('span','loading__text');
         span.appendChild(document.createTextNode(text))
