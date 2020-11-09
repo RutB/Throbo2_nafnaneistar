@@ -192,6 +192,7 @@
 #window2.viewliked__view {
     align-items: flex-start;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .gender__table caption,
@@ -238,6 +239,33 @@
 .gender__rankstar.fas {
     color: var(--star-color);
     padding: 0;
+}
+.gender__sortTable {
+    width: 100%;
+    height: 1.5em;
+    font-size: 1.5em;
+    border-radius: 2em;
+    border: none;
+    color: var(--font-color);
+    background-color: var(--nav-bg-color);
+    cursor: pointer;
+}
+.gender__sortTable:hover {
+    transition: background-color 300ms ease-in;
+    background-color: var(--nav-bg-color-lg);
+}
+.elephant__loader {
+    position: absolute;
+    text-align: center;
+    position: absolute;
+    text-align: center;
+
+    left: 50%;
+    top: 50%;
+}
+.elephant__loader span {
+        width: 100%;
+        background-color:var(--ambient-color);
 }
 
 #window2 .viewliked__container {

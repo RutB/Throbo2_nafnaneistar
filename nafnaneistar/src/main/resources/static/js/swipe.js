@@ -79,9 +79,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getNewName(url) {
+
+    let buttons = document.querySelectorAll('button');
+    buttons.forEach(b => {
+      b.disabled = true
+    })
     let params = extractParams();
     if (params.length > 1)
       url += params;
+    createElephantLoader(document.querySelector('.namecard'),"Sæki Næsta Nafn...") 
     fetch(url)
       .then((resp) => {
         if (resp.status !== 200) {
@@ -91,8 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return resp.json();
       })
       .then((data) => {
+        removeElephantLoader();
+        buttons.forEach(b => {
+          b.disabled = false
+        })
         rePopulateData(data);
         getListSize();
+        
       });
   }
 
@@ -146,6 +157,40 @@ document.addEventListener("DOMContentLoaded", () => {
     return i;
   }
 
+  function createElephantLoader(container,text){
+    let nameText = document.querySelector(".namecard__name");
+    let nameDesc = document.querySelector(".namecard__description");
+    let genderIcon = document.querySelector(".namecard__gender");
+    nameText.textContent = ""
+    nameDesc.textContent = ""
+    genderIcon.classList.remove("fa-venus");
+    genderIcon.classList.remove("fa-mars");
+    let elephant__loader = el('div','elephant__loader');
+    let loading__img = el('div','loading__imgdiv')
+    elephant__loader.appendChild(loading__img);
+    let img = el('img','loading__img')
+    img.setAttribute('alt',"Walking elephant that represents a loading gif")
+    img.setAttribute('src','/walking-elephant/fill.gif')
+    loading__img.appendChild(img)
+    let span = el('span','loading__text');
+    span.appendChild(document.createTextNode(text))
+    elephant__loader.appendChild(span)
+    container.insertBefore(elephant__loader,container.childNodes[0])
+}
+function removeElephantLoader(){
+  let elephants = document.querySelectorAll('.elephant__loader')
+  elephants.forEach(e=> e.remove())
+}
+function el(tag, className, text = null) {
+  let element = document.createElement(tag)
+  if (className) {
+      let classes = className.split(' ');
+      classes.forEach(c => element.classList.add(c))
+  }
+  if (text)
+      element.appendChild(document.createTextNode(text))
+  return element;
+}
 
   function extractParams() {
     let params = "";
@@ -175,3 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
     getNewName(url)
   }
 });
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}

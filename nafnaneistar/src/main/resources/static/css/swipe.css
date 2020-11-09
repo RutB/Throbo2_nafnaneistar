@@ -18,6 +18,13 @@
     align-items: center;
 
 }
+.elephant__loader{
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
 
 .namesleft {
     font-size: .5em;

@@ -103,6 +103,7 @@
 
         </section>
         <section id="window3" class="viewliked__view viewliked__window">
+            <button class="gender__sortTable">Sortera í Stafrófsröð</button>
             <table class="gender__table">
                 <caption>Kvenkyns </caption>
                 <thead>
@@ -112,6 +113,7 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
+
                 <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
                     <td  class="gender__name">
                         <div class="gender__nameInfo">

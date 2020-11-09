@@ -1,15 +1,24 @@
+
 document.addEventListener('DOMContentLoaded', () => {
+
     let tabs = document.querySelectorAll('.viewliked__tab');
+
     for (const t of tabs) {
         t.addEventListener('click', openWindow);
     }
     initStarConversion();
 
+    let window3 = document.querySelector('#window3');
+    let gender_button = window3.querySelector('.gender__sortTable');
+    gender_button.addEventListener('click',()=> {
+        document.querySelector('body').appendChild(createTableLoader("Endurraða Töflu...",true))
+    })
+
+
     let rows = document.querySelectorAll('.gender__row');
     rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
 
 
-    let window3 = document.querySelector("#window3")
     let stars = window3.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
         star.addEventListener('mouseenter', starStruck)
@@ -106,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let tables = document.querySelectorAll('.combo__table');
         clearTable(0, tables)
         clearTable(1, tables)
+        document.querySelector('main').appendChild(createTableLoader("Sæki og sortera töflu..."))
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
@@ -116,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then((data) => {
                 let tables = document.querySelectorAll('.combo__table');
+                removeTableLoader();
                 populateTable(data, tables);
             });
     }
@@ -318,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let url = `${window.location.origin}/viewliked/getrankedList?id=${id}`;
         ranks.textContent = id
         starConvertSingleRow(gender__rank)
+        document.querySelector('main').appendChild(createTableLoader("Sæki og sortera töflu..."))
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
@@ -327,13 +339,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 return resp.json();
             })
             .then((data) => {
+                removeTableLoader();
                 let tables = document.querySelectorAll('.rating__table');
                 populateTable(data, tables);
                 tables.forEach(t => sortTable(t))
+                
             });
     }
 
+
     function openWindow(e) {
+       
         if (e.target.getAttribute('id') == null) return
         if (!e.target.getAttribute('id').includes('tab')) return;
         let tabno = e.target.getAttribute('id');
@@ -342,12 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.classList.add('--active')
         let views = document.querySelectorAll('.viewliked__window');
         let no = parseInt(tabno.split('tab')[1]);
-        if (no === 3) {
-            let window3 = document.querySelector('#window3');
-            let tables = window3.querySelectorAll('.gender__table')
-            tables.forEach(t => sortMiddleTable(t))
-        }
         if (no === 2 || no === 4) return;
+
         views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
@@ -355,6 +367,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function createTableLoader(text,specialFix = false){
+        if(specialFix){
+            setTimeout(()=> {
+                let tables = window3.querySelectorAll('.gender__table')
+                tables.forEach(t=> sortMiddleTable(t))
+            },1000);
+            removeTableLoader();
+        }
+        let table_loader = el('div','elephant__loader');
+        let loading__img = el('div','loading__imgdiv')
+        table_loader.appendChild(loading__img);
+        let img = el('img','loading__img')
+        img.setAttribute('src','/walking-elephant/fill.gif')
+        loading__img.appendChild(img)
+        let span = el('span','loading__text');
+        span.appendChild(document.createTextNode(text))
+        table_loader.appendChild(span)
+        return table_loader;
+    }
+
+    function removeTableLoader(){
+        let elephants = document.querySelectorAll('.elephant__loader')
+        elephants.forEach(e=> e.remove())
+    }
     const sendUpdateRating = (id, rating) => {
         let url = `${window.location.origin}/viewliked/updaterating?id=${id}&rating=${rating}`;
         fetch(url)
@@ -389,9 +425,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 switching = true;
             }
         }
+        removeTableLoader();
     }
 
-    const sortMiddleTable = (table) => {
+    async function sortMiddleTable(table) {
         const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVWXYÝZÞÆÖ`
         let rows, x, y, shouldSwitch;
         let switching = true;
@@ -413,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 switching = true;
             }
         }
+        removeTableLoader();
     }
 
 })
