@@ -17,7 +17,7 @@ public interface NameRepository extends JpaRepository<NameCard, Long> {
     List<NameCard> findAllByDescriptionLike(String s); //breyta í name like? 
     List<NameCard> findAllByGender(boolean bool);
     List<NameCard> findAllByNameLike(String s);
-    List<NameCard> findAllByNameLikeAndGender(String s, boolean b); // HAT, test f. namesearch
+    List<NameCard> findAllByNameLikeAndGender(String s, Boolean b); // HAT, test f. namesearch
     Optional<NameCard> findDescriptionByName(String s);
     Integer countByGender(boolean gender);
 

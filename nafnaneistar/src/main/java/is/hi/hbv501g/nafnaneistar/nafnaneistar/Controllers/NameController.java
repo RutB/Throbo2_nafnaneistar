@@ -132,29 +132,52 @@ public class NameController {
     }
 
     // 0 er male,  1 er female, 3 bæði
+
+    /**
+     *  TODO:
+     *    
+     */
     /**
      * Takes input from user and populates the model with names that are like the users input 
      * @param searchedName String which is used for a search of available names
      * @param model Model populated with related data
      * @param session Current users session
+     * @param gender 
      * @return searchname template
      */
     @RequestMapping(value="/searchname", method = RequestMethod.POST)
     public String searchName(
             @RequestParam(required = true) String searchedName,
-            @RequestParam(required = false) String female,
-            @RequestParam(required = false) String Male,
+            @RequestParam(required = true) String gender,
             Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
         }
         String s = searchedName.concat("%");
         s = StringUtils.capitalize(s);
-        ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
-        System.out.println(SearchedList.get(0).getName());
-        model.addAttribute("names", SearchedList);
         
+        if (!(Integer.parseInt(gender) == 3)) {
+            Boolean kyn = (Integer.parseInt(gender) == 1) ? true : false;
+            ArrayList<NameCard> searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender(s, kyn);
+        }
+        else{
+            ArrayList<NameCard> searchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
+        }
+        System.out.println("Þetta er gender: " + gender);
+        //System.out.println("Þetta er kyn: " + kyn);
+
+
+        /*
+        if (kyn == 3){
+            ArrayList<NameCard> searchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
+        }
+        else{
+            ArrayList<NameCard> searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender(s, kyn);
+        }
+        */
+        model.addAttribute("names", searchedList);
         return "searchname";
     }
 

@@ -13,6 +13,7 @@ public interface NameService {
     List<NameCard> findAllByDescriptionLike(String s); //Breyta í name?
     List<NameCard> findAllByGender(boolean bool);
     List<NameCard> findAllByNameLike(String s);        //HAT
+    List<NameCard> findAllByNameLikeAndGender(String s, Boolean b);
     String findDescriptionByName(String s);
     Integer countByGender(boolean gender);
 
