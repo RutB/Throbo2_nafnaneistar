@@ -136,6 +136,10 @@ public class User {
         return this.availableNames.size();
     }
 
+    public int getApprovedNamesSize(){
+        return this.approvedNames.keySet().size();
+    }
+
     /**
      * Gets a random Id from the availableNames
      * @return an Id that is from the availableNames list

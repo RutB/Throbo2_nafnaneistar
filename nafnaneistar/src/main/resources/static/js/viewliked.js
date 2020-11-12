@@ -14,10 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('body').appendChild(createTableLoader("Endurraða Töflu...",true))
     })
 
-
     let rows = document.querySelectorAll('.gender__row');
     rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
-
 
     let stars = window3.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
@@ -253,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     }
-
     function initStarConversion() {
         let ranks = document.querySelectorAll('.gender__rank');
         ranks.forEach(rank => {
@@ -347,9 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-
     function openWindow(e) {
-       
         if (e.target.getAttribute('id') == null) return
         if (!e.target.getAttribute('id').includes('tab')) return;
         let tabno = e.target.getAttribute('id');
