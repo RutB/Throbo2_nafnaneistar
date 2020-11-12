@@ -255,13 +255,13 @@
     background-color: var(--nav-bg-color-lg);
 }
 .elephant__loader {
+    width: 100vw;
+    height: 100vh;
     position: absolute;
-    text-align: center;
-    position: absolute;
-    text-align: center;
-
-    left: 50%;
-    top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .elephant__loader span {
         width: 100%;

@@ -25,6 +25,15 @@
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
+.elephant__loader {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 .namesleft {
     font-size: .5em;

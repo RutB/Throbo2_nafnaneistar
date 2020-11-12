@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,7 @@ public class SettingsRestController {
     {   User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser)) return false;
         if(newname.isBlank() || newname.isEmpty()) return false;
+        if(!StringUtils.isAlphanumericSpace(newname)) return false;
         try {
             currentUser.setName(newname);
             userService.save(currentUser);
