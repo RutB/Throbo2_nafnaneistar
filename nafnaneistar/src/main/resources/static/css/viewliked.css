@@ -261,6 +261,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
     justify-content: center;
 }
 .elephant__loader span {
