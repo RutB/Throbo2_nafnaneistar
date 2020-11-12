@@ -17,9 +17,8 @@ public class UserUtils {
      */
     public static void initAvailableNames(User user, NameService nameService){
         ArrayList<Integer> ids = new ArrayList<>();
-		for(NameCard nc : nameService.findAll()){
+		for(NameCard nc : nameService.findAll())
             ids.add(nc.getId());
-        }
         user.setAvailableNames(ids);
     }
 
@@ -35,7 +34,7 @@ public class UserUtils {
         ArrayList<Integer> genderList = new ArrayList<Integer>();
         ArrayList<NameCard> ncs = (ArrayList<NameCard>) nameService.findAll();
         ncs.removeIf(nc -> nc.getGender() != gender);
-        ncs.forEach(n -> genderList.add(n.getId()));
+        ncs.forEach(n -> { if(user.getAvailableNames().contains(n.getId())) genderList.add(n.getId());});
         return genderList;
     }
 

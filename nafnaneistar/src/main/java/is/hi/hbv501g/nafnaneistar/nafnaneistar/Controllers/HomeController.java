@@ -24,6 +24,17 @@ public class HomeController {
         return "redirect:/login";
     }
 
+    @RequestMapping("/settings")
+    public String Settings(Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null)
+            return "redirect:/login";
+        return "/settings";
+    }
+
+
+
+
 
 
 

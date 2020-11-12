@@ -84,16 +84,15 @@ public class NameController {
         int fnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 1).size();
         int mnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 0).size();
 
+        int totalfnames = nameService.countByGender(true);
+        int totalmnames = nameService.countByGender(false);
+
         int totalmnamesleft = UserUtils.getGenderList(currentUser,nameService,0).size() ;
         int totalfnamesleft = UserUtils.getGenderList(currentUser,nameService,1).size() ;
 
-        int totalfnames = nameService.countByGender(true);
-        int totalmnames = nameService.countByGender(false);
-        System.out.print(totalfnames);
-        System.out.print(totalmnames);
         
-        int femaledisliked = Math.abs((totalfnames - (totalfnamesleft)) - fnames) ;
-        int maledisliked = Math.abs((totalmnames - (totalmnamesleft) ) - mnames) ;
+        int femaledisliked = Math.abs(totalfnames - (totalfnamesleft) - fnames) ;
+        int maledisliked = Math.abs(totalmnames - (totalmnamesleft)  - mnames) ;
         
         Integer[] femalestats = new Integer[] {fnames,femaledisliked,totalfnamesleft};
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
@@ -154,7 +153,6 @@ public class NameController {
         String s = searchedName.concat("%");
         s = StringUtils.capitalize(s);
         ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
-        System.out.println(SearchedList.get(0).getName());
         model.addAttribute("names", SearchedList);
         
         return "searchname";

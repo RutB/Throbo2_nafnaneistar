@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elephant__loader.appendChild(loading__img);
     let img = el('img','loading__img')
     img.setAttribute('alt',"Walking elephant that represents a loading gif")
-    img.setAttribute('src','/walking-elephant/fill.gif')
+    img.setAttribute('src','/img/fill.gif')
     loading__img.appendChild(img)
     let span = el('span','loading__text');
     span.appendChild(document.createTextNode(text))
@@ -221,10 +221,3 @@ function el(tag, className, text = null) {
   }
 });
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
