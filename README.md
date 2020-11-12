@@ -16,7 +16,7 @@ Forritið keyrir sjálfgefið á http://localhost:7979/ og taka skal eftir að �
 * ef að repo-ið er sótt er hægt að breyta sjálfgefnu porti í application.properties skránni og breyta línunni sem inniheldur: server.port=7979 og breyta þá 7979 í eitthvað annað
 
 Það ætti að vera hægt bara að clone-a repoið eða sækja repo-ið og keyra í VsCode með springboot extension pakkanum eða í öðrum studdum ritlum (t.d. Eclipse).
-Einnig er hægt að sækja JAR skránna frá : https://notendur.hi.is/ojv1/hugbo1/nafnaneistar-301020-SNAPSHOT.jar og keyra með java -jar nafnaneistar-301020-SNAPSHOT.jar og þá keyrir forritið á porti 7979
+
 
 
 
