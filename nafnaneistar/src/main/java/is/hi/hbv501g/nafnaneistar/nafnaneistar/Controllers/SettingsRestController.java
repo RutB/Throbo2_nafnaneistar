@@ -70,7 +70,20 @@ public class SettingsRestController {
             }       
         }
         return false;
-        
+    }
+
+    @GetMapping(path="/settings/resetlists", produces = "application/json")
+    public boolean updateNameRating(HttpSession session) 
+    {   User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser)) return false;
+        try {
+            UserUtils.initAvailableNames(currentUser, nameService);
+            currentUser.setApprovedNames(new HashMap<Integer,Integer>());
+            userService.save(currentUser);
+            return true;
+        }catch(Error e){
+            return false;
+        }       
     }
 
 }

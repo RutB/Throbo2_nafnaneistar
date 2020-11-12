@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const resetLikedButton = document.querySelector('#settings__reset__button');
     
+    resetLikedButton.addEventListener('click',resetList)
 
 
     function updateName() {
@@ -46,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             nameInput.value = ""
-            url = `${window.location.origin}/settings/updatename?newname=${name}`;
-            createElephantLoader("Uppfæri Nafn")
+            let url = `${window.location.origin}/settings/updatename?newname=${name}`;
+            createElephantLoader("Uppfæri lykilorð")
             fetch(url).then(resp => {
                 if(resp.status !== 200){
                     console.error("failed to get response: " + resp.text)
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             oldpassInput.value = ""
             newpass.value = ""
-            url = `${window.location.origin}/settings/changepassword?oldpass=${oldpass}&newpass=${newpass}`;
+            let url = `${window.location.origin}/settings/changepassword?oldpass=${oldpass}&newpass=${newpass}`;
             createElephantLoader("Uppfæri Nafn")
             fetch(url).then(resp => {
                 if(resp.status !== 200){
@@ -108,6 +109,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    function resetList(){
+        let totalLiked = document.querySelector('.settings__totalLiked');
+        //ég veit að þetta er nono en nenni ekki að henda í custom popup atm
+        let answer =  confirm("Ertu viss um að þú viljir byrja uppá nýtt með listana?")
+        if(answer){
+            let url = `${window.location.origin}/settings/resetlists`;
+            createElephantLoader("Núllstilli lista")
+            fetch(url).then(resp => {
+                if(resp.status !== 200){
+                    console.error("failed to get response: " + resp.text())
+                 }
+                return resp.json();
+            }).then(r => {
+                if(r){
+                    totalLiked.textContent = "0";
+                }
+                removeElephantLoader();
+            });
+        }
+    }
+
     function createElephantLoader(text){
         let body = document.querySelector('body')
         let elephant__loader = el('div','elephant__loader');
@@ -128,16 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
         elephants.forEach(e=> e.remove())
       }
 
-      function el(tag, className, text = null) {
-        let element = document.createElement(tag)
-        if (className) {
-            let classes = className.split(' ');
-            classes.forEach(c => element.classList.add(c))
-        }
-        if (text)
-            element.appendChild(document.createTextNode(text))
-        return element;
-      }
-      
+    function el(tag, className, text = null) {
+    let element = document.createElement(tag)
+    if (className) {
+        let classes = className.split(' ');
+        classes.forEach(c => element.classList.add(c))
+    }
+    if (text)
+        element.appendChild(document.createTextNode(text))
+    return element;
+    }
+    
       const capitalize = str => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 });

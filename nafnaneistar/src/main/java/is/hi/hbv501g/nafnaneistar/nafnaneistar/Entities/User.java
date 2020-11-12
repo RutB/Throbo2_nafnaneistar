@@ -219,6 +219,9 @@ public class User {
     public String getPassword() {
         return password;
     }
+    public void setApprovedNames(HashMap<Integer,Integer> names){
+        this.approvedNames = names;
+    }
 
     public void setPassword(String password) {
         this.password = password;
