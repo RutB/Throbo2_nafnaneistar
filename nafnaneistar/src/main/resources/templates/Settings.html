@@ -17,7 +17,7 @@
                 <div class="settings__blockContent">
                     <span class="settings__currentName" th:text=${user.getName()}></span>
                     <label>Nýtt Nafn:
-                        <input class="settings__input" type="text" name="changeName" id="changeName">
+                        <input class="settings__input" type="text" name="changeName" id="changeName" required>
                     </label>
                     <button class="settings__button" id="settings__updateName__button" type="submit">Uppfæra nafn</button>
                 </div>
@@ -28,10 +28,10 @@
                 <h2 class="settings__blockTitle">Breyta Lykilorði</h2>
                 <div class="settings__blockContent">
                     <label>Gamla lykilorð
-                        <input class="settings__input" type="password" name="changePass__old" id="changePass__old">
+                        <input class="settings__input" type="password" name="changePass__old" id="changePass__old" required>
                     </label>
                     <label>Nýtt lykilorð
-                        <input class="settings__input" type="password" name="changePass__new" id="changePass__new">
+                        <input class="settings__input" type="password" name="changePass__new" id="changePass__new" required>
                     </label>
                     <button class="settings__button" id="settings__changePassword__button" type="submit">Uppfæra Lykilorð</button>
                 </div>
@@ -39,15 +39,16 @@
         </section>
         <section class="settings__container">
             <div class="settings__block resetLiked">
-                <h2 class="settings__blockTitle">Núllstilla Valin Nöfn</h2>
+                <h2 class="settings__blockTitle">Núllstilla Nafnalista</h2>
                 <div class="settings__blockContent">
                     <span class="settings__resetLikedStats">
-                        Þú hefur líkað við: <strong class="settings__totalLiked" th:text="${user.getApprovedNamesSize()}"></strong> nöfn
+                        Þér hefur líkað við: <strong class="settings__totalLiked" th:text="${user.getApprovedNamesSize()}"></strong> nöfn
                     </span>
                     <button class="settings__button" id="settings__reset__button" type="submit">Núllstilla Lista</button>
                 </div>
             </div>
         </section>
     </main>
+    <script th:src="@{/js/settings.js}"></script>
 </body>
 </html>

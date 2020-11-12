@@ -35,6 +35,9 @@
     border: none;
     width: 100%;
 }
+.settings__input:placeholder-shown,.settings__input::placeholder {
+    color: var(--ambient-color);
+}
 
 .settings__button {
     height: 1.5rem;
