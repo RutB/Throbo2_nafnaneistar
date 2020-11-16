@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
                    button.disabled = false;
                    error.classList.add('--hidden')
                    error.textContent = msg;
-                   console.log("hér er ég");
+                   console.log("tengist partner");
                 }
                 else {
                     button.disabled = true;
                     error.classList.remove('--hidden');
                     populateTable(data);
-                    console.log("eða hér");
+                    console.log("ekki tengist partner");
                 } 
         })
     }

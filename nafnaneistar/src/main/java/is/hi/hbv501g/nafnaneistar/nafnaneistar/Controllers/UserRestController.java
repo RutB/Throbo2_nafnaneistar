@@ -70,10 +70,22 @@ public class UserRestController {
      * @return true or false depending on if the email is valid or not
      */
     @GetMapping(path="/linkpartner/checkemail", produces = "application/json")
-    public boolean validateEmailPartner(@RequestParam String email) 
+    public boolean validateEmailPartner(@RequestParam String email, HttpSession session) 
     {   User user = userService.findByEmail(email);
-        if(user != null)
-            return true;
+        User curr = (User) session.getAttribute("currentUser");
+        if (curr.getId() != user.getId()){
+            if(user != null){
+                boolean boo = false;   
+                for(Long id : curr.getLinkedPartners()){
+                    System.out.print(boo);
+                    if(user.getId() == id){
+                        boo = true;
+                    }
+                }
+                if(!boo)
+                    return true;
+            }
+        }
         return false;
     }
 
