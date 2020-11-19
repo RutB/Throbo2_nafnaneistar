@@ -151,7 +151,6 @@ public class NameController {
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
         }
-<<<<<<< HEAD
         ArrayList<NameCard> searchedList;
         if ((Integer.parseInt(gender) == 3)) {
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(StringUtils.capitalize(searchedName.concat("%")));
@@ -161,15 +160,6 @@ public class NameController {
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender((StringUtils.capitalize(searchedName.concat("%"))), kyn);
         }
         model.addAttribute("names", searchedList);
-=======
-        model.addAttribute("user", currentUser);
-        
-        String s = searchedName.concat("%");
-        s = StringUtils.capitalize(s);
-        ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
-        model.addAttribute("names", SearchedList);
-        
->>>>>>> master
         return "searchname";
     }
 }
