@@ -120,6 +120,35 @@ public class NameRestController {
     }
 
     /**
+     * 
+     * @param middle
+     * @param gender
+     * @param session to get the User session
+     * @return
+     */
+    @GetMapping(path="/viewliked/namemaker", produces = "application/json")
+    public String[] getRandomName(
+        @RequestParam(required = false) String middle,
+        @RequestParam(required = false) String gender,
+        HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(currentUser.getApprovedNames().size() <= 2){
+            return new String[] {"Þú þarft að skoða fleiri nöfn",""};
+        }
+        Optional<NameCard> nc = nameService.findById(currentUser
+                .getRandomNameId(UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, Integer.parseInt(gender))));
+        String name = nc.get().getName();
+        String middlename = "";
+        if(middle != null) {
+            nc = nameService.findById(currentUser
+                .getRandomNameId(UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, Integer.parseInt(gender))));
+                middlename += " " + nc.get().getName();
+        }
+        return new String[] {name,middlename};
+            
+    }
+
+    /**
      * function to get the updated list size of female and male names from the availablenames list
      * @param session - to manage who the user requesting is
      * @return information regarding the remaining male names and remaining female names

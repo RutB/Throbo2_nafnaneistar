@@ -41,6 +41,7 @@
     font-size: 1.5rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
+    /*visibility: hidden;*/
 }
 
 .form__input:focus::placeholder,
@@ -68,13 +69,17 @@ table caption {
 }
 
 table th {
-    font-size: 1.1em;
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
 table tr:nth-of-type(even) {
     background-color: var(--ambient-color);
 }
+table tr:nth-of-type(odd) {
+    background-color: var(--swipe-bg-color);
+}
+
 table tr:hover{
     transition: background-color 300ms ease-in;
     background-color: var(--nav-bg-color);
@@ -87,9 +92,76 @@ table tr {
     border-top: 1px solid var(--nav-bg-color);
     border-bottom: 1px solid var(--nav-bg-color);
     cursor: pointer;
+    font-size: 1rem;
+}
+label {
+    color: var(--font-color);
+    font-size: 1.1em;
+    font-weight: 400;
+}
+td > button {
+    border-radius: 2em;
+    background-color: var(--ambient-color);
+    cursor: pointer;
+    transition: background-color 300ms ease-in;
 }
 
+td > button:hover {
+    transition: background-color 300ms ease-in;
+    transition: transform 300ms ease-in;
+    transform: scale(1.1);
+    background-color: lightcoral;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--swipe-bg-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 4px solid var(--ambient-color);
+    cursor: pointer;
+}
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--ambient-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 4px solid var(--ambient-color);
+    cursor: pointer;
+}
+.filter__title {
+    margin: .5em 0;
+    align-items: center;
+}
 
+.filter__checkbox {
+    height: .8em;
+    width: .8em;
+    content: "";
+    position: absolute;
+    background-color: var(--nav-bg-color-lg);
+    align-self: center;
+    justify-self: center;
+    margin: .1em;
+    cursor: pointer;
+    border: 1px solid var(--nav-bg-color);
+    z-index: 10000000;
+}
+
+.fa-check {
+    padding: 0 0 .2em 0;
+}
 @media only screen and (max-width: 768px) {
 
     .form__input,

@@ -32,7 +32,7 @@ public class NameController {
 
 
     /**
-     * Constructor for NameController, it Needs a UserService and a NameService to function
+     * Constructor for NameController, it needs a UserService and a NameService to function
      * @param userService
      * @param nameService
      */
@@ -84,24 +84,27 @@ public class NameController {
         int fnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 1).size();
         int mnames = UserUtils.getGenderList(currentUser.getApprovedNames().keySet(), nameService, 0).size();
 
+        int totalfnames = nameService.countByGender(true);
+        int totalmnames = nameService.countByGender(false);
+
         int totalmnamesleft = UserUtils.getGenderList(currentUser,nameService,0).size() ;
         int totalfnamesleft = UserUtils.getGenderList(currentUser,nameService,1).size() ;
 
-        int totalfnames = nameService.countByGender(true);
-        int totalmnames = nameService.countByGender(false);
         
-        int femaledisliked = Math.abs((totalfnames - (totalfnamesleft)) - fnames) ;
-        int maledisliked = Math.abs((totalmnames - (totalmnamesleft) ) - mnames) ;
+        int femaledisliked = Math.abs(totalfnames - (totalfnamesleft) - fnames) ;
+        int maledisliked = Math.abs(totalmnames - (totalmnamesleft)  - mnames) ;
         
         Integer[] femalestats = new Integer[] {fnames,femaledisliked,totalfnamesleft};
         Integer[] malestats = new Integer[] {mnames,maledisliked,totalmnamesleft};
 
         String meaning = nameService.findDescriptionByName(currentUser.getName().split(" ")[0]);
-        System.out.println(currentUser.getName().split(" ")[0]);
         ArrayList<User> partners = new ArrayList<User>();
-        for(Long id : currentUser.getLinkedPartners())
-            partners.add(userService.findById(id).get());
-
+        for(Long id : currentUser.getLinkedPartners()) {
+            User partner = userService.findById(id).get();
+            if(!partners.contains(partner))
+                 partners.add(partner);
+        }
+            
         HashMap<NameCard,Integer> ncs = new HashMap<>();
         currentUser.getApprovedNames().forEach((key,value) -> ncs.put((nameService.findById(key).orElse(null)),value)); 
 
@@ -117,8 +120,8 @@ public class NameController {
     /**
      * On accessing /searchname from the domain, if the user is logged in and has a
      * valid session the User is rendered the searchname template
-     * @param model 
-     * @param session
+     * @param model manages the data for the viewing template
+     * @param session manages the session of the user
      * @return searchname template rendered
      */
     @RequestMapping(value = "/searchname", method = RequestMethod.GET)
@@ -148,6 +151,7 @@ public class NameController {
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
         }
+<<<<<<< HEAD
         ArrayList<NameCard> searchedList;
         if ((Integer.parseInt(gender) == 3)) {
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(StringUtils.capitalize(searchedName.concat("%")));
@@ -157,6 +161,15 @@ public class NameController {
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender((StringUtils.capitalize(searchedName.concat("%"))), kyn);
         }
         model.addAttribute("names", searchedList);
+=======
+        model.addAttribute("user", currentUser);
+        
+        String s = searchedName.concat("%");
+        s = StringUtils.capitalize(s);
+        ArrayList<NameCard> SearchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(s);
+        model.addAttribute("names", SearchedList);
+        
+>>>>>>> master
         return "searchname";
     }
 }

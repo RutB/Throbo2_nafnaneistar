@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="is" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stillingar | Nafnaneistar</title>
+    <link rel="shortcut icon" th:href="@{/img/fav.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/settings.css}">
+</head>
+<header th:replace="Swipe.html :: header"></header>
+<body>
+    <main class="settings">
+        <section class="settings__container">
+            <div class="settings__block settings__updateName">
+                <h2 class="settings__blockTitle">Breyta Nafni</h2>
+                <div class="settings__blockContent">
+                    <span class="settings__currentName" th:text=${user.getName()}></span>
+                    <label>Nýtt Nafn:
+                        <input class="settings__input" type="text" name="changeName" id="changeName" required>
+                    </label>
+                    <button class="settings__button" id="settings__updateName__button" type="submit">Uppfæra nafn</button>
+                </div>
+            </div>
+        </section>
+        <section class="settings__container">
+            <div class="settings__block settings__changePassword">
+                <h2 class="settings__blockTitle">Breyta Lykilorði</h2>
+                <div class="settings__blockContent">
+                    <label>Gamla lykilorð
+                        <input class="settings__input" type="password" name="changePass__old" id="changePass__old" required>
+                    </label>
+                    <label>Nýtt lykilorð
+                        <input class="settings__input" type="password" name="changePass__new" id="changePass__new" required>
+                    </label>
+                    <button class="settings__button" id="settings__changePassword__button" type="submit">Uppfæra Lykilorð</button>
+                </div>
+            </div>
+        </section>
+        <section class="settings__container">
+            <div class="settings__block resetLiked">
+                <h2 class="settings__blockTitle">Núllstilla Nafnalista</h2>
+                <div class="settings__blockContent">
+                    <span class="settings__resetLikedStats">
+                        Þér hefur líkað við: <strong class="settings__totalLiked" th:text="${user.getApprovedNamesSize()}"></strong> nöfn
+                    </span>
+                    <button class="settings__button" id="settings__reset__button" type="submit">Núllstilla Lista</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script th:src="@{/js/settings.js}"></script>
+</body>
+</html>

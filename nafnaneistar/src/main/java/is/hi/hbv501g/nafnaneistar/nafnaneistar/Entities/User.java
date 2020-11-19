@@ -136,6 +136,10 @@ public class User {
         return this.availableNames.size();
     }
 
+    public int getApprovedNamesSize(){
+        return this.approvedNames.keySet().size();
+    }
+
     /**
      * Gets a random Id from the availableNames
      * @return an Id that is from the availableNames list
@@ -211,8 +215,12 @@ public class User {
         return this.linkedPartners;
     }
 
+
     public String getPassword() {
         return password;
+    }
+    public void setApprovedNames(HashMap<Integer,Integer> names){
+        this.approvedNames = names;
     }
 
     public void setPassword(String password) {

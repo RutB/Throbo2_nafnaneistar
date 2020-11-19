@@ -16,13 +16,17 @@
             <span id="tab2" class="viewliked__tab">Skoða sameiginlegan lista með: 
                 <div class="viewliked__select"><span class="select__selected">Velja:</span> <i class="fas select__down fa-caret-down"></i>
                     <div class="viewliked__selectmenu">
-                        <span th:each="partner : ${partners}" class="select__option" th:if="${partners.size() > 0}" th:id="${partner.getId()}"  th:text="${partner.getName()}">
+                        <span 
+                            th:if="${partners.size() > 0}" 
+                            th:each="partner : ${partners}" class="select__option"  
+                            th:id="${partner.getId()}"  
+                            th:text="${partner.getName()}">
                         </span>
                         <span class="select__option" th:unless="${partners.size() > 0}">Enginn tengdur</span>
                     </div>
                 </div>
             </span>
-            <span id="tab3" class="viewliked__tab">Gefa Nafni einkunn</span>
+            <span id="tab3" class="viewliked__tab">Gefa Nafni Einkunn</span>
             <span id="tab4" class="viewliked__tab">Skoða nöfn með: 
                 <div class="viewliked__select"><span class="select__selected">Einkunn</span> <i class="fas select__down fa-caret-down"></i>
                     <div class="viewliked__selectmenu">
@@ -36,7 +40,7 @@
                     </div>
                 </div>
             </span>
-            <span id="tab5" class="viewliked__tab">Option 5</span>
+            <span id="tab5" class="viewliked__tab">Nafna Samsetningar</span>
         </section>
         <section id="window1" class="viewliked__view viewliked__window viewliked__active">
             <div class="viewliked__container">
@@ -58,7 +62,7 @@
                         <div class="viewliked__statistics">
                             <span class="viewliked__namestatistic">Þú hefur samþykkt <span class="statistic__maleliked" th:text="${malestats[0]}"></span> nöfn</span>
                             <span class="viewliked__namestatistic">Þú hefur hafnað <span class="statistic__maledisliked" th:text="${malestats[1]}"></span> nöfnum</span>
-                            <span class="viewliked__namestatistic">Þá átt eftir að skoða <span class="statistic__maleleft" th:text="${malestats[2]}">10</span> nöfn</span>
+                            <span class="viewliked__namestatistic">Þá átt eftir að skoða <span class="statistic__maleleft" th:text="${malestats[2]}"></span> nöfn</span>
                         </div>
                     </div>
                 </div>
@@ -99,6 +103,7 @@
 
         </section>
         <section id="window3" class="viewliked__view viewliked__window">
+            <button class="gender__sortTable">Sortera í Stafrófsröð</button>
             <table class="gender__table">
                 <caption>Kvenkyns </caption>
                 <thead>
@@ -108,8 +113,15 @@
                         <th>Aðgerðir</th>
                     </tr>
                 </thead>
+
                 <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 1}">
-                    <td  class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td  class="gender__name">
+                        <div class="gender__nameInfo">
+                            <span  th:text="${line.key.getName()}"></span>
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <span class="gender__description" th:text="${line.key.getDescription()}"> ? </span>
+                    </td>
                     <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
                     <td class="gender__operations"><button class="gender__removeName">Taka af lista</button></td>
                 </tr>
@@ -124,7 +136,13 @@
                     </tr>
                 </thead>
                 <tr th:id="${line.key.getId()}" class="gender__row" th:each="line : ${ncs}" th:if="${line.key.getGender() == 0}">
-                    <td  class="gender__name" th:text="${line.key.getName()}"></td>
+                    <td  class="gender__name">
+                        <div class="gender__nameInfo">
+                            <span  th:text="${line.key.getName()    }"></span>
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <span class="gender__description" th:text="${line.key.getDescription()}"> </span>
+                    </td>
                     <td th:attr="class='rank'+${line.value} + ' gender__rank'" th:text="${line.value}"></td>
                     <td class="gender__operations"><button class="gender__removeName">Taka af lista</button></td>
                 </tr>
@@ -133,7 +151,7 @@
         </section>
         <section id="window4" class="viewliked__view viewliked__window">
             <div class="viewliked__container">
-               <h2 class="rating__title">Nöfn með <span class="rating__rank"></span></h2> 
+               <h2 class="rating__title">Nöfn með <span class="gender__rank">5</span></h2> 
                <div class="rating__tables">
                <table class="rating__table gender__table">
                    <caption>Kvenkyns</caption>
@@ -165,7 +183,33 @@
             </div>
 
         </section>
-        
+        <section id="window5" class="viewliked__view viewliked__window">
+            <div class="viewliked__container">
+                <div class="viewliked__namemaker">
+                    <div class="viewliked__namemakerText">
+                        <h2 class="viewliked__title">Nafna Samsetningar</h2>
+                        <p>Settu inn eftirnafn og fáðu uppástungur fyrir nafn</p>
+                        <input class="form__input" type="text" id="lastname" placeholder="Eftirnafn">
+                    </div>
+                    <div class="viewliked__namemakerCriteria">
+                        <label>Karlkyns
+                            <input checked class="gender__radio" type="radio" name="gender" id="male">
+                        </label>
+                        <label>Kvenkyns
+                            <input class="gender__radio" type="radio" name="gender" id="female">
+                        </label>
+                    </div>
+                    <div class="viewliked__namemakerButtons">
+                        <button class="viewliked__nameButton">Fá Nafn</button>
+                        <button class="viewliked__nameButton">Fá Nafn og Millinafn</button>
+                    </div>
+                    <span class="viewliked__nameResult"></span>
+                </div>
+
+               
+            
+            </div>
+        </section>
     </main>
     <script th:src="@{/js/viewliked.js}"></script>
 </body>

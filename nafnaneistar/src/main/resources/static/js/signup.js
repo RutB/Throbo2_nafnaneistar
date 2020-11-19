@@ -38,13 +38,5 @@ function resetEmailtxt(){
     error.classList.add('--hidden')
     error.textContent = msg
 }
-function el(tag,className,text = null){
-    let element = document.createElement(tag)
-    element.classList.add(className)
-    if(text)
-        element.appendChild(document.createTextNode(text))
-    return element;
-}
-
 
 });

@@ -1,21 +1,31 @@
+
 document.addEventListener('DOMContentLoaded', () => {
 
     let tabs = document.querySelectorAll('.viewliked__tab');
+
     for (const t of tabs) {
         t.addEventListener('click', openWindow);
     }
     initStarConversion();
 
+    let window3 = document.querySelector('#window3');
+    let gender_button = window3.querySelector('.gender__sortTable');
+    gender_button.addEventListener('click',()=> {
+        document.querySelector('body').appendChild(createTableLoader("Endurraða Töflu...",true))
+    })
+
     let rows = document.querySelectorAll('.gender__row');
     rows.forEach(row => row.addEventListener('mouseleave', starConvertRow));
 
-
-    let window3 = document.querySelector("#window3")
     let stars = window3.querySelectorAll('.gender__rankstar');
     stars.forEach(star => {
         star.addEventListener('mouseenter', starStruck)
         star.addEventListener('click', updateRank)
     })
+
+    let window5 = document.querySelector("#window5")
+    let nameButtons = window5.querySelectorAll('.viewliked__nameButton');
+    nameButtons.forEach(nb => nb.addEventListener('click', createRandomName))
 
     let removeButtons = document.querySelectorAll('.gender__removeName');
     removeButtons.forEach(button => button.addEventListener('click', removeNameFromList))
@@ -26,17 +36,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let tab4 = document.querySelector("#tab4");
     let rankSelect = tab4.querySelectorAll('.select__option');;
-    console.log(rankSelect)
     rankSelect.forEach(select => select.addEventListener('click', initRankSelect))
 
+    function createRandomName(e) {
+        let result = document.querySelector('.viewliked__nameResult')
+        let radioButtons = document.querySelectorAll('.gender__radio');
+        let lastname = document.querySelector('#lastname').value
+        let gender, middle;
+        radioButtons.forEach(rb => {
+            if (rb.checked)
+                gender = (rb.getAttribute('id') === "female") ? 1 : 0;
+        });
+        if (e.target.textContent.toLowerCase().includes('millinafn'))
+            middle = true
+        let url = (middle) ? `${window.location.origin}/viewliked/namemaker?middle=${middle}&gender=${gender}` : `${window.location.origin}/viewliked/namemaker?gender=${gender}`;
+        fetch(url)
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.error(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                let name = ""
+                data.forEach(d => {
+                    if (d !== "")
+                        name += d;
+                })
+                name += " " + lastname;
+                result.textContent = name
+            });
+    }
+
     function removeNameFromList(e) {
+        let w3 = document.querySelector('#window3')
         let grandpapa = e.target.parentNode.parentNode; //row
         let id = grandpapa.getAttribute('id');
         let url = `${window.location.origin}/viewliked/remove?id=${id}`;
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
-                    console.log(`Error ${resp.text()}`);
+                    console.error(`Error ${resp.text()}`);
                     return;
                 }
                 return resp.json();
@@ -44,6 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((data) => {
                 if (data)
                     grandpapa.remove();
+                let rows = w3.querySelectorAll('.gender__row');
+                for (let row of rows) {
+                    if (parseInt(row.getAttribute('id')) === parseInt(id)) {
+                        row.remove();
+                        break;
+                    }
+                }
             })
     }
 
@@ -62,23 +110,37 @@ document.addEventListener('DOMContentLoaded', () => {
         combopartner.textContent = e.target.textContent;
         selected.textContent = e.target.textContent;
         let url = `${window.location.origin}/viewliked/combolist?partnerid=${id}`;
-        clearTable(0)
-        clearTable(1)
+        let tables = document.querySelectorAll('.combo__table');
+        clearTable(0, tables)
+        clearTable(1, tables)
+        document.querySelector('main').appendChild(createTableLoader("Sæki og sortera töflu..."))
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
-                    console.log(`Error ${resp.text()}`);
+                    console.error(`Error ${resp.text()}`);
                     return;
                 }
                 return resp.json();
             })
             .then((data) => {
-                populateTable(data);
+                let tables = document.querySelectorAll('.combo__table');
+                removeTableLoader();
+                populateTable(data, tables);
             });
     }
 
-    function clearTable(gender) {
-        let tables = document.querySelectorAll('.combo__table');
+    function el(tag, className, text = null) {
+        let element = document.createElement(tag)
+        if (className) {
+            let classes = className.split(' ');
+            classes.forEach(c => element.classList.add(c))
+        }
+        if (text)
+            element.appendChild(document.createTextNode(text))
+        return element;
+    }
+
+    function clearTable(gender, tables) {
         let table = tables[gender]
         let tbody = table.querySelector('tbody');
         while (tbody.firstChild)
@@ -86,31 +148,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return tbody;
     }
 
-    function populateTable(data) {
-        let ftbody = clearTable(0)
-        let mtbody = clearTable(1)
+    function populateTable(data, tables) {
+        let ftbody = clearTable(0, tables)
+        let mtbody = clearTable(1, tables)
         for (const [key, rank] of Object.entries(data)) {
             info = key.split('-')
+            
             let name = info[0]
             let id = info[1]
             let gender = info[2];
-            let row = document.createElement('tr');
-            row.classList.add('combo__row')
-            let td = document.createElement('td');
+            let row = el('tr', 'combo__row');
+            let td = el('td', null, name);
             row.setAttribute('id', id);
-            td.appendChild(document.createTextNode(name))
             row.appendChild(td)
 
-            let startd = document.createElement('td');
-            startd.classList.add('gender__rank');
+            let startd = el('td', 'gender__rank');
             startd.appendChild(document.createTextNode(rank))
             row.appendChild(startd)
 
-            let ops = document.createElement('td');
-            ops.classList.add('combo__operations')
-            //<button class="gender__removeName">Taka af lista</button>
-            let bt = document.createElement('button')
-            bt.classList.add('gender__removeName')
+            let ops = el('td', 'combo__operations');
+            let bt = el('button', 'gender__removeName')
+
             bt.addEventListener('click', removeNameFromList)
             bt.appendChild(document.createTextNode("Taka af Lista"))
             ops.appendChild(bt);
@@ -120,17 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (gender == 0)
                 mtbody.appendChild(row)
             starConvertSingleRow(row);
-
         }
-
-
     }
-
-
 
     function updateRank(e) {
         let grandpapa = e.target.parentNode.parentNode
-        console.log(grandpapa)
         let parent = e.target.parentNode;
         let id = grandpapa.getAttribute('id');
         let currank = parent.classList[0]
@@ -199,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     }
-
     function initStarConversion() {
         let ranks = document.querySelectorAll('.gender__rank');
         ranks.forEach(rank => {
@@ -232,21 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
     function createEmptyStar(rank) {
-        let star = document.createElement('i');
-        star.classList.add('far');
-        star.classList.add('fa-star')
-        star.classList.add('gender__rankstar')
-        star.classList.add('empty')
+        let star = el('i', 'far fa-star gender__rankstar empty')
         if (rank)
             star.classList.add(`starrank-${rank}`)
         return star;
     }
     function createFilledStar(rank) {
-        let star = document.createElement('i');
-        star.classList.add('fas');
-        star.classList.add('fa-star')
-        star.classList.add('gender__rankstar')
-        star.classList.add('filled')
+        let star = el('i', 'fas fa-star gender__rankstar filled')
         if (rank)
             star.classList.add(`starrank-${rank}`)
         return star;
@@ -256,54 +299,62 @@ document.addEventListener('DOMContentLoaded', () => {
         let grandpapa = target.parentNode
         let grandgranpapa = grandpapa.parentNode;
         let id = null;
-        if(target.getAttribute('id') !== null){
-            if(target.getAttribute('id').includes('rank')){
+        if (target.getAttribute('id') !== null) {
+            if (target.getAttribute('id').includes('rank'))
                 id = target.getAttribute('id').split('rank')[1]
-            }
         }
-        else if(grandgranpapa.getAttribute('id') !== null){
-            if(grandgranpapa.getAttribute('id').includes('rank')){
+        else if (grandgranpapa.getAttribute('id') !== null) {
+            if (grandgranpapa.getAttribute('id').includes('rank'))
                 id = grandgranpapa.getAttribute('id').split('rank')[1]
-            }
-        }
-        else if(grandgranpapa.getAttribute('id') !== null){
-            if(grandgranpapa.getAttribute('id').includes('rank')){
-                id = grandgranpapa.getAttribute('id').split('rank')[1]
-            }
-        }
-                
-        if(id !== null)
-            showTopList(id)
 
+        }
+        else if (grandgranpapa.getAttribute('id') !== null) {
+            if (grandgranpapa.getAttribute('id').includes('rank'))
+                id = grandgranpapa.getAttribute('id').split('rank')[1]
+        }
+        if (id !== null)
+            showTopList(id)
     }
 
-    function showTopList(id){
+    function showTopList(id) {
         tabs.forEach(tab => tab.classList.remove('--active'));
+        let gender__rank = document.querySelector('.rating__title');
+        let ranks = gender__rank.querySelector('.gender__rank');
         tabs[3].classList.add('--active')
+        document.querySelectorAll('.viewliked__window').forEach(window => window.classList.remove("viewliked__active"))
+        document.querySelector('#window4').classList.add("viewliked__active")
         let url = `${window.location.origin}/viewliked/getrankedList?id=${id}`;
+        ranks.textContent = id
+        starConvertSingleRow(gender__rank)
+        document.querySelector('main').appendChild(createTableLoader("Sæki og sortera töflu..."))
         fetch(url)
-        .then((resp) => {
-            if (resp.status !== 200) {
-                console.log(`Error ${resp.text()}`);
-                return;
-            }
-            return resp.json();
-        })
-        .then((data) => {
-            console.log(data)
-        });
+            .then((resp) => {
+                if (resp.status !== 200) {
+                    console.error(`Error ${resp.text()}`);
+                    return;
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                removeTableLoader();
+                let tables = document.querySelectorAll('.rating__table');
+                populateTable(data, tables);
+                tables.forEach(t => sortTable(t))
+                
+            });
     }
 
     function openWindow(e) {
-        if(e.target.getAttribute('id') == null) return
+        if (e.target.getAttribute('id') == null) return
         if (!e.target.getAttribute('id').includes('tab')) return;
         let tabno = e.target.getAttribute('id');
-        if(tabno === null) return;
+        if (tabno === null) return;
         tabs.forEach(tab => tab.classList.remove('--active'));
         e.target.classList.add('--active')
         let views = document.querySelectorAll('.viewliked__window');
-        let no = tabno.split('tab')[1];
-        if (parseInt(no) === 2 || parseInt(no)=== 4) return; 
+        let no = parseInt(tabno.split('tab')[1]);
+        if (no === 2 || no === 4) return;
+
         views.forEach(view => view.classList.remove('viewliked__active'))
         let window = `window${no}`;
         document.getElementById(window).classList.add('viewliked__active')
@@ -311,19 +362,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    function sendUpdateRating(id, rating) {
+    function createTableLoader(text,specialFix = false){
+        if(specialFix){
+            setTimeout(()=> {
+                let tables = window3.querySelectorAll('.gender__table')
+                tables.forEach(t=> sortMiddleTable(t))
+            },1000);
+            removeTableLoader();
+        }
+        let table_loader = el('div','elephant__loader');
+        let loading__img = el('div','loading__imgdiv')
+        table_loader.appendChild(loading__img);
+        let img = el('img','loading__img')
+        img.setAttribute('src','/img/fill.gif')
+        img.setAttribute('alt',"Walking elephant that represents a loading gif")
+        loading__img.appendChild(img)
+        let span = el('span','loading__text');
+        span.appendChild(document.createTextNode(text))
+        table_loader.appendChild(span)
+        return table_loader;
+    }
+
+    function removeTableLoader(){
+        let elephants = document.querySelectorAll('.elephant__loader')
+        elephants.forEach(e=> e.remove())
+    }
+    const sendUpdateRating = (id, rating) => {
         let url = `${window.location.origin}/viewliked/updaterating?id=${id}&rating=${rating}`;
         fetch(url)
             .then((resp) => {
                 if (resp.status !== 200) {
-                    console.log(`Error ${resp.text()}`);
+                    console.error(`Error ${resp.text()}`);
                     return;
                 }
                 return resp.json();
             })
-            .then((data) => {
-                console.log(data)
-            });
+    }
+
+    const sortTable = (table) => {
+        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVWXYÝZÞÆÖ`
+        let rows, x, y, shouldSwitch;
+        let switching = true;
+        let i;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1, j = 2; i < (rows.length - 1); i++, j++) {
+                shouldSwitch = false;
+                x = rows[i].querySelector('td');
+                y = rows[j].querySelector('td');
+                if (LETTERS.indexOf(x.textContent[0].toUpperCase()) > LETTERS.indexOf(y.textContent[0].toUpperCase())) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+        removeTableLoader();
+    }
+
+    async function sortMiddleTable(table) {
+        const LETTERS = `AÁBCDÐEÉFGHIÍJKLMNOÓPRSTUÚVWXYÝZÞÆÖ`
+        let rows, x, y, shouldSwitch;
+        let switching = true;
+        let i;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1, j = 2; i < (rows.length - 1); i++, j++) {
+                shouldSwitch = false;
+                x = rows[i].querySelector('span');
+                y = rows[j].querySelector('span');  
+                if (LETTERS.indexOf(x.textContent[0].toUpperCase()) > LETTERS.indexOf(y.textContent[0].toUpperCase())) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+        removeTableLoader();
     }
 
 })
