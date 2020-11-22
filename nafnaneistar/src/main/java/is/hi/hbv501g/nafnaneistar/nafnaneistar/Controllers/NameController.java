@@ -162,4 +162,15 @@ public class NameController {
         model.addAttribute("names", searchedList);
         return "searchname";
     }
+
+    /**
+     * Færi yfir í NameRestController
+     */
+/*     @RequestMapping(value="/searchname/likename", method = RequestMethod.GET) //Nota GET er þægi?
+    public String likeName( //Get ég gert void? Þarf að skila einhverju?
+        @RequestParam(required = true) String nameToLike ){  //Breyta breytuheiti?
+
+        return 0;
+        }
+ */
 }

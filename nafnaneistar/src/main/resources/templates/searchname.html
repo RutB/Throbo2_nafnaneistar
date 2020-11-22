@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/components/form.css}">
         <title>Leit að nafni</title>
     </head>
     <header th:replace="Swipe.html :: header"></header>
@@ -32,7 +33,8 @@
                     </thead>
                     <tbody>
                         <tr th:each="name : ${names}">
-                            <td> </td>
+                            <td><button class="form__button add__button" th:id="${name.getId()}">Bæta við á minn lista</button></td>
+                            <td><button class="form__button remove__button" th:id="${name.getId()}">Taka af</button></td>
                             <td th:text="${name.getName()}" ></td>
                             <td th:text="${name.getDescription()}"></td>
                         </tr>
@@ -41,5 +43,6 @@
                 </div>
             </div>
         </main>
+        <script th:src="@{/js/searchname.js}"></script>
     </body>
 </html>

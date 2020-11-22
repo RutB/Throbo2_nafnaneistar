@@ -207,6 +207,27 @@ public class NameRestController {
         return nameService.findById(newID);
     }
 
+    /**
+     * Setja valið nafn úr leit í lista notanda.
+     * Þarf kannski að refactora yfir í sinn eigin RestController.
+     * @getmapping er shorthand fyrir @RequestMapping(method = RequestMethod.GET)
+     * Hafa check á þvi hvort user er logged in?
+     */
+    @GetMapping(path="/searchname/addtoliked/{id}", produces = "application/json")
+    public void approveSearchedName(@PathVariable String id, HttpSession session){
+        User currentUser = (User) session.getAttribute("currentUser");
+        System.out.println("User id to add to liked: " + id);
+        currentUser.approveName(Integer.parseInt(id));
+        userService.save(currentUser);
+    }
+
+    @GetMapping(path="/searchname/removefromliked/{id}", produces = "application/json")
+    public void removeSearchedName(@PathVariable String id, HttpSession session){
+        User currentUser = (User) session.getAttribute("currentUser");
+        System.out.println("User id to remove from liked: " + id);
+        currentUser.removeApprovedName(Integer.parseInt(id));
+        userService.save(currentUser);
+    }
 
 
 }
