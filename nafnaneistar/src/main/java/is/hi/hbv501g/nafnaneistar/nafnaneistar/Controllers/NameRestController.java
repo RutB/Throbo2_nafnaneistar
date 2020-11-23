@@ -214,19 +214,36 @@ public class NameRestController {
      * Hafa check á þvi hvort user er logged in?
      */
     @GetMapping(path="/searchname/addtoliked/{id}", produces = "application/json")
-    public void approveSearchedName(@PathVariable String id, HttpSession session){
+    public boolean approveSearchedName(@PathVariable String id, HttpSession session){
         User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+            return false;
         System.out.println("User id to add to liked: " + id);
-        currentUser.approveName(Integer.parseInt(id));
-        userService.save(currentUser);
+        try{
+            currentUser.approveName(Integer.parseInt(id));
+            userService.save(currentUser);
+            return true;
+        }
+        catch(Error e){
+            return false;
+        }
+    
     }
 
     @GetMapping(path="/searchname/removefromliked/{id}", produces = "application/json")
-    public void removeSearchedName(@PathVariable String id, HttpSession session){
+    public boolean removeSearchedName(@PathVariable String id, HttpSession session){
         User currentUser = (User) session.getAttribute("currentUser");
+        if(!UserUtils.isLoggedIn(currentUser))
+        return false;
         System.out.println("User id to remove from liked: " + id);
-        currentUser.removeApprovedName(Integer.parseInt(id));
-        userService.save(currentUser);
+        try{
+            currentUser.removeApprovedName(Integer.parseInt(id));
+            userService.save(currentUser);
+            return true;
+        }
+        catch(Error e){
+            return false;
+        }
         
     }
 

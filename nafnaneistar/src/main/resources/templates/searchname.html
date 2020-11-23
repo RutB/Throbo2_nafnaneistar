@@ -4,38 +4,62 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" th:href="@{/css/styles.css}">
-        <link rel="stylesheet" th:href="@{/css/components/form.css}">
-        <title>Leit að nafni</title>
+        <link rel="stylesheet" th:href="@{/css/searchname.css}">
+        <link rel="stylesheet" th:href="@{/css/swipe.css}">
+        <!-- <link rel="stylesheet" th:href="@{/css/components/form.css}"> -->
+       <!--  <link rel="stylesheet" th:href="@{/css/viewliked.css}"> -->
+        <title>Leit að nafni | Nafnaneistar</title>
     </head>
     <header th:replace="Swipe.html :: header"></header>
     <body>
-        <main class="main">
-            <form th:action="@{searchname}" method="post">
-                <input type="text" th:name="searchedName" id="searchedname" placeholder="Leita að nafni" required/>
-                <button type="submit">Leita</button>
-                <select id="gender" th:name="gender">
-                    <option th:value="'3'">Öll kyn</option>
-                    <option th:value="'0'">Karlkyn</option>
-                    <option th:value="'1'">Kvenkyn</option>
-                </select>
-            </form>
+        <main class="search">
+            <div class="search__sidebar">
+                <form class="sidebar__content" th:action="@{searchname}" method="post">
+                    <input type="text" th:name="searchedName" id="searchedname" placeholder="Sláðu inn nafn til að leita að" required/>
+                    <select id="gender" th:name="gender">
+                        <option th:value="'3'">Öll kyn</option>
+                        <option th:value="'0'">Karlkyn</option>
+                        <option th:value="'1'">Kvenkyn</option>
+                    </select>
+                    <button class="" type="submit">Leita</button>
+                </form>
+            </div>
             <div th:switch="${names}">
-                <p th:case="null">---</p>
+                <p th:case="null"></p>
                 <div th:case="*">
-                <h2>Leit skilaði:</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nafn:</th>
-                            <th>Meining:</th>
+                            <th>Nafn</th>
+                            <th>Meining</th>
+                            <th>Aðgerð</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="name : ${names}">
-                            <td><button class="form__button add__button" th:id="${name.getId()}">Bæta við</button></td>
-                            <td><button class="form__button remove__button" th:id="${name.getId()}">Taka af</button></td>
-                            <td th:text="${name.getName()}" ></td>
-                            <td th:text="${name.getDescription()}"></td>
+<!--                             <td th:if="{#lists.contains()}" >  
+                                <button th:if="" class="form__button remove__button" >Taka af</button>
+                            </td>
+                            <td>
+                                <button class="form__button add__button">Bæta á</button>
+                            </td> -->
+<!--                             <td th:text="${name.getId()}"></td> -->
+                            <td class="result__name" th:text="${name.getName()}"></td>
+                            <td class="result__desc" th:text="${name.getDescription()}"></td>
+                            <td th:unless="${#lists.contains(approvedList, name.getId())}">
+                                <button class="add__button" th:id="${name.getId()}">Bæta á lista</button>    
+                            </td>
+                            <td th:if="${#lists.contains(approvedList, name.getId())}">
+                                <button class="remove__button" th:id="${name.getId()}">Taka af lista</button>    
+                            </td>
+
+                            
+
+<!--                             <td th:if="{#lists.contains(convertedList, ${name.getId()})}"  >
+                                <button class="add__button" th:text="Bæta á lista"></button>
+                            </td> -->
+                            
+                            <!-- <td class="add__button"><button>Bæta á lista</button></td> -->
                         </tr>
                     </tbody>
                 </table>    
@@ -43,5 +67,6 @@
             </div>
         </main>
         <script th:src="@{/js/searchname.js}"></script>
+        <!-- https://www.baeldung.com/thymeleaf-lists-utility -->
     </body>
 </html>

@@ -14,12 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((resp) => {
                 if (resp.status !== 200) {
                     console.error(`Error ${resp.text()}`);
-                    return;
+                    return
                 }
-                /*Kalla hér á fall sem breytir takka hjá nafni*/
-                /*Það vantar logic sem checkar ef nafn er nú þegar á lista*/
-                return;
-            });
+                return resp.json();
+            }).then(data => {
+                console.log(data)
+                if(data)
+                    toggleButton(e.target)
+            })
 
     };
 
@@ -28,10 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((resp) => {
                 if(resp.status !== 200)  {
                     console.error(`Error ${resp.text()}`);
-                    return;
+                    return ;
                 }
-                return;
-            });
+                /*Kalla hér á fall sem breytir takka hjá nafni*/
+                return resp.json();
+            }).then(data => {
+                console.log(data)
+                if(data)
+                    toggleButton(e.target)
+            })
     };
 
     /**
@@ -44,8 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
      * Ef ýtt er á takka og aðgerð heppnast, þá:
      *  Toggla takka, s.s. fela current og birta hinn
      */
-    function checkApproveStatus(){
-        
+    function toggleButton(button){
+        if(button.classList.contains("remove__button")){
+            button.textContent = "Bæta í lista"
+            button.classList.toggle("remove__button")
+            button.classList.toggle("add__button")
+        }
+        else if(button.classList.contains("add__button")){
+            button.textContent = "Taka úr lista"
+            button.classList.toggle("remove__button")
+            button.classList.toggle("add__button")
+        }
+
     }
-    checkApproveStatus();
+   // checkApproveStatus();
 });

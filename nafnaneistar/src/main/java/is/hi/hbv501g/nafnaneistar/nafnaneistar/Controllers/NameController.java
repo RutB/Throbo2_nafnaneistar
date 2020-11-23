@@ -2,6 +2,7 @@ package is.hi.hbv501g.nafnaneistar.nafnaneistar.Controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpSession;
@@ -159,7 +160,24 @@ public class NameController {
             Boolean kyn = (Integer.parseInt(gender) == 1) ? true : false;
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender((StringUtils.capitalize(searchedName.concat("%"))), kyn);
         }
+        /**
+         * TODO:
+         * Fara yfir searchedList
+         * Safna IDs sem eru nú þegar approved
+         * Senda þann lista inn í Modelið
+         * Setja th:if sem upphafsetur rétta takka við hvert nafn
+         */
+
+        HashMap<NameCard,Integer> ncs = new HashMap<>();
+        currentUser.getApprovedNames().forEach((key,value) -> ncs.put((nameService.findById(key).orElse(null)),value));
+        ArrayList<NameCard> approvedList = new ArrayList<NameCard>(ncs.keySet());
+        ArrayList<Integer> approvedId = new ArrayList<>();
+
+        for (NameCard item : approvedList){
+            approvedId.add(item.getId());
+        }
         
+        model.addAttribute("approvedList", (List) approvedId);
         model.addAttribute("names", searchedList);
         return "searchname";
     }
