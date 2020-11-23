@@ -1,4 +1,3 @@
-<!--HAT - HTML fyrir leit af nafni-->
 <!DOCTYPE html>
 <html lang="is" xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -33,7 +32,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="name : ${names}">
-                            <td><button class="form__button add__button" th:id="${name.getId()}">Bæta við á minn lista</button></td>
+                            <td><button class="form__button add__button" th:id="${name.getId()}">Bæta við</button></td>
                             <td><button class="form__button remove__button" th:id="${name.getId()}">Taka af</button></td>
                             <td th:text="${name.getName()}" ></td>
                             <td th:text="${name.getDescription()}"></td>

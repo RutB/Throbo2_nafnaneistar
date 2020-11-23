@@ -227,6 +227,7 @@ public class NameRestController {
         System.out.println("User id to remove from liked: " + id);
         currentUser.removeApprovedName(Integer.parseInt(id));
         userService.save(currentUser);
+        
     }
 
 

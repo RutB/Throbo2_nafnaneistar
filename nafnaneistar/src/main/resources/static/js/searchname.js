@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    /**
-     * TODO:
-     * 
-     */
+
     let addButtons = document.querySelectorAll(".add__button");
     let removeButtons = document.querySelectorAll(".remove__button"); 
     addButtons.forEach(b => b.addEventListener("click", addToList));
@@ -39,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /**
      * TODO:
-     * Finna af hverju hvert nafn er 2x á lista
      * Taka inn lista sem er að birtast
      * Fara yfir hvert stak í lista
      * Ef id staksins er nú þegar í approvedNames lista, þá:
@@ -48,5 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
      * Ef ýtt er á takka og aðgerð heppnast, þá:
      *  Toggla takka, s.s. fela current og birta hinn
      */
-
+    function checkApproveStatus(){
+        
+    }
+    checkApproveStatus();
 });
