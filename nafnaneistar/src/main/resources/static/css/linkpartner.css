@@ -37,13 +37,14 @@
     padding: 0.2em;
 } 
 
-.link__info{
+.link__heading{
     display:flex;
     flex-direction:column;
     align-items: center;
     white-space: nowrap;
 }
-.link__info > p {
+
+.link__heading > p {
     display: inline-block;
 }
 
@@ -51,12 +52,17 @@
     margin-top:0;
 }
 
+.link__info, .linkTable__headerrow{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size:1.1em;
+}
+
 .link__remove {
     border-radius: 2em;
     background-color: var(--ambient-color);
     cursor: pointer;
     transition: background-color 300ms ease-in;
-    font-size: 0.6em;
+    font-size: 1.1em;
 }
 
 .link__remove:hover {
