@@ -6,7 +6,7 @@
     flex-wrap: nowrap; 
     width: 100%;
     margin-top: 1em;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .search__sidebar {
@@ -201,6 +201,7 @@ input[type='radio']:checked:after {
 @media only screen and (max-width: 768px) {
     .search{
         flex-wrap: wrap;
+        justify-content: center;
     }
     .search__sidebar {
         width: 100%;
