@@ -171,7 +171,7 @@ public class NameController {
             approvedId.add(item.getId());
         }
         
-        model.addAttribute("approvedList", (List) approvedId);
+        model.addAttribute("approvedList",approvedId);
         model.addAttribute("names", searchedList);
         return "searchname";
     }
