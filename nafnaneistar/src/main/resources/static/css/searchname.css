@@ -186,7 +186,7 @@ input[type='radio']:checked:after {
     border: 1px solid var(--nav-bg-color);
     z-index: 10000000;
 }
-.remove__button {
+.remove__button,.add__button{
     width: max-content;
 }
 
