@@ -1,0 +1,204 @@
+.search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: left;
+    flex-wrap: nowrap; 
+    width: 100%;
+    flex: 0 0;
+}
+
+.search__sidebar {
+    align-self: flex-start;
+    justify-self: flex-start;
+    display: flex;
+    height: 29em;
+    width: 18%;
+    min-width: 18%;
+    max-width: 18%;
+    background-color: var(--ambient-color);
+    border-radius: 5em;
+    padding: 1em;
+    justify-content: center;
+    margin-left: 2.8rem;
+    flex: 0 0;
+    
+}
+
+.sidebar__content{
+    display: flex;
+    width: 90%;
+    justify-items: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    
+}
+
+.box {
+    display: flex; 
+    border:1px red solid;
+    width: 20%;
+}
+
+.sidebar__content input {
+    width: 95%;
+    height: 1.5rem;
+    font-size: 0.9rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: .2em;
+    border: none;
+    text-align: justify;
+
+}
+
+.sidebar__content button {
+    background-color: var(--bt-color);
+    color: var(--font-color);
+    height: 1.3rem;
+    font-size: 1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    justify-self: center;
+    border-radius: .5em;
+    width: 75%;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebar__content button:hover {
+    transition: background-color 300ms ease-in;
+    background-color: var(--bt-color-lg);
+}
+
+.sidebar__content input::placeholder {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--font-color);
+}
+
+.sidebar__content input:focus::placeholder {
+    color: transparent;
+}
+
+::placeholder {
+    text-align: center;
+    font-size: 0.5rem;
+    color: var(--font-color);
+}
+
+.sidebar__content > *:not(:first-child) {
+    margin-top: 0.7rem;
+}
+
+.search__results{
+    width: 90%;
+    margin-left: 2rem;
+    border: 2px solid var(--nav-bg-color);
+    font-size: 2em;
+    margin-top: 0em;
+}
+
+.add__button {
+    background-color: var(--nav-bg-color-lg);
+}
+.add__button:hover {
+    background-color: var(--nav-bg-color); 
+}
+
+table th {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+table tr:nth-of-type(even) {
+    background-color: var(--ambient-color);
+}
+table tr:nth-of-type(odd) {
+    background-color: var(--swipe-bg-color);
+}
+
+table tr:hover{
+    transition: background-color 300ms ease-in;
+    background-color: var(--nav-bg-color);
+}
+
+table tr {
+    padding: .2em 0;
+    border-top: 1px solid var(--nav-bg-color);
+    border-bottom: 1px solid var(--nav-bg-color);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+td > button {
+    border-radius: 2em;
+    background-color: var(--ambient-color);
+    cursor: pointer;
+    transition: background-color 300ms ease-in;
+}
+
+td > button:hover {
+    transition: background-color 300ms ease-in;
+    transition: transform 300ms ease-in;
+    transform: scale(1.1);
+    background-color: lightcoral;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--swipe-bg-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 4px solid var(--ambient-color);
+    cursor: pointer;
+}
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--ambient-color);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 4px solid var(--ambient-color);
+    cursor: pointer;
+}
+
+.filter__checkbox {
+    height: .8em;
+    width: .8em;
+    content: "";
+    position: absolute;
+    background-color: var(--nav-bg-color-lg);
+    align-self: center;
+    justify-self: center;
+    margin: .1em;
+    cursor: pointer;
+    border: 1px solid var(--nav-bg-color);
+    z-index: 10000000;
+}
+
+.fa-check {
+    padding: 0 0 .2em 0;
+}
+@media only screen and (max-width: 768px) {
+
+    form,
+    form::placeholder
+    form button {
+        height: 3rem;
+        font-size: 1rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        border: none;
+    }
+}
