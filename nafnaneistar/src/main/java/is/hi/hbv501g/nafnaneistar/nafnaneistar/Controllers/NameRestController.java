@@ -213,12 +213,19 @@ public class NameRestController {
      * @getmapping er shorthand fyrir @RequestMapping(method = RequestMethod.GET)
      * Hafa check á þvi hvort user er logged in?
      */
+
+
+    /**
+     * Adds a name from search results into the current users liked list.
+     * @param id String of the id of the name to be added to the liked list.
+     * @param session The users current Http session
+     * @return Boolean, returns true if action is a success, othe.rwise it returns false. 
+     */
     @GetMapping(path="/searchname/addtoliked/{id}", produces = "application/json")
     public boolean approveSearchedName(@PathVariable String id, HttpSession session){
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser))
             return false;
-        System.out.println("User id to add to liked: " + id);
         try{
             currentUser.approveName(Integer.parseInt(id));
             userService.save(currentUser);
@@ -230,12 +237,17 @@ public class NameRestController {
     
     }
 
+    /**
+     * Removes a search result name from the current users liked list, if it is currently on the list. 
+     * @param id String of the id of the name to be removed from the liked list.
+     * @param session The users current Http session.
+     * @return Boolean, returns true if action is a success, otherwise it returns false.
+     */
     @GetMapping(path="/searchname/removefromliked/{id}", produces = "application/json")
     public boolean removeSearchedName(@PathVariable String id, HttpSession session){
         User currentUser = (User) session.getAttribute("currentUser");
         if(!UserUtils.isLoggedIn(currentUser))
         return false;
-        System.out.println("User id to remove from liked: " + id);
         try{
             currentUser.removeApprovedName(Integer.parseInt(id));
             userService.save(currentUser);
