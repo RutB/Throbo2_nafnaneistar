@@ -206,15 +206,7 @@ public class NameRestController {
         Integer newID = user.getRandomNameId(UserUtils.getGenderList(user,nameService,gender));
         return nameService.findById(newID);
     }
-
-    /**
-     * Setja valið nafn úr leit í lista notanda.
-     * Þarf kannski að refactora yfir í sinn eigin RestController.
-     * @getmapping er shorthand fyrir @RequestMapping(method = RequestMethod.GET)
-     * Hafa check á þvi hvort user er logged in?
-     */
-
-
+    
     /**
      * Adds a name from search results into the current users liked list.
      * @param id String of the id of the name to be added to the liked list.
@@ -256,8 +248,5 @@ public class NameRestController {
         catch(Error e){
             return false;
         }
-        
     }
-
-
 }

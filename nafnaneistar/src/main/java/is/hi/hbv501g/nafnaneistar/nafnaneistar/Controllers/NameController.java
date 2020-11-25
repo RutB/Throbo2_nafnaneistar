@@ -160,13 +160,6 @@ public class NameController {
             Boolean kyn = (Integer.parseInt(gender) == 1) ? true : false;
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLikeAndGender((StringUtils.capitalize(searchedName.concat("%"))), kyn);
         }
-        /**
-         * TODO:
-         * Fara yfir searchedList
-         * Safna IDs sem eru nú þegar approved
-         * Senda þann lista inn í Modelið
-         * Setja th:if sem upphafsetur rétta takka við hvert nafn
-         */
 
         HashMap<NameCard,Integer> ncs = new HashMap<>();
         currentUser.getApprovedNames().forEach((key,value) -> ncs.put((nameService.findById(key).orElse(null)),value));
