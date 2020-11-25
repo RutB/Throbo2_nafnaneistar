@@ -46,6 +46,9 @@ h2 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+button{
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,.1);
+}
 
 main {
     max-width: var(--max-width);
@@ -84,7 +87,6 @@ button:focus, button:focus-within,input:focus, input:focus-within,a:focus,a:focu
     }
 
     .main {
-        height: 60vh;
         margin-top: 1em;
     }
 }

@@ -51,7 +51,6 @@ public class UserController {
         User currentUser = (User) session.getAttribute("currentUser");
         if (UserUtils.isLoggedIn(currentUser))
             return "redirect:/swipe";
-        model.addAttribute("users", userService.findAll());
         model.addAttribute("user", new User());
         return "Login";
     }

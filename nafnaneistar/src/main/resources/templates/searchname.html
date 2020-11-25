@@ -6,6 +6,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/searchname.css}">
         <title>Leit að nafni | Nafnaneistar</title>
+        <link rel="shortcut icon" th:href="@{/img/fav.png}" type="image/x-icon">
     </head>
     <header th:replace="Swipe.html :: header"></header>
     <body>
@@ -21,10 +22,9 @@
                     <button type="submit">Leita</button>
                 </form>
             </div>
-            <div th:switch="${names}">
+            <th:block th:switch="${names}">
                 <p th:case="null"></p>
-                <div th:case="*">
-                    <table class="search__results">
+                    <table th:case="*" class="search__results">
                         <thead>
                             <tr>
                                 <th>Nafn</th>
@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody >
-                            <tr  th:each="name : ${names}">
+                            <tr class="result__row" th:each="name : ${names}">
                                 <td class="result__name" th:text="${name.getName()}"></td>
                                 <td class="result__desc" th:text="${name.getDescription()}"></td>
                                 <td th:unless="${#lists.contains(approvedList, name.getId())}">
@@ -45,8 +45,7 @@
                             </tr>
                         </tbody>
                     </table>    
-                </div>
-            </div>
+            </th:block>
         </main>
         <script th:src="@{/js/searchname.js}"></script>
     </body>

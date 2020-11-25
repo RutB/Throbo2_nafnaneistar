@@ -24,9 +24,6 @@
                 <ul class="nav__sublinks">
                     <li class="nav__greeting"><i class="fas fa-user"></i> Halló <span class="nav__user" th:text="${user} ? ${user.getName().split(' ')[0]} : 'Enginn'"/></li>
                     <li class="nav__sublink"><i class="fas fa-wrench"></i><a th:href="@{/settings}">Stillingar</a></li>
-                    <li class="nav__sublink"><i class="fas fa-fan"></i>Bla bla</li>
-                    <li class="nav__sublink"><i class="fas fa-birthday-cake"></i>Bla bla</li>
-                    <li class="nav__sublink"><i class="fas fa-comment"></i>Bla bla</li>
                     <li class="nav__sublink"><i class="fas fa-sign-out-alt"></i><a th:href="@{/logout}">Skrá út</a></li>
                 </ul>
             </div>

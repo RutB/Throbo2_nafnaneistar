@@ -152,6 +152,7 @@ public class NameController {
         if(!UserUtils.isLoggedIn(currentUser)){
             return "redirect:login";
         }
+        searchedName = searchedName.toLowerCase();
         ArrayList<NameCard> searchedList;
         if ((Integer.parseInt(gender) == 3)) {
             searchedList = (ArrayList<NameCard>) nameService.findAllByNameLike(StringUtils.capitalize(searchedName.concat("%")));

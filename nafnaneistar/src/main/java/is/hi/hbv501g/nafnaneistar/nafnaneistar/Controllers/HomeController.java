@@ -14,13 +14,9 @@ import is.hi.hbv501g.nafnaneistar.utils.UserUtils;
 
 @Controller
 public class HomeController {
-    private UserService userService;
-    private NameService nameService;
 
     @Autowired
     public HomeController(UserService userService, NameService nameService) {
-        this.userService = userService;
-        this.nameService = nameService;
     }
 
     @RequestMapping("/")

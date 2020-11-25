@@ -264,10 +264,6 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif; 
     justify-content: center;
 }
-.elephant__loader span {
-        width: 100%;
-        background-color:var(--ambient-color);
-}
 
 #window2 .viewliked__container {
     flex-direction: row;

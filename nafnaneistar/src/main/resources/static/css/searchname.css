@@ -5,7 +5,8 @@
     justify-content: left;
     flex-wrap: nowrap; 
     width: 100%;
-    flex: 0 0;
+    margin-top: 1em;
+    justify-content: center;
 }
 
 .search__sidebar {
@@ -21,7 +22,6 @@
     padding: 1em;
     justify-content: center;
     margin-left: 2.8rem;
-    flex: 0 0;
     
 }
 
@@ -186,12 +186,33 @@ input[type='radio']:checked:after {
     border: 1px solid var(--nav-bg-color);
     z-index: 10000000;
 }
+.remove__button {
+    width: max-content;
+}
+
+.result__row td {
+    border: 1px solid var(--nav-bg-color);
+    vertical-align: middle;
+}
 
 .fa-check {
     padding: 0 0 .2em 0;
 }
 @media only screen and (max-width: 768px) {
-
+    .search{
+        flex-wrap: wrap;
+    }
+    .search__sidebar {
+        width: 100%;
+        min-width: unset;
+        max-width: unset;
+        min-height: unset;
+        max-height: unset;
+        height: unset   ;
+    }
+    .search__results {
+        margin-top: 1em;
+    }
     form,
     form::placeholder
     form button {

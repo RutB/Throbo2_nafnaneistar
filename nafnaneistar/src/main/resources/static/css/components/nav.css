@@ -53,6 +53,7 @@
     margin: auto 0;
     border-radius: 1em;
     font-weight: bold;
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,.1);
 }
 
 .nav__links {

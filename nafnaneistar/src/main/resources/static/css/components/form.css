@@ -73,6 +73,7 @@ table th {
     font-weight: bold;
 }
 
+
 table tr:nth-of-type(even) {
     background-color: var(--ambient-color);
 }
@@ -158,6 +159,7 @@ input[type='radio']:checked:after {
     border: 1px solid var(--nav-bg-color);
     z-index: 10000000;
 }
+
 
 .fa-check {
     padding: 0 0 .2em 0;
