@@ -1,7 +1,7 @@
 # Throbo2_nafnaneistar
  
 Heimasíða:
-http://www.nafnaneistar.xyz/
+http://nafnaneistar.olijon.xyz/login
 
 
 # Fyrir Code Exchange:
